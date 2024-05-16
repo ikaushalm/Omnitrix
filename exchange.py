@@ -198,6 +198,9 @@ try:
                     last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
                     set_last_value(float(last_value_txt))
                 loop_count=loop_count+1
+                starting_value = ImageGrab.grab(bbox=(1109, 131, 1239, 152))
+                txt = pytesseract.image_to_string(starting_value,config='--psm 6')
+                startingvaluefinal=float(txt)
                 sleep(28)    
             except:
                 print("Unable to get the bet history")
