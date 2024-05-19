@@ -9,6 +9,24 @@ import numpy as np
 import re
 import cv2
 
+from twilio.rest import Client
+
+# Your Twilio Account SID and Auth Token
+account_sid = 'ACcf5c43d3ca76cbd9cc51b4b2ae1dff6c'
+auth_token = '1809f844d96bbe6bc57906ead628f039'
+
+# Create a Twilio client
+client = Client(account_sid, auth_token)
+
+# Your Twilio phone number (obtained from Twilio)
+from_phone = '+14144859675'
+
+# The recipient's phone number
+to_phone = '+917786868782'
+
+
+
+
 function_one=1
 function_change=1
 last_value=None
@@ -21,6 +39,7 @@ at_last_value=None
 at_loss_count=0
 at_loop_count=0
 at_repeat_count=1
+at_function_change=1
 
 
 
@@ -145,6 +164,7 @@ starting_value = ImageGrab.grab(bbox=(735, 104, 815, 120))
 txt = extract_numbers(pytesseract.image_to_string(starting_value,config='--psm 6'))
 print(txt)
 flag=False
+targetyes=0
 
 try:    
     # pyautogui.click(x=607, y=640)                                                               
@@ -153,31 +173,55 @@ try:
     print(startingvaluefinal)
     print(target_amt_final)
     while True:
-        while startingvaluefinal>target_amt_final:
-            if at_loop_count!=0:
-                at_loss_limit=max(arrhistory)-float(at_max_loss)
-                if arrhistory[-1]<at_loss_limit:
-                    print('setting break flag to false')
-                    flag = True
-                    break
-            print('Traget Achieved')
+        while startingvaluefinal>target_amt_final: 
             print('getting ready for trailling stop loss')
             try:
                 at_lock_check = pyautogui.locateOnScreen("placeyourbets.png", confidence=0.8)
                 print(at_lock_check)
                 at_strLockcheck = str(at_lock_check)
                 print(len(at_strLockcheck))
-                           
+                if targetyes==0:
+                    # The message you want to send
+                    message_body = "previous Target Achieved: " + str(target_amt_final) + " Getting ready for TSL"
+
+
+                    # Send the SMS
+                    message = client.messages.create(
+                    body=message_body,
+                    from_=from_phone,
+                    to=to_phone
+                    )
+                    targetyes=targetyes+1
+
+               
+
             except:
                 print("unable to find lock")
-                atstrLockcheck=''
+                at_strLockcheck=''
             if(len(at_strLockcheck)==43) :
                 sleep(2)
-                pyautogui.click(766,110)
+                pyautogui.click(785,110)
                 sleep(2)
                 at_current_value = ImageGrab.grab(bbox=(735, 104, 815, 120))
                 at_current_txt = pytesseract.image_to_string(at_current_value,config='--psm 6')
                 at_current_value_final=float(extract_numbers(at_current_txt))
+                if at_loop_count!=0:
+                    at_loss_limit=max(arrhistory)-float(at_max_loss)
+                    if at_current_value_final<at_loss_limit:
+                        print('setting break flag to true')
+                        # print("last value " + arrhistory[-1] +"maximum loss value as per tsl"+at_loss_limit )
+                        flag = True
+                        message_body = "Trailing stop Loss hit:"+str(at_loss_limit) + "Programm is closing"
+
+                        # Send the SMS
+                        message = client.messages.create(
+                        body=message_body,
+                        from_=from_phone,
+                        to=to_phone
+                        )
+
+                        break
+
                 if(at_loop_count!=0):
                     print(at_last_value)
                     print(at_current_value_final)
@@ -217,54 +261,57 @@ try:
                         pic.save("screenshot.png")
                                             
 
-                    if function_change==1:  # Call function_one() twice for every even iteration
+                    if at_function_change==1:  # Call function_one() twice for every even iteration
                         for _ in range(at_repeat_count):
                             betonB()
-                        function_change=2
-                        pyautogui.click(766,110)
+                        at_function_change=2
+                        pyautogui.click(785,110)
                         sleep(2)
                         last_value_pic = ImageGrab.grab(bbox=(735, 104, 815, 120))
                         last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
                         set_last_value_at(float(extract_numbers(last_value_txt)))
+                        add_to_fixed_length_array(arrhistory, extract_numbers(last_value_txt))
                         
-                    elif function_change==2:  # Call function_one() twice for every even iteration
+                    elif at_function_change==2:  # Call function_one() twice for every even iteration
                         for _ in range(at_repeat_count):
                             betonB()
-                        function_change=3
-                        pyautogui.click(766,110)
+                        at_function_change=3
+                        pyautogui.click(785,110)
                         sleep(2)                   
                         last_value_pic = ImageGrab.grab(bbox=(735, 104, 815, 120))
                         last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
                         set_last_value_at(float(extract_numbers(last_value_txt)))
-                    elif function_change==3:  # Call function_one() twice for every even iteration
+                        add_to_fixed_length_array(arrhistory, extract_numbers(last_value_txt))
+                    elif at_function_change==3:  # Call function_one() twice for every even iteration
                         for _ in range(at_repeat_count):
                             betonA()
-                        function_change=4
-                        pyautogui.click(766,110)
+                        at_function_change=4
+                        pyautogui.click(785,110)
                         sleep(2)
                         last_value_pic = ImageGrab.grab(bbox=(735, 104, 815, 120))
                         last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
                         set_last_value_at(float(extract_numbers(last_value_txt)))
-                    elif function_change==4:  # Call function_one() twice for every even iteration
+                        add_to_fixed_length_array(arrhistory, extract_numbers(last_value_txt))
+                    elif at_function_change==4:  # Call function_one() twice for every even iteration
                         for _ in range(at_repeat_count):
                             betonA()
-                        function_change=1
-                        pyautogui.click(766,110)
+                        at_function_change=1
+                        pyautogui.click(785,110)
                         sleep(2)
                         last_value_pic = ImageGrab.grab(bbox=(735, 104, 815, 120))
                         last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
                         set_last_value_at(float(extract_numbers(last_value_txt)))
+                        add_to_fixed_length_array(arrhistory, extract_numbers(last_value_txt))
                     at_loop_count=at_loop_count+1
-                    at_starting_value = ImageGrab.grab(bbox=(735, 104, 815, 120))
-                    at_txt = pytesseract.image_to_string(at_starting_value,config='--psm 6')
-                    add_to_fixed_length_array(arrhistory, extract_numbers(at_txt))
+                 
                     sleep(28)    
                 except:
                     print("Unable to get the bet history")
             else:
                 print("Unable to get the lock")
-            if flag:
-                break  # Break the outer loop if the flag is True
+        if flag:
+            print("Your trailing stop loss is hit ")
+            break  # Break the outer loop if the flag is True
             
         while startingvaluefinal<target_amt_final:
             
@@ -280,7 +327,7 @@ try:
                 strLockcheck=''
             if(len(strLockcheck)==43) :
                 sleep(2)
-                pyautogui.click(766,110)
+                pyautogui.click(785,110)
                 sleep(2)
                 current_value = ImageGrab.grab(bbox=(735, 104, 815, 120))
                 current_txt = pytesseract.image_to_string(current_value,config='--psm 6')
@@ -328,7 +375,7 @@ try:
                         for _ in range(repeat_count):
                             betonB()
                         function_change=2
-                        pyautogui.click(766,110)
+                        pyautogui.click(785,110)
                         sleep(2)
                         last_value_pic = ImageGrab.grab(bbox=(735, 104, 815, 120))
                         last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
@@ -338,7 +385,7 @@ try:
                         for _ in range(repeat_count):
                             betonB()
                         function_change=3
-                        pyautogui.click(766,110)
+                        pyautogui.click(785,110)
                         sleep(2)                   
                         last_value_pic = ImageGrab.grab(bbox=(735, 104, 815, 120))
                         last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
@@ -347,7 +394,7 @@ try:
                         for _ in range(repeat_count):
                             betonA()
                         function_change=4
-                        pyautogui.click(766,110)
+                        pyautogui.click(785,110)
                         sleep(2)
                         last_value_pic = ImageGrab.grab(bbox=(735, 104, 815, 120))
                         last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
@@ -356,7 +403,7 @@ try:
                         for _ in range(repeat_count):
                             betonA()
                         function_change=1
-                        pyautogui.click(766,110)
+                        pyautogui.click(785,110)
                         sleep(2)
                         last_value_pic = ImageGrab.grab(bbox=(735, 104, 815, 120))
                         last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
@@ -370,8 +417,6 @@ try:
                     print("Unable to get the bet history")
             else:
                 print("Unable to get the lock")
-
-
 except:
     print('Pls go to the  original screen')
 
