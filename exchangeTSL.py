@@ -200,7 +200,7 @@ try:
                 at_strLockcheck=''
             if(len(at_strLockcheck)==43) :
                 sleep(2)
-                pyautogui.click(785,110)
+                pyautogui.click(795,110)
                 sleep(2)
                 at_current_value = ImageGrab.grab(bbox=(735, 104, 815, 120))
                 at_current_txt = pytesseract.image_to_string(at_current_value,config='--psm 6')
@@ -265,7 +265,7 @@ try:
                         for _ in range(at_repeat_count):
                             betonB()
                         at_function_change=2
-                        pyautogui.click(785,110)
+                        pyautogui.click(795,110)
                         sleep(2)
                         last_value_pic = ImageGrab.grab(bbox=(735, 104, 815, 120))
                         last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
@@ -276,7 +276,7 @@ try:
                         for _ in range(at_repeat_count):
                             betonB()
                         at_function_change=3
-                        pyautogui.click(785,110)
+                        pyautogui.click(795,110)
                         sleep(2)                   
                         last_value_pic = ImageGrab.grab(bbox=(735, 104, 815, 120))
                         last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
@@ -286,7 +286,7 @@ try:
                         for _ in range(at_repeat_count):
                             betonA()
                         at_function_change=4
-                        pyautogui.click(785,110)
+                        pyautogui.click(795,110)
                         sleep(2)
                         last_value_pic = ImageGrab.grab(bbox=(735, 104, 815, 120))
                         last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
@@ -296,7 +296,7 @@ try:
                         for _ in range(at_repeat_count):
                             betonA()
                         at_function_change=1
-                        pyautogui.click(785,110)
+                        pyautogui.click(795,110)
                         sleep(2)
                         last_value_pic = ImageGrab.grab(bbox=(735, 104, 815, 120))
                         last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
@@ -327,7 +327,7 @@ try:
                 strLockcheck=''
             if(len(strLockcheck)==43) :
                 sleep(2)
-                pyautogui.click(785,110)
+                pyautogui.click(795,110)
                 sleep(2)
                 current_value = ImageGrab.grab(bbox=(735, 104, 815, 120))
                 current_txt = pytesseract.image_to_string(current_value,config='--psm 6')
@@ -375,7 +375,7 @@ try:
                         for _ in range(repeat_count):
                             betonB()
                         function_change=2
-                        pyautogui.click(785,110)
+                        pyautogui.click(795,110)
                         sleep(2)
                         last_value_pic = ImageGrab.grab(bbox=(735, 104, 815, 120))
                         last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
@@ -385,7 +385,7 @@ try:
                         for _ in range(repeat_count):
                             betonB()
                         function_change=3
-                        pyautogui.click(785,110)
+                        pyautogui.click(795,110)
                         sleep(2)                   
                         last_value_pic = ImageGrab.grab(bbox=(735, 104, 815, 120))
                         last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
@@ -394,7 +394,7 @@ try:
                         for _ in range(repeat_count):
                             betonA()
                         function_change=4
-                        pyautogui.click(785,110)
+                        pyautogui.click(795,110)
                         sleep(2)
                         last_value_pic = ImageGrab.grab(bbox=(735, 104, 815, 120))
                         last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
@@ -403,7 +403,7 @@ try:
                         for _ in range(repeat_count):
                             betonA()
                         function_change=1
-                        pyautogui.click(785,110)
+                        pyautogui.click(795,110)
                         sleep(2)
                         last_value_pic = ImageGrab.grab(bbox=(735, 104, 815, 120))
                         last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
