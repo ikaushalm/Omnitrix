@@ -19,13 +19,27 @@ repeat_count=1
 
 
 def betonA():
-    pyautogui.click(x=850, y=800) 
+    # 567, 600
+    pyautogui.click(x=600,y= 600)
 
 def betonB():
-    pyautogui.click(x=1050,y= 800)
+    # 700, 600
+    pyautogui.click(x=740,y= 600)
 
    
-
+def extract_numbers(text):
+     # Define the regex pattern to match numbers and decimal points
+    pattern = r'\d+(\.\d+)?'
+    # Use re.search to find the first match in the text
+    match = re.search(pattern, text)
+    if match:
+        # Extract the matched number string
+        number_str = match.group()
+        # Convert the matched string to a float
+        number = float(number_str)
+        return number
+    else:
+        return None  # Return None if no number is found
 
 # get Teserect Executable Location
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
@@ -101,16 +115,18 @@ def set_last_value(value):
     global last_value
     last_value = value
 
-
-starting_value = ImageGrab.grab(bbox=(1109, 131, 1239, 152))
-txt = pytesseract.image_to_string(starting_value,config='--psm 6')
+starting_value = ImageGrab.grab(bbox=(735, 104, 815, 120))
+txt = extract_numbers(pytesseract.image_to_string(starting_value,config='--psm 6'))
 print(txt)
-print(len(txt))
-try:                                                                  
+
+try:    
+    # pyautogui.click(x=607, y=640)                                                               
     startingvaluefinal=float(txt)
     target_amt_final=float(target_amt)
-    print(target_amt)
+    print(startingvaluefinal)
+    print(target_amt_final)
     while startingvaluefinal<target_amt_final:
+        
         print('inside function')
         try:
             lock_check = pyautogui.locateOnScreen("placeyourbets.png", confidence=0.8)
@@ -122,13 +138,13 @@ try:
             print("unable to find lock")
             strLockcheck=''
 
-        if(len(strLockcheck)==44) :
+        if(len(strLockcheck)==43) :
             sleep(2)
-            pyautogui.click(1150,135)
+            pyautogui.click(766,110)
             sleep(2)
-            current_value = ImageGrab.grab(bbox=(1109, 131, 1239, 152))
+            current_value = ImageGrab.grab(bbox=(735, 104, 815, 120))
             current_txt = pytesseract.image_to_string(current_value,config='--psm 6')
-            current_value_final=float(current_txt)
+            current_value_final=float(extract_numbers(current_txt))
             if(loop_count!=0):
                 print(last_value)
                 print(current_value_final)
@@ -160,48 +176,56 @@ try:
             try:
                 print('repeat_count')
                 print(repeat_count)
+                if loss_count>=6:
+                    #taking screen shots for maximum loss for better understanding of the data
+                    # Top-left: (315, 563)
+                    # Bottom-right: (502, 618)
+                    pic = ImageGrab.grab(bbox=(315, 563, 502, 618))
+                    pic.save("screenshot.png")
+                                        
+
                 if function_change==1:  # Call function_one() twice for every even iteration
                     for _ in range(repeat_count):
                         betonB()
                     function_change=2
-                    pyautogui.click(1150,135)
+                    pyautogui.click(766,110)
                     sleep(2)
-                    last_value_pic = ImageGrab.grab(bbox=(1109, 131, 1239, 152))
+                    last_value_pic = ImageGrab.grab(bbox=(735, 104, 815, 120))
                     last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
-                    set_last_value(float(last_value_txt))
+                    set_last_value(float(extract_numbers(last_value_txt)))
                     
                 elif function_change==2:  # Call function_one() twice for every even iteration
                     for _ in range(repeat_count):
                          betonB()
                     function_change=3
-                    pyautogui.click(1150,135)
+                    pyautogui.click(766,110)
                     sleep(2)                   
-                    last_value_pic = ImageGrab.grab(bbox=(1109, 131, 1239, 152))
+                    last_value_pic = ImageGrab.grab(bbox=(735, 104, 815, 120))
                     last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
-                    set_last_value(float(last_value_txt))
+                    set_last_value(float(extract_numbers(last_value_txt)))
                 elif function_change==3:  # Call function_one() twice for every even iteration
                     for _ in range(repeat_count):
                         betonA()
                     function_change=4
-                    pyautogui.click(1150,135)
+                    pyautogui.click(766,110)
                     sleep(2)
-                    last_value_pic = ImageGrab.grab(bbox=(1109, 131, 1239, 152))
+                    last_value_pic = ImageGrab.grab(bbox=(735, 104, 815, 120))
                     last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
-                    set_last_value(float(last_value_txt))
+                    set_last_value(float(extract_numbers(last_value_txt)))
                 elif function_change==4:  # Call function_one() twice for every even iteration
                     for _ in range(repeat_count):
                         betonA()
                     function_change=1
-                    pyautogui.click(1150,135)
+                    pyautogui.click(766,110)
                     sleep(2)
-                    last_value_pic = ImageGrab.grab(bbox=(1109, 131, 1239, 152))
+                    last_value_pic = ImageGrab.grab(bbox=(735, 104, 815, 120))
                     last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
-                    set_last_value(float(last_value_txt))
+                    set_last_value(float(extract_numbers(last_value_txt)))
                 loop_count=loop_count+1
-                starting_value = ImageGrab.grab(bbox=(1109, 131, 1239, 152))
+                starting_value = ImageGrab.grab(bbox=(735, 104, 815, 120))
                 txt = pytesseract.image_to_string(starting_value,config='--psm 6')
-                startingvaluefinal=float(txt)
-                sleep(28)    
+                startingvaluefinal=float(extract_numbers(txt))
+                sleep(20)    
             except:
                 print("Unable to get the bet history")
         else:
