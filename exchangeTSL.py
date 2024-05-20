@@ -13,7 +13,7 @@ from twilio.rest import Client
 
 # Your Twilio Account SID and Auth Token
 account_sid = 'ACcf5c43d3ca76cbd9cc51b4b2ae1dff6c'
-auth_token = '1809f844d96bbe6bc57906ead628f039'
+auth_token = '6fa491c1275def4ac4d2dd608c6fef09'
 
 # Create a Twilio client
 client = Client(account_sid, auth_token)
