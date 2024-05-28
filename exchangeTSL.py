@@ -43,13 +43,13 @@ at_function_change=1
 
 
 
-def betonA():
-    # 567, 600
-    pyautogui.click(x=600,y= 600)
+def betonA(no_click):
+    pyautogui.click(x=600,y= 600,clicks=no_click)
 
-def betonB():
-    # 700, 600
-    pyautogui.click(x=740,y= 600)
+
+def betonB(no_click):
+    pyautogui.click(x=740,y= 600,clicks=no_click)
+
 
 arrhistory=[]
 
@@ -174,10 +174,13 @@ try:
     print(target_amt_final)
     while True:
         while startingvaluefinal>target_amt_final: 
+            loss_count=0
             print('getting ready for trailling stop loss')
-            try:
+            try:               
                 at_lock_check = pyautogui.locateOnScreen("placeyourbets.png", confidence=0.8)
                 print(at_lock_check)
+                pyautogui.click(795,110)
+                sleep(1)
                 at_strLockcheck = str(at_lock_check)
                 print(len(at_strLockcheck))
                 if targetyes==0:
@@ -199,8 +202,6 @@ try:
                 print("unable to find lock")
                 at_strLockcheck=''
             if(len(at_strLockcheck)==43) :
-                sleep(2)
-                pyautogui.click(795,110)
                 sleep(2)
                 at_current_value = ImageGrab.grab(bbox=(735, 104, 815, 120))
                 at_current_txt = pytesseract.image_to_string(at_current_value,config='--psm 6')
@@ -258,12 +259,14 @@ try:
                         # Top-left: (315, 563)
                         # Bottom-right: (502, 618)
                         pic = ImageGrab.grab(bbox=(315, 563, 502, 618))
-                        pic.save("screenshot.png")
+                        pic.save("screenshot_"+str(at_loss_count)+".png")
                                             
 
                     if at_function_change==1:  # Call function_one() twice for every even iteration
-                        for _ in range(at_repeat_count):
-                            betonB()
+                        if at_loss_count<=4:
+                            betonB(at_repeat_count)
+                        else:
+                            betonA(at_repeat_count)
                         at_function_change=2
                         pyautogui.click(795,110)
                         sleep(2)
@@ -273,8 +276,10 @@ try:
                         add_to_fixed_length_array(arrhistory, extract_numbers(last_value_txt))
                         
                     elif at_function_change==2:  # Call function_one() twice for every even iteration
-                        for _ in range(at_repeat_count):
-                            betonB()
+                        if at_loss_count<=4:
+                            betonB(at_repeat_count)
+                        else:
+                            betonA(at_repeat_count)
                         at_function_change=3
                         pyautogui.click(795,110)
                         sleep(2)                   
@@ -283,8 +288,10 @@ try:
                         set_last_value_at(float(extract_numbers(last_value_txt)))
                         add_to_fixed_length_array(arrhistory, extract_numbers(last_value_txt))
                     elif at_function_change==3:  # Call function_one() twice for every even iteration
-                        for _ in range(at_repeat_count):
-                            betonA()
+                        if at_loss_count<=4:
+                            betonA(at_repeat_count)
+                        else:
+                            betonB(at_repeat_count)
                         at_function_change=4
                         pyautogui.click(795,110)
                         sleep(2)
@@ -293,8 +300,10 @@ try:
                         set_last_value_at(float(extract_numbers(last_value_txt)))
                         add_to_fixed_length_array(arrhistory, extract_numbers(last_value_txt))
                     elif at_function_change==4:  # Call function_one() twice for every even iteration
-                        for _ in range(at_repeat_count):
-                            betonA()
+                        if at_loss_count<=4:
+                            betonA(at_repeat_count)
+                        else:
+                            betonB(at_repeat_count)
                         at_function_change=1
                         pyautogui.click(795,110)
                         sleep(2)
@@ -314,10 +323,11 @@ try:
             break  # Break the outer loop if the flag is True
             
         while startingvaluefinal<target_amt_final:
-            
             print('inside function')
-            try:
+            try:               
                 lock_check = pyautogui.locateOnScreen("placeyourbets.png", confidence=0.8)
+                pyautogui.click(795,110)
+                sleep(1)
                 print(lock_check)
                 strLockcheck = str(lock_check)
                 print(len(strLockcheck))
@@ -326,8 +336,6 @@ try:
                 print("unable to find lock")
                 strLockcheck=''
             if(len(strLockcheck)==43) :
-                sleep(2)
-                pyautogui.click(795,110)
                 sleep(2)
                 current_value = ImageGrab.grab(bbox=(735, 104, 815, 120))
                 current_txt = pytesseract.image_to_string(current_value,config='--psm 6')
@@ -364,16 +372,16 @@ try:
                     print('repeat_count')
                     print(repeat_count)
                     if loss_count>=6:
-                        #taking screen shots for maximum loss for better understanding of the data
-                        # Top-left: (315, 563)
-                        # Bottom-right: (502, 618)
+
                         pic = ImageGrab.grab(bbox=(315, 563, 502, 618))
-                        pic.save("screenshot.png")
+                        pic.save("screenshot_"+str(loss_count)+".png")
                                             
 
                     if function_change==1:  # Call function_one() twice for every even iteration
-                        for _ in range(repeat_count):
-                            betonB()
+                        if loss_count<4:
+                            betonB(repeat_count)
+                        else:
+                            betonA(repeat_count)
                         function_change=2
                         pyautogui.click(795,110)
                         sleep(2)
@@ -382,8 +390,10 @@ try:
                         set_last_value(float(extract_numbers(last_value_txt)))
                         
                     elif function_change==2:  # Call function_one() twice for every even iteration
-                        for _ in range(repeat_count):
-                            betonB()
+                        if loss_count<4:
+                            betonB(repeat_count)
+                        else:
+                            betonA(repeat_count)
                         function_change=3
                         pyautogui.click(795,110)
                         sleep(2)                   
@@ -391,8 +401,10 @@ try:
                         last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
                         set_last_value(float(extract_numbers(last_value_txt)))
                     elif function_change==3:  # Call function_one() twice for every even iteration
-                        for _ in range(repeat_count):
-                            betonA()
+                        if loss_count<4:
+                            betonA(repeat_count)
+                        else:
+                            betonB(repeat_count)
                         function_change=4
                         pyautogui.click(795,110)
                         sleep(2)
@@ -400,8 +412,10 @@ try:
                         last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
                         set_last_value(float(extract_numbers(last_value_txt)))
                     elif function_change==4:  # Call function_one() twice for every even iteration
-                        for _ in range(repeat_count):
-                            betonA()
+                        if loss_count<4:
+                            betonA(repeat_count)
+                        else:
+                            betonB(repeat_count)
                         function_change=1
                         pyautogui.click(795,110)
                         sleep(2)
