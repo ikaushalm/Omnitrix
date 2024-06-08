@@ -43,6 +43,7 @@ at_function_change=1
 
 
 
+
 def betonA(no_click):
     pyautogui.click(x=600,y= 600,clicks=no_click)
 
@@ -84,6 +85,7 @@ pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tessera
 #to take screen out of this ide
 target_amt=pyautogui.prompt(text="",title="Enter your target")
 sleep(2)
+getfunctionchange=pyautogui.prompt(text="",title="Enter B=1 and A=3")
 at_max_loss=pyautogui.prompt(text="This will hit when your target is already completed",title="Enter your maximum loss in rupee")
 sleep(2)
 
@@ -169,158 +171,161 @@ targetyes=0
 try:    
     # pyautogui.click(x=607, y=640)                                                               
     startingvaluefinal=float(txt)
+    function_change=int(getfunctionchange)
     target_amt_final=float(target_amt)
     print(startingvaluefinal)
     print(target_amt_final)
     while True:
-        while startingvaluefinal>target_amt_final: 
-            loss_count=0
-            print('getting ready for trailling stop loss')
-            try:               
-                at_lock_check = pyautogui.locateOnScreen("placeyourbets.png", confidence=0.8)
-                print(at_lock_check)
-                pyautogui.click(795,110)
-                sleep(1)
-                at_strLockcheck = str(at_lock_check)
-                print(len(at_strLockcheck))
-                if targetyes==0:
-                    # The message you want to send
-                    message_body = "previous Target Achieved: " + str(target_amt_final) + " Getting ready for TSL"
+        # while startingvaluefinal>target_amt_final: 
+        #     loss_count=0
+        #     print('getting ready for trailling stop loss')
+        #     try:               
+        #         at_lock_check = pyautogui.locateOnScreen("placeyourbets.png", confidence=0.8)
+        #         print(at_lock_check)
+        #         pyautogui.click(795,110)
+        #         sleep(1)
+        #         at_strLockcheck = str(at_lock_check)
+        #         print(len(at_strLockcheck))
+        #         if targetyes==0:
+        #             # The message you want to send
+        #             message_body = "previous Target Achieved: " + str(target_amt_final) + " Getting ready for TSL"
 
 
-                    # Send the SMS
-                    message = client.messages.create(
-                    body=message_body,
-                    from_=from_phone,
-                    to=to_phone
-                    )
-                    targetyes=targetyes+1
+        #             # Send the SMS
+        #             message = client.messages.create(
+        #             body=message_body,
+        #             from_=from_phone,
+        #             to=to_phone
+        #             )
+        #             targetyes=targetyes+1
 
                
 
-            except:
-                print("unable to find lock")
-                at_strLockcheck=''
-            if(len(at_strLockcheck)==43) :
-                sleep(2)
-                at_current_value = ImageGrab.grab(bbox=(735, 104, 815, 120))
-                at_current_txt = pytesseract.image_to_string(at_current_value,config='--psm 6')
-                at_current_value_final=float(extract_numbers(at_current_txt))
-                if at_loop_count!=0:
-                    at_loss_limit=max(arrhistory)-float(at_max_loss)
-                    if at_current_value_final<at_loss_limit:
-                        print('setting break flag to true')
-                        # print("last value " + arrhistory[-1] +"maximum loss value as per tsl"+at_loss_limit )
-                        flag = True
-                        message_body = "Trailing stop Loss hit:"+str(at_loss_limit) + "Programm is closing"
+        #     except:
+        #         print("unable to find lock")
+        #         at_strLockcheck=''
+        #     if(len(at_strLockcheck)==43) :
+        #         sleep(2)
+        #         at_current_value = ImageGrab.grab(bbox=(735, 104, 815, 120))
+        #         at_current_txt = pytesseract.image_to_string(at_current_value,config='--psm 6')
+        #         at_current_value_final=float(extract_numbers(at_current_txt))
+        #         if at_loop_count!=0:
+        #             at_loss_limit=max(arrhistory)-float(at_max_loss)
+        #             if at_current_value_final<at_loss_limit:
+        #                 print('setting break flag to true')
+        #                 # print("last value " + arrhistory[-1] +"maximum loss value as per tsl"+at_loss_limit )
+        #                 flag = True
+        #                 message_body = "Trailing stop Loss hit:"+str(at_loss_limit) + "Programm is closing"
 
-                        # Send the SMS
-                        message = client.messages.create(
-                        body=message_body,
-                        from_=from_phone,
-                        to=to_phone
-                        )
+        #                 # Send the SMS
+        #                 message = client.messages.create(
+        #                 body=message_body,
+        #                 from_=from_phone,
+        #                 to=to_phone
+        #                 )
 
-                        break
+        #                 break
 
-                if(at_loop_count!=0):
-                    print(at_last_value)
-                    print(at_current_value_final)
-                    if(at_last_value>at_current_value_final):
-                        print('inside true loop')
-                        at_loss_count=at_loss_count+1
-                        if at_loss_count==1:
-                            at_repeat_count=2
-                        elif at_loss_count==2: 
-                            at_repeat_count=4
-                        elif at_loss_count==3:
-                            at_repeat_count=8
-                        elif at_loss_count==4:
-                            at_repeat_count=16
-                        elif at_loss_count==5:
-                            at_repeat_count=32
-                        elif at_loss_count==6:
-                            at_repeat_count=64
-                        elif at_loss_count==7:
-                            at_repeat_count=128
-                        else:
-                            at_repeat_count=at_loss_count*2
+        #         if(at_loop_count!=0):
+        #             print(at_last_value)
+        #             print(at_current_value_final)
+        #             if(at_last_value>at_current_value_final):
+        #                 print('inside true loop')
+        #                 at_loss_count=at_loss_count+1
+        #                 if at_loss_count==1:
+        #                     at_repeat_count=2
+        #                 elif at_loss_count==2: 
+        #                     at_repeat_count=4
+        #                 elif at_loss_count==3:
+        #                     at_repeat_count=8
+        #                 elif at_loss_count==4:
+        #                     at_repeat_count=16
+        #                 elif at_loss_count==5:
+        #                     at_repeat_count=32
+        #                 elif at_loss_count==6:
+        #                     at_repeat_count=64
+        #                 elif at_loss_count==7:
+        #                     at_repeat_count=128
+        #                 elif at_loss_count==8:
+        #                     at_repeat_count=256
+        #                 else:
+        #                     at_repeat_count=at_loss_count*2
 
-                        print('printing loss count')
-                        print(at_loss_count)
-                    else:
-                        at_repeat_count=1
-                        at_loss_count=0
-                try:
-                    print('at_repeat_count')
-                    print(at_repeat_count)
-                    if at_loss_count>=6:
-                        #taking screen shots for maximum loss for better understanding of the data
-                        # Top-left: (315, 563)
-                        # Bottom-right: (502, 618)
-                        pic = ImageGrab.grab(bbox=(315, 563, 502, 618))
-                        pic.save("screenshot_"+str(at_loss_count)+".png")
+        #                 print('printing loss count')
+        #                 print(at_loss_count)
+        #             else:
+        #                 at_repeat_count=1
+        #                 at_loss_count=0
+        #         try:
+        #             print('at_repeat_count')
+        #             print(at_repeat_count)
+        #             if at_loss_count>=6:
+        #                 #taking screen shots for maximum loss for better understanding of the data
+        #                 # Top-left: (315, 563)
+        #                 # Bottom-right: (502, 618)
+        #                 pic = ImageGrab.grab(bbox=(315, 563, 502, 618))
+        #                 pic.save("screenshot_"+str(at_loss_count)+".png")
                                             
 
-                    if at_function_change==1:  # Call function_one() twice for every even iteration
-                        if at_loss_count<=4:
-                            betonB(at_repeat_count)
-                        else:
-                            betonA(at_repeat_count)
-                        at_function_change=2
-                        pyautogui.click(795,110)
-                        sleep(2)
-                        last_value_pic = ImageGrab.grab(bbox=(735, 104, 815, 120))
-                        last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
-                        set_last_value_at(float(extract_numbers(last_value_txt)))
-                        add_to_fixed_length_array(arrhistory, extract_numbers(last_value_txt))
+        #             if at_function_change==1:  # Call function_one() twice for every even iteration
+        #                 if at_loss_count<=4:
+        #                     betonB(at_repeat_count)
+        #                 else:
+        #                     betonA(at_repeat_count)
+        #                 at_function_change=2
+        #                 pyautogui.click(795,110)
+        #                 sleep(2)
+        #                 last_value_pic = ImageGrab.grab(bbox=(735, 104, 815, 120))
+        #                 last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
+        #                 set_last_value_at(float(extract_numbers(last_value_txt)))
+        #                 add_to_fixed_length_array(arrhistory, extract_numbers(last_value_txt))
                         
-                    elif at_function_change==2:  # Call function_one() twice for every even iteration
-                        if at_loss_count<=4:
-                            betonB(at_repeat_count)
-                        else:
-                            betonA(at_repeat_count)
-                        at_function_change=3
-                        pyautogui.click(795,110)
-                        sleep(2)                   
-                        last_value_pic = ImageGrab.grab(bbox=(735, 104, 815, 120))
-                        last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
-                        set_last_value_at(float(extract_numbers(last_value_txt)))
-                        add_to_fixed_length_array(arrhistory, extract_numbers(last_value_txt))
-                    elif at_function_change==3:  # Call function_one() twice for every even iteration
-                        if at_loss_count<=4:
-                            betonA(at_repeat_count)
-                        else:
-                            betonB(at_repeat_count)
-                        at_function_change=4
-                        pyautogui.click(795,110)
-                        sleep(2)
-                        last_value_pic = ImageGrab.grab(bbox=(735, 104, 815, 120))
-                        last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
-                        set_last_value_at(float(extract_numbers(last_value_txt)))
-                        add_to_fixed_length_array(arrhistory, extract_numbers(last_value_txt))
-                    elif at_function_change==4:  # Call function_one() twice for every even iteration
-                        if at_loss_count<=4:
-                            betonA(at_repeat_count)
-                        else:
-                            betonB(at_repeat_count)
-                        at_function_change=1
-                        pyautogui.click(795,110)
-                        sleep(2)
-                        last_value_pic = ImageGrab.grab(bbox=(735, 104, 815, 120))
-                        last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
-                        set_last_value_at(float(extract_numbers(last_value_txt)))
-                        add_to_fixed_length_array(arrhistory, extract_numbers(last_value_txt))
-                    at_loop_count=at_loop_count+1
+        #             elif at_function_change==2:  # Call function_one() twice for every even iteration
+        #                 if at_loss_count<=4:
+        #                     betonB(at_repeat_count)
+        #                 else:
+        #                     betonA(at_repeat_count)
+        #                 at_function_change=3
+        #                 pyautogui.click(795,110)
+        #                 sleep(2)                   
+        #                 last_value_pic = ImageGrab.grab(bbox=(735, 104, 815, 120))
+        #                 last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
+        #                 set_last_value_at(float(extract_numbers(last_value_txt)))
+        #                 add_to_fixed_length_array(arrhistory, extract_numbers(last_value_txt))
+        #             elif at_function_change==3:  # Call function_one() twice for every even iteration
+        #                 if at_loss_count<=4:
+        #                     betonA(at_repeat_count)
+        #                 else:
+        #                     betonB(at_repeat_count)
+        #                 at_function_change=4
+        #                 pyautogui.click(795,110)
+        #                 sleep(2)
+        #                 last_value_pic = ImageGrab.grab(bbox=(735, 104, 815, 120))
+        #                 last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
+        #                 set_last_value_at(float(extract_numbers(last_value_txt)))
+        #                 add_to_fixed_length_array(arrhistory, extract_numbers(last_value_txt))
+        #             elif at_function_change==4:  # Call function_one() twice for every even iteration
+        #                 if at_loss_count<=4:
+        #                     betonA(at_repeat_count)
+        #                 else:
+        #                     betonB(at_repeat_count)
+        #                 at_function_change=1
+        #                 pyautogui.click(795,110)
+        #                 sleep(2)
+        #                 last_value_pic = ImageGrab.grab(bbox=(735, 104, 815, 120))
+        #                 last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
+        #                 set_last_value_at(float(extract_numbers(last_value_txt)))
+        #                 add_to_fixed_length_array(arrhistory, extract_numbers(last_value_txt))
+        #             at_loop_count=at_loop_count+1
                  
-                    sleep(28)    
-                except:
-                    print("Unable to get the bet history")
-            else:
-                print("Unable to get the lock")
-        if flag:
-            print("Your trailing stop loss is hit ")
-            break  # Break the outer loop if the flag is True
+        #             sleep(28)    
+        #         except:
+        #             print("Unable to get the bet history")
+        #     else:
+        #         print("Unable to get the lock")
+        # if flag:
+        #     print("Your trailing stop loss is hit ")
+        #     break  # Break the outer loop if the flag is True
             
         while startingvaluefinal<target_amt_final:
             print('inside function')
@@ -378,7 +383,7 @@ try:
                                             
 
                     if function_change==1:  # Call function_one() twice for every even iteration
-                        if loss_count<4:
+                        if loss_count<5:
                             betonB(repeat_count)
                         else:
                             betonA(repeat_count)
@@ -390,7 +395,7 @@ try:
                         set_last_value(float(extract_numbers(last_value_txt)))
                         
                     elif function_change==2:  # Call function_one() twice for every even iteration
-                        if loss_count<4:
+                        if loss_count<5:
                             betonB(repeat_count)
                         else:
                             betonA(repeat_count)
@@ -401,7 +406,7 @@ try:
                         last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
                         set_last_value(float(extract_numbers(last_value_txt)))
                     elif function_change==3:  # Call function_one() twice for every even iteration
-                        if loss_count<4:
+                        if loss_count<5:
                             betonA(repeat_count)
                         else:
                             betonB(repeat_count)
@@ -412,7 +417,7 @@ try:
                         last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
                         set_last_value(float(extract_numbers(last_value_txt)))
                     elif function_change==4:  # Call function_one() twice for every even iteration
-                        if loss_count<4:
+                        if loss_count<5:
                             betonA(repeat_count)
                         else:
                             betonB(repeat_count)
