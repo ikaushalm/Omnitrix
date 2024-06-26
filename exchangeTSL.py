@@ -34,6 +34,7 @@ loss_count=0
 win_count=0
 loop_count=0
 repeat_count=1
+bet_count=0
 
 
 at_last_value=None
@@ -335,6 +336,7 @@ try:
                 pyautogui.click(795,110)
                 sleep(1)
                 print(lock_check)
+                bet_count=bet_count+1
                 strLockcheck = str(lock_check)
                 print(len(strLockcheck))
                 
@@ -386,13 +388,17 @@ try:
                                             
 
                     if function_change==1:  # Call function_one() twice for every even iteration
-                        if win_count>=2:
+                        
+                        if bet_count%3==0:
                             betonA(repeat_count)
                         else:
-                            if loss_count<=3:
-                                betonB(repeat_count)
-                            else:
+                            if win_count>=2:
                                 betonA(repeat_count)
+                            else:
+                                if loss_count<=3:
+                                    betonB(repeat_count)
+                                else:
+                                    betonA(repeat_count)
 
                         function_change=2
                         pyautogui.click(795,110)
@@ -402,13 +408,16 @@ try:
                         set_last_value(float(extract_numbers(last_value_txt)))
                         
                     elif function_change==2:  # Call function_one() twice for every even iteration
-                        if win_count>=2:
+                        if bet_count%3==0:
                             betonA(repeat_count)
-                        else:
-                            if loss_count<=3:
-                                betonB(repeat_count)
-                            else:
+                        else:                        
+                            if win_count>=2:
                                 betonA(repeat_count)
+                            else:
+                                if loss_count<=3:
+                                    betonB(repeat_count)
+                                else:
+                                    betonA(repeat_count)
                         function_change=3
                         pyautogui.click(795,110)
                         sleep(2)                   
@@ -416,13 +425,16 @@ try:
                         last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
                         set_last_value(float(extract_numbers(last_value_txt)))
                     elif function_change==3:  # Call function_one() twice for every even iteration
-                        if win_count>=2:
-                            betonB(repeat_count)
-                        else:
-                            if loss_count<=3:
-                                betonA(repeat_count)
-                            else:
+                        if bet_count%3==0:
+                            betonA(repeat_count)
+                        else: 
+                            if win_count>=2:
                                 betonB(repeat_count)
+                            else:
+                                if loss_count<=3:
+                                    betonA(repeat_count)
+                                else:
+                                    betonB(repeat_count)
                         function_change=4
                         pyautogui.click(795,110)
                         sleep(2)
@@ -430,13 +442,16 @@ try:
                         last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
                         set_last_value(float(extract_numbers(last_value_txt)))
                     elif function_change==4:  # Call function_one() twice for every even iteration
-                        if win_count>=2:
-                            betonB(repeat_count)
-                        else:
-                            if loss_count<=3:
-                                betonA(repeat_count)
-                            else:
+                        if bet_count%3==0:
+                            betonA(repeat_count)
+                        else:  
+                            if win_count>=2:
                                 betonB(repeat_count)
+                            else:
+                                if loss_count<=3:
+                                    betonA(repeat_count)
+                                else:
+                                    betonB(repeat_count)
                         function_change=1
                         pyautogui.click(795,110)
                         sleep(2)
