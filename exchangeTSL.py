@@ -43,11 +43,7 @@ from time import sleep
 import pyautogui
 import pytesseract
 from PIL import ImageGrab
-from PIL import Image
-import random
-import numpy as np
 import re
-import cv2
 import logging
 import winsound
 import os
@@ -257,7 +253,7 @@ try:
                         win_count=win_count+1
                 try:
                     if loss_count>=6:
-                        pic = ImageGrab.grab(bbox=(315, 563, 502, 618))
+                        pic = pyautogui.screenshot()
                         pic.save("screenshot_"+str(loss_count)+".png")
                                             
 
