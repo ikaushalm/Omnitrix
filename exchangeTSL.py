@@ -53,6 +53,7 @@ import winsound
 import os
 from datetime import datetime
 import csv
+import platform
 
 # from twilio.rest import Client
 
@@ -123,9 +124,29 @@ def write_to_csv(betted_on, current_value, target_amt, losscount, wincount):
 def play_alarm():
     """Play an alarm sound."""
     frequency = 1000  # Frequency in Hz
-    duration = 1000   # Duration in milliseconds
+    duration = 2000   # Duration in milliseconds
     winsound.Beep(frequency, duration)
 
+def close_chrome_tabs():
+    """Close all Chrome tabs."""
+    try:
+        if platform.system() == 'Windows':
+            # Close Chrome via taskkill
+            subprocess.call(['taskkill', '/F', '/IM', 'chrome.exe'])
+        else:
+            print("Unsupported OS")
+    except Exception as e:
+        logging.error(f"An error occurred while closing Chrome tabs: {e}", exc_info=True)
+
+def shutdown_system():
+    """Shut down the system."""
+    try:
+        if platform.system() == 'Windows':
+            subprocess.call(['shutdown', '/s', '/t', '0'])
+        else:
+            print("Unsupported OS")
+    except Exception as e:
+        logging.error(f"An error occurred while shutting down the system: {e}", exc_info=True)
 
 def betonA(no_click):
     # pyautogui.click(x=600,y= 600,clicks=no_click)
@@ -322,7 +343,9 @@ try:
             else:
                 strLockcheck=''
         else:
-            play_alarm()
+            play_alarm() 
+            close_chrome_tabs()
+            shutdown_system()
             # logging.info("Condition not met, alarm beeped.")
             # sleep(10)  # Wait before rechecking
 except Exception as e:
