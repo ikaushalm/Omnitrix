@@ -1,3 +1,43 @@
+import subprocess
+import sys
+
+def install(package):
+    """Install the package using pip."""
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+def check_and_install_dependencies():
+    """Check and install missing dependencies."""
+    dependencies = [
+        'pyautogui',
+        'pytesseract',
+        'Pillow',
+        'numpy',
+        'opencv-python',
+        'setuptools'
+    ]
+    
+    # Try importing pkg_resources to check if setuptools is installed
+    try:
+        import pkg_resources
+    except ImportError:
+        print("pkg_resources not found. Installing setuptools...")
+        install('setuptools')
+    
+    import pkg_resources
+    
+    installed_packages = {pkg.key for pkg in pkg_resources.working_set}
+    for package in dependencies:
+        if package not in installed_packages:
+            print(f"Installing {package}...")
+            install(package)
+        else:
+            print(f"{package} is already installed.")
+
+# Call the function to check and install dependencies
+check_and_install_dependencies()
+
+# Import other necessary modules after ensuring dependencies
+
 import string
 from time import sleep
 import pyautogui
