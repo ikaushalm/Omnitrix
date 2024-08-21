@@ -12,6 +12,7 @@ import logging
 import winsound
 import os
 from datetime import datetime
+import csv
 
 # from twilio.rest import Client
 
@@ -63,6 +64,22 @@ logging.basicConfig(filename=log_filename, level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(filename)s - %(lineno)d - %(message)s')
 
 
+# CSV file setup
+csv_filename = f'{log_dir}/bot_data_{timestamp}.csv'
+csv_headers = ['Betted On', 'CurrentValue', 'TargetAmt', 'Losscount', 'Wincount']
+
+# Initialize CSV file with headers if it does not exist
+if not os.path.isfile(csv_filename):
+    with open(csv_filename, mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(csv_headers)
+
+def write_to_csv(betted_on, current_value, target_amt, losscount, wincount):
+    """Write data to the CSV file."""
+    with open(csv_filename, mode='a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow([betted_on, current_value, target_amt, losscount, wincount])
+
 def play_alarm():
     """Play an alarm sound."""
     frequency = 1000  # Frequency in Hz
@@ -75,6 +92,7 @@ def betonA(no_click):
     pyautogui.click(x=850, y=800,clicks=no_click)
     # logging.info("Betting on A --Current value:{starting_value_final} Target Value:{target_amt}  Loss Count: {loss_count} Win Count:{win_count} Repeat_count:{repeat_count}")
     logging.info(f"A,{startingvaluefinal},{target_amt},{loss_count},{win_count}")
+    write_to_csv('A', startingvaluefinal, target_amt, loss_count, win_count)
 
 
 
@@ -83,6 +101,7 @@ def betonB(no_click):
     pyautogui.click(x=1050,y= 800,clicks=no_click)
     # logging.info("Betting on B --Loss Count: {loss_count} Win Count:{win_count} Repeat_count:{repeat_count}")
     logging.info(f"B,{startingvaluefinal},{target_amt},{loss_count},{win_count}")
+    write_to_csv('B', startingvaluefinal, target_amt, loss_count, win_count)
 
 
 # Extracting numbers from text
