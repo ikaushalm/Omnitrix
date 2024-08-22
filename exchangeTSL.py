@@ -1,3 +1,5 @@
+import math
+import random
 import subprocess
 import sys
 
@@ -11,8 +13,6 @@ def check_and_install_dependencies():
         'pyautogui',
         'pytesseract',
         'Pillow',
-        'numpy',
-        'opencv-python',
         'setuptools'
     ]
     
@@ -38,7 +38,6 @@ check_and_install_dependencies()
 
 # Import other necessary modules after ensuring dependencies
 
-import string
 from time import sleep
 import pyautogui
 import pytesseract
@@ -48,6 +47,7 @@ import logging
 import winsound
 import os
 from datetime import datetime
+import time
 import csv
 import platform
 
@@ -144,8 +144,43 @@ def shutdown_system():
     except Exception as e:
         logging.error(f"An error occurred while shutting down the system: {e}", exc_info=True)
 
+
+def move_cursor_in_random_circles(center_x, center_y, radius, duration=6):
+    """Move the cursor in random circles around the given center point for the specified duration with human-like imperfections."""
+    
+    screen_width, screen_height = pyautogui.size()  # Get screen dimensions
+    start_time = time.time()
+    
+    while time.time() - start_time < duration:
+        num_steps = random.randint(10, 20)  # More steps for smoother circles
+        for step in range(num_steps):
+            angle = 2 * math.pi * step / num_steps
+            
+            # Introduce slight random deviations
+            deviation_angle = random.uniform(-0.2, 0.2)
+            x = center_x + (radius + random.uniform(-5, 5)) * math.cos(angle + deviation_angle)
+            y = center_y + (radius + random.uniform(-5, 5)) * math.sin(angle + deviation_angle)
+            
+            # Ensure cursor stays within screen bounds
+            x = max(0, min(screen_width - 1, x))
+            y = max(0, min(screen_height - 1, y))
+            
+            # Move cursor with variable speed
+            move_duration = random.uniform(0.1, 0.5)  # Slightly longer durations
+            pyautogui.moveTo(x, y, duration=move_duration)
+            
+            # Add a variable delay for more natural movement
+            time.sleep(random.uniform(0.05, 0.2))
+        
+        # Randomly adjust radius and center for the next circle
+        radius = max(5, radius + random.uniform(-10, 10))  # Prevent radius from going too small
+        center_x = max(0, min(screen_width - 1, center_x + random.uniform(-20, 20)))  # Adjust center with bounds check
+        center_y = max(0, min(screen_height - 1, center_y + random.uniform(-20, 20)))  # Adjust center with bounds check
+
 def betonA(no_click):
     # pyautogui.click(x=600,y= 600,clicks=no_click)
+    move_cursor_in_random_circles(850, 800, 30)  # Move cursor in random circles around the betting point
+    sleep(1)  # Short delay to mimic human behavior
     pyautogui.click(x=850, y=800,clicks=no_click)
     # logging.info("Betting on A --Current value:{starting_value_final} Target Value:{target_amt}  Loss Count: {loss_count} Win Count:{win_count} Repeat_count:{repeat_count}")
     logging.info(f"A,{startingvaluefinal},{target_amt},{loss_count},{win_count}")
@@ -155,6 +190,9 @@ def betonA(no_click):
 
 def betonB(no_click):
     # pyautogui.click(x=740,y= 600,clicks=no_click)
+    """Perform betting action on B."""
+    move_cursor_in_random_circles(1050, 800, 30)  # Move cursor in random circles around the betting point
+    sleep(1)  # Short delay to mimic human behavior
     pyautogui.click(x=1050,y= 800,clicks=no_click)
     # logging.info("Betting on B --Loss Count: {loss_count} Win Count:{win_count} Repeat_count:{repeat_count}")
     logging.info(f"B,{startingvaluefinal},{target_amt},{loss_count},{win_count}")
@@ -246,7 +284,12 @@ try:
                         elif loss_count==7:
                             repeat_count=128
                         else:
-                            repeat_count=loss_count*2
+                            repeat_count=loss_count*2   
+                    # checks if its a tie                    
+                    elif(last_value==current_value_final):
+                        loss_count=loss_count
+                        repeat_count=repeat_count
+                        win_count=win_count
                     else:
                         repeat_count=1
                         loss_count=0
