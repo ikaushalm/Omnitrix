@@ -10,11 +10,19 @@ class BetAnalyzerApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Bet Analyzer")
-        self.root.geometry("800x600")
+        self.maximize_window()
 
         self.directory = 'logs'
         self.create_widgets()
         self.list_csv_files()
+
+    def maximize_window(self):
+        # Get the screen width and height
+        screen_width = self.root.winfo_screenwidth()
+        screen_height = self.root.winfo_screenheight()
+
+        # Set the window size to the screen size
+        self.root.geometry(f"{screen_width}x{screen_height}+0+0")
 
     def create_widgets(self):
         self.file_label = Label(self.root, text="Select a CSV file:")
