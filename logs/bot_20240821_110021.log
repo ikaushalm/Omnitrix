@@ -1,4 +1,0 @@
-2024-08-21 11:01:08,507 - INFO - exchangeTSL.py - 130 - Starting value: 20708.58
-2024-08-21 11:01:08,507 - INFO - exchangeTSL.py - 131 - Target amount: 20800
-2024-08-21 11:01:08,507 - INFO - exchangeTSL.py - 132 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount,Repeatcount
-2024-08-21 11:01:12,019 - INFO - exchangeTSL.py - 85 - B,20708.58,20800,0,0,1

@@ -1,0 +1,26 @@
+2024-08-23 21:51:26,811 - INFO - exchangeTSL.py - 244 - Starting value: 20228.58
+2024-08-23 21:51:26,811 - INFO - exchangeTSL.py - 245 - Target amount: 20800
+2024-08-23 21:51:26,811 - INFO - exchangeTSL.py - 246 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-08-23 21:51:42,857 - INFO - exchangeTSL.py - 198 - B,20228.58,20800,0,0
+2024-08-23 21:52:29,045 - INFO - exchangeTSL.py - 198 - B,20228.58,20800,0,0
+2024-08-23 21:53:11,152 - INFO - exchangeTSL.py - 186 - A,20228.58,20800,1,0
+2024-08-23 21:54:03,271 - INFO - exchangeTSL.py - 186 - A,20178.58,20800,0,1
+2024-08-23 21:54:49,356 - INFO - exchangeTSL.py - 186 - A,20273.58,20800,0,2
+2024-08-23 21:55:34,953 - INFO - exchangeTSL.py - 186 - A,20321.08,20800,0,3
+2024-08-23 21:56:26,638 - INFO - exchangeTSL.py - 186 - A,20368.58,20800,1,0
+2024-08-23 21:57:09,559 - INFO - exchangeTSL.py - 186 - A,20318.58,20800,2,0
+2024-08-23 21:57:58,233 - INFO - exchangeTSL.py - 186 - A,20218.58,20800,3,0
+2024-08-23 21:58:40,785 - INFO - exchangeTSL.py - 198 - B,20018.58,20800,0,1
+2024-08-23 21:59:31,710 - INFO - exchangeTSL.py - 186 - A,20398.58,20800,1,0
+2024-08-23 22:00:19,878 - INFO - exchangeTSL.py - 186 - A,20348.58,20800,0,1
+2024-08-23 22:01:03,199 - INFO - exchangeTSL.py - 186 - A,20443.58,20800,0,2
+2024-08-23 22:01:51,737 - INFO - exchangeTSL.py - 186 - A,20491.08,20800,0,3
+2024-08-23 22:02:45,542 - INFO - exchangeTSL.py - 186 - A,20538.58,20800,1,0
+2024-08-23 22:03:34,181 - INFO - exchangeTSL.py - 186 - A,20488.58,20800,2,0
+2024-08-23 22:04:22,755 - INFO - exchangeTSL.py - 186 - A,20388.58,20800,3,0
+2024-08-23 22:04:59,415 - ERROR - exchangeTSL.py - 391 - An error occurred in the main function: float() argument must be a string or a real number, not 'NoneType'
+Traceback (most recent call last):
+  File "d:\Kaushal\Playground\last_omnitrix\Omnitrix\exchangeTSL.py", line 264, in <module>
+    current_value_final=float(extract_numbers(current_txt))
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: float() argument must be a string or a real number, not 'NoneType'

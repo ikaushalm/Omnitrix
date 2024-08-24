@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from tkinter import Tk, Label, Button, Radiobutton, StringVar, Listbox, Scrollbar, VERTICAL, RIGHT, Y, messagebox, Toplevel
+from tkinter import Tk, Label, Button, Radiobutton, StringVar, Listbox, Scrollbar, VERTICAL, RIGHT, Y, messagebox, Toplevel, Text
 import os
 import webbrowser
 from pandasgui import show  # For PandasGUI
@@ -69,62 +69,54 @@ class BetAnalyzerApp:
             messagebox.showerror("Error", "No file selected.")
             return
 
-        try:
-            df = pd.read_csv(self.file_path)
-        except Exception as e:
-            messagebox.showerror("Error", f"Error reading the CSV file: {e}")
-            return
+        df = pd.read_csv(self.file_path)
 
+        # Inspect the 'Time' column
         if 'Time' not in df.columns:
             messagebox.showerror("Error", "'Time' column not found.")
             return
 
-        # Process data
-        self.process_data(df)
-        
-        # Display results based on selected option
-        self.display_results(df)
-
-    def process_data(self, df):
+        # Convert 'Time' column to datetime
         try:
             df['Time'] = pd.to_datetime(df['Time'], format='%Y-%m-%d %H:%M:%S', errors='coerce')
-            if df['Time'].isna().any():
-                messagebox.showwarning("Warning", "Some dates could not be parsed. Check the data format.")
         except Exception as e:
             messagebox.showerror("Error", f"Error converting 'Time' column: {e}")
             return
 
-        df['Wincount'] = (df['Wincount'] > 0).astype(int)
-        df['Losscount'] = (df['Losscount'] > 0).astype(int)
-        df['Next Wincount'] = df['Wincount'].shift(-1)
+        if df['Time'].isna().any():
+            messagebox.showwarning("Warning", "Some dates could not be parsed. Check the data format.")
+
+        # Create 'Actual Bet' column
         df['Actual Bet'] = df.apply(
-            lambda row: row['Betted On'] if row['Next Wincount'] > 0 else ('B' if row['Betted On'] == 'A' else 'A'),
+            lambda row: row['Betted On'] if row['Wincount'] > 0 else ('B' if row['Betted On'] == 'A' else 'A'),
             axis=1
         )
+
         df['Correct Prediction'] = df['Betted On'] == df['Actual Bet']
+        success_rate = df['Correct Prediction'].mean() * 100
 
-        # Compute additional statistics
-        self.success_rate = df['Correct Prediction'].mean() * 100
-        self.correct_avg_value = df[df['Correct Prediction']]['CurrentValue'].mean()
-        self.incorrect_avg_value = df[~df['Correct Prediction']]['CurrentValue'].mean()
+        correct_bets = df[df['Correct Prediction']]
+        incorrect_bets = df[~df['Correct Prediction']]
 
-    def display_results(self, df):
+        correct_avg_value = correct_bets['CurrentValue'].mean()
+        incorrect_avg_value = incorrect_bets['CurrentValue'].mean()
+
         if self.view_option.get() == "Graphs":
-            self.plot_graphs(df)
+            self.plot_graphs(df, success_rate, correct_avg_value, incorrect_avg_value)
         elif self.view_option.get() == "PandasGUI":
-            self.display_tables_pandasgui(df)
+            self.display_tables_pandasgui(df, success_rate, correct_avg_value, incorrect_avg_value)
         elif self.view_option.get() == "HTML":
-            self.display_tables_html(df, self.success_rate, self.correct_avg_value, self.incorrect_avg_value)
+            self.display_tables_html(df, success_rate, correct_avg_value, incorrect_avg_value)
         elif self.view_option.get() == "Excel":
-            self.display_tables_excel(df)
+            self.display_tables_excel(df, success_rate, correct_avg_value, incorrect_avg_value)
 
-    def plot_graphs(self, df):
+    def plot_graphs(self, df, success_rate, correct_avg_value, incorrect_avg_value):
         sns.set(style="whitegrid")
         plt.figure(figsize=(14, 14))
 
         # Subplot 1: Success Rate Plot
         plt.subplot(2, 2, 1)
-        plt.bar(['Success Rate'], [self.success_rate], color='lightgreen', edgecolor='black')
+        plt.bar(['Success Rate'], [success_rate], color='lightgreen', edgecolor='black')
         plt.title('Success Rate', fontsize=12)
         plt.ylabel('Percentage', fontsize=10)
         plt.ylim(0, 100)
@@ -146,7 +138,7 @@ class BetAnalyzerApp:
 
         # Subplot 3: Average Current Value Plot
         plt.subplot(2, 2, 3)
-        values = [self.correct_avg_value, self.incorrect_avg_value]
+        values = [correct_avg_value, incorrect_avg_value]
         labels = ['Correct Bets', 'Incorrect Bets']
         plt.bar(labels, values, color=['lightgreen', 'salmon'], edgecolor='black')
         plt.title('Average Current Value Comparison', fontsize=12)
@@ -169,10 +161,14 @@ class BetAnalyzerApp:
         plt.tight_layout(pad=0.5)
         plt.show()
 
-    def display_tables_pandasgui(self, df):
+    def display_tables_pandasgui(self, df, success_rate, correct_avg_value, incorrect_avg_value):
         gui = show(df, settings={'block': True})
 
     def display_tables_html(self, df, success_rate, correct_avg_value, incorrect_avg_value):
+        table_window = Toplevel(self.root)
+        table_window.title("Table Analysis")
+        table_window.geometry("800x600")
+
         html = f"""
         <html>
         <head><style>
@@ -182,13 +178,10 @@ class BetAnalyzerApp:
         </style></head>
         <body>
         <h2>Detailed Analysis</h2>
-        
         <h3>Overall Data Summary</h3>
         {df.describe(include='all').to_html()}
-        
         <h3>Win and Loss Counts</h3>
         {df.groupby('Betted On')[['Wincount', 'Losscount']].sum().to_html()}
-        
         <h3>Summary Statistics by Bet Type</h3>
         {df.groupby('Betted On').agg(
             total_wins=pd.NamedAgg(column='Wincount', aggfunc='sum'),
@@ -197,13 +190,10 @@ class BetAnalyzerApp:
             min_value=pd.NamedAgg(column='CurrentValue', aggfunc='min'),
             max_value=pd.NamedAgg(column='CurrentValue', aggfunc='max')
         ).reset_index().to_html()}
-        
         <h3>Data with Actual Bet Column</h3>
         {df.head(10).to_html()}
-        
         <h3>Success Rate</h3>
         <p>Success Rate: {success_rate:.2f}%</p>
-        
         <h3>Average Current Value</h3>
         <p>Correct Bets: {correct_avg_value:.2f}</p>
         <p>Incorrect Bets: {incorrect_avg_value:.2f}</p>
@@ -213,10 +203,9 @@ class BetAnalyzerApp:
 
         with open("table_analysis.html", "w") as file:
             file.write(html)
-        
         webbrowser.open("table_analysis.html")
 
-    def display_tables_excel(self, df):
+    def display_tables_excel(self, df, success_rate, correct_avg_value, incorrect_avg_value):
         with pd.ExcelWriter('table_analysis.xlsx') as writer:
             df.describe(include='all').to_excel(writer, sheet_name='Overall Data Summary')
             df.groupby('Betted On')[['Wincount', 'Losscount']].sum().to_excel(writer, sheet_name='Win and Loss Counts')

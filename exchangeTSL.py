@@ -103,7 +103,7 @@ logging.basicConfig(filename=log_filename, level=logging.INFO,
 
 # CSV file setup
 csv_filename = f'{log_dir}/bot_data_{timestamp}.csv'
-csv_headers = ['Betted On', 'CurrentValue', 'TargetAmt', 'Losscount', 'Wincount']
+csv_headers = ['Time','Betted On', 'CurrentValue', 'TargetAmt', 'Losscount', 'Wincount']
 
 # Initialize CSV file with headers if it does not exist
 if not os.path.isfile(csv_filename):
@@ -111,11 +111,11 @@ if not os.path.isfile(csv_filename):
         writer = csv.writer(file)
         writer.writerow(csv_headers)
 
-def write_to_csv(betted_on, current_value, target_amt, losscount, wincount):
+def write_to_csv(time,betted_on, current_value, target_amt, losscount, wincount):
     """Write data to the CSV file."""
     with open(csv_filename, mode='a', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow([betted_on, current_value, target_amt, losscount, wincount])
+        writer.writerow([time,betted_on, current_value, target_amt, losscount, wincount])
 
 def play_alarm():
     """Play an alarm sound."""
@@ -184,7 +184,7 @@ def betonA(no_click):
     pyautogui.click(x=850, y=800,clicks=no_click)
     # logging.info("Betting on A --Current value:{starting_value_final} Target Value:{target_amt}  Loss Count: {loss_count} Win Count:{win_count} Repeat_count:{repeat_count}")
     logging.info(f"A,{startingvaluefinal},{target_amt},{loss_count},{win_count}")
-    write_to_csv('A', startingvaluefinal, target_amt, loss_count, win_count)
+    write_to_csv(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),'A', startingvaluefinal, target_amt, loss_count, win_count)
 
 
 
@@ -196,7 +196,7 @@ def betonB(no_click):
     pyautogui.click(x=1050,y= 800,clicks=no_click)
     # logging.info("Betting on B --Loss Count: {loss_count} Win Count:{win_count} Repeat_count:{repeat_count}")
     logging.info(f"B,{startingvaluefinal},{target_amt},{loss_count},{win_count}")
-    write_to_csv('B', startingvaluefinal, target_amt, loss_count, win_count)
+    write_to_csv(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),'B', startingvaluefinal, target_amt, loss_count, win_count)
 
 
 # Extracting numbers from text

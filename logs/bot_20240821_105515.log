@@ -1,7 +1,0 @@
-2024-08-21 10:55:44,723 - INFO - exchangeTSL.py - 130 - Starting value: 20663.58
-2024-08-21 10:55:44,724 - INFO - exchangeTSL.py - 131 - Target amount: 20750
-2024-08-21 10:55:44,724 - INFO - exchangeTSL.py - 132 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount,Repeatcount
-2024-08-21 10:55:48,533 - INFO - exchangeTSL.py - 85 - B,20663.58,20750,0,0,1
-2024-08-21 10:56:21,910 - INFO - exchangeTSL.py - 85 - B,20711.08,20750,0,1,1
-2024-08-21 10:56:45,777 - INFO - exchangeTSL.py - 267 - Condition not met, alarm beeped.
-2024-08-21 10:56:56,793 - INFO - exchangeTSL.py - 267 - Condition not met, alarm beeped.
