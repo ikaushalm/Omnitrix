@@ -4,11 +4,22 @@ import webbrowser
 import subprocess
 from datetime import datetime
 
+# Get the current working directory
+current_dir = os.getcwd()
+print(f"Current Directory: {current_dir}")
+
+# Define the path to go one directory up
+parent_dir = os.path.abspath(os.path.join(current_dir, '..'))
+print(f"Parent Directory: {parent_dir}")
+
+# Define the path to the PagePush directory inside the parent directory
+pagepush_dir = os.path.join(parent_dir, 'PagePush')
+print(f"PagePush Directory: {pagepush_dir}")
+
 # Define the directory where CSV files are stored
 DIRECTORY = 'logs'
-OUTPUT_HTML_FILE = 'table_analysis.html'
-REPO_DIR = '.'  # Directory where the Git repository is initialized
-
+OUTPUT_HTML_FILE = os.path.join(pagepush_dir, 'index.html')  # Updated path
+REPO_DIR = pagepush_dir  # Directory where the Git repository is initialized
 
 def git_push():
     """Commit and push the generated HTML file to the Git repository."""
@@ -246,3 +257,4 @@ def analyze_and_push():
         git_push()
     except Exception as e:
         print(f"An error occurred: {e}")
+
