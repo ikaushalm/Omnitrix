@@ -1,0 +1,541 @@
+
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap">
+    <style>
+        body {
+            font-family: 'Roboto Mono', monospace;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .light-mode {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        .dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        .progress-bar-success {
+            transition: width 0.3s;
+        }
+        .progress-bar-success.green {
+            background-color: #28a745; /* Bootstrap green */
+        }
+        .progress-bar-success.yellow {
+            background-color: #ffc107; /* Bootstrap yellow */
+        }
+        .progress-bar-success.red {
+            background-color: #dc3545; /* Bootstrap red */
+        }
+        .toggle-content {
+            display: none; /* Hidden by default */
+        }
+        .toggle-button {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+        /* Enhanced table styling for light mode */
+        .table-custom.light-mode {
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .table-custom.light-mode thead th {
+            background-color: #007bff;
+            color: white;
+        }
+        .table-custom.light-mode tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .table-custom.light-mode tbody tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+        .table-custom.light-mode tbody tr:hover {
+            background-color: #e9ecef;
+        }
+        /* Enhanced table styling for dark mode */
+        .table-custom.dark-mode {
+            border: 2px solid #333;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .table-custom.dark-mode thead th {
+            background-color: #444;
+            color: #e0e0e0;
+        }
+        .table-custom.dark-mode tbody tr:nth-child(even) {
+            background-color: #1e1e1e;
+        }
+        .table-custom.dark-mode tbody tr:nth-child(odd) {
+            background-color: #121212;
+        }
+        .table-custom.dark-mode tbody tr:hover {
+            background-color: #333;
+        }
+    </style>
+    <script>
+        function toggleContent() {
+            var content = document.getElementById('actual-bet-data');
+            var button = document.getElementById('toggle-button');
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+                button.innerText = 'Hide Data with Actual Bet Column';
+            } else {
+                content.style.display = 'none';
+                button.innerText = 'Show Data with Actual Bet Column';
+            }
+        }
+        
+        function toggleMode() {
+            var body = document.body;
+            var button = document.getElementById('mode-toggle');
+            var tables = document.querySelectorAll('.table-custom');
+            var headers = document.querySelectorAll('th');
+            
+            if (body.classList.contains('dark-mode')) {
+                body.classList.remove('dark-mode');
+                body.classList.add('light-mode');
+                button.innerText = 'Dark Mode';
+                tables.forEach(table => table.classList.remove('dark-mode'));
+                tables.forEach(table => table.classList.add('light-mode'));
+                headers.forEach(th => th.classList.remove('dark-mode'));
+                headers.forEach(th => th.classList.add('light-mode'));
+            } else {
+                body.classList.remove('light-mode');
+                body.classList.add('dark-mode');
+                button.innerText = 'Light Mode';
+                tables.forEach(table => table.classList.remove('light-mode'));
+                tables.forEach(table => table.classList.add('dark-mode'));
+                headers.forEach(th => th.classList.remove('light-mode'));
+                headers.forEach(th => th.classList.add('dark-mode'));
+            }
+        }
+    </script>
+</head>
+<body class="container dark-mode">
+    <button id="mode-toggle" class="btn btn-secondary toggle-button" onclick="toggleMode()">Light Mode</button>
+    
+    <h2 class="mt-4">Detailed Analysis</h2>
+    
+    <h3>Success Rate:</h3>
+    <div class="progress">
+        <div class="progress-bar progress-bar-success yellow"
+            role="progressbar"
+            style="width: 46.15%;"
+            aria-valuenow="46.15"
+            aria-valuemin="0"
+            aria-valuemax="100">
+            46.15%
+        </div>
+    </div>
+    
+    <h3>Win and Loss Counts:</h3>
+    <table border="1" class="dataframe table table-custom dark-mode">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Wincount</th>
+      <th>Losscount</th>
+    </tr>
+    <tr>
+      <th>Betted On</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>A</th>
+      <td>8</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>B</th>
+      <td>4</td>
+      <td>6</td>
+    </tr>
+  </tbody>
+</table>
+    
+    <h3>Average Current Value:</h3>
+    <p>Correct Bets: 20392.33</p>
+    <p>Incorrect Bets: 20490.75</p>
+    
+    <h3>Summary Statistics by Bet Type:</h3>
+    <table border="1" class="dataframe table table-custom dark-mode">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Betted On</th>
+      <th>total_wins</th>
+      <th>total_losses</th>
+      <th>average_value</th>
+      <th>min_value</th>
+      <th>max_value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>A</td>
+      <td>8</td>
+      <td>8</td>
+      <td>20412.955000</td>
+      <td>19681.08</td>
+      <td>20768.58</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>B</td>
+      <td>4</td>
+      <td>6</td>
+      <td>20496.534545</td>
+      <td>20081.08</td>
+      <td>20816.08</td>
+    </tr>
+  </tbody>
+</table>
+    
+    <h3>Data with Actual Bet Column:</h3>
+    <button id="toggle-button" class="btn btn-primary" onclick="toggleContent()">Show Data with Actual Bet Column</button>
+    <div id="actual-bet-data" class="toggle-content">
+        <table border="1" class="dataframe table table-custom dark-mode">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Time</th>
+      <th>Betted On</th>
+      <th>CurrentValue</th>
+      <th>TargetAmt</th>
+      <th>Losscount</th>
+      <th>Wincount</th>
+      <th>Next Wincount</th>
+      <th>Actual Bet</th>
+      <th>Correct Prediction</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2024-08-25 14:54:39</td>
+      <td>B</td>
+      <td>20386.08</td>
+      <td>20850</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>A</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2024-08-25 14:55:29</td>
+      <td>B</td>
+      <td>20386.08</td>
+      <td>20850</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>B</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2024-08-25 14:56:24</td>
+      <td>A</td>
+      <td>20336.08</td>
+      <td>20850</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>B</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2024-08-25 14:57:21</td>
+      <td>A</td>
+      <td>20431.08</td>
+      <td>20850</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>B</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2024-08-25 14:58:01</td>
+      <td>B</td>
+      <td>20381.08</td>
+      <td>20850</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>A</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2024-08-25 14:58:54</td>
+      <td>A</td>
+      <td>20281.08</td>
+      <td>20850</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>B</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2024-08-25 14:59:51</td>
+      <td>B</td>
+      <td>20081.08</td>
+      <td>20850</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>B</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2024-08-25 15:00:48</td>
+      <td>A</td>
+      <td>19681.08</td>
+      <td>20850</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1.0</td>
+      <td>A</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2024-08-25 15:01:33</td>
+      <td>A</td>
+      <td>20441.08</td>
+      <td>20850</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>B</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2024-08-25 15:02:27</td>
+      <td>B</td>
+      <td>20488.58</td>
+      <td>20850</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>B</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2024-08-25 15:03:14</td>
+      <td>A</td>
+      <td>20438.58</td>
+      <td>20850</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>B</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2024-08-25 15:04:09</td>
+      <td>A</td>
+      <td>20533.58</td>
+      <td>20850</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>A</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2024-08-25 15:04:59</td>
+      <td>B</td>
+      <td>20483.58</td>
+      <td>20850</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>A</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2024-08-25 15:05:52</td>
+      <td>B</td>
+      <td>20578.58</td>
+      <td>20850</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>A</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>2024-08-25 15:06:46</td>
+      <td>A</td>
+      <td>20528.58</td>
+      <td>20850</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>A</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>2024-08-25 15:07:33</td>
+      <td>A</td>
+      <td>20428.58</td>
+      <td>20850</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>B</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>2024-08-25 15:08:31</td>
+      <td>B</td>
+      <td>20618.58</td>
+      <td>20850</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>B</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>2024-08-25 15:09:18</td>
+      <td>B</td>
+      <td>20568.58</td>
+      <td>20850</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>A</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>2024-08-25 15:10:13</td>
+      <td>A</td>
+      <td>20663.58</td>
+      <td>20850</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>B</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>2024-08-25 15:11:03</td>
+      <td>A</td>
+      <td>20613.58</td>
+      <td>20850</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>B</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>2024-08-25 15:12:01</td>
+      <td>A</td>
+      <td>20513.58</td>
+      <td>20850</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>B</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>2024-08-25 15:12:45</td>
+      <td>A</td>
+      <td>20313.58</td>
+      <td>20850</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>A</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>2024-08-25 15:13:36</td>
+      <td>A</td>
+      <td>19913.58</td>
+      <td>20850</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1.0</td>
+      <td>A</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>2024-08-25 15:14:20</td>
+      <td>B</td>
+      <td>20673.58</td>
+      <td>20850</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1.0</td>
+      <td>B</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>2024-08-25 15:15:10</td>
+      <td>A</td>
+      <td>20721.08</td>
+      <td>20850</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1.0</td>
+      <td>A</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>2024-08-25 15:15:56</td>
+      <td>A</td>
+      <td>20768.58</td>
+      <td>20850</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1.0</td>
+      <td>A</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+</body>
+</html>
