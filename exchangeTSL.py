@@ -1,49 +1,13 @@
+import bet_analyzer
 import math
 import random
 import subprocess
-import sys
-import bet_analyzer
-
-
-def install(package):
-    """Install the package using pip."""
-    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
-
-def check_and_install_dependencies():
-    """Check and install missing dependencies."""
-    dependencies = [
-        'pyautogui',
-        'pytesseract',
-        'Pillow',
-        'setuptools'
-    ]
-    
-    # Try importing pkg_resources to check if setuptools is installed
-    try:
-        import pkg_resources
-    except ImportError:
-        print("pkg_resources not found. Installing setuptools...")
-        install('setuptools')
-    
-    import pkg_resources
-    
-    installed_packages = {pkg.key for pkg in pkg_resources.working_set}
-    for package in dependencies:
-        if package not in installed_packages:
-            print(f"Installing {package}...")
-            install(package)
-        else:
-            print(f"{package} is already installed.")
-
-# Call the function to check and install dependencies
-check_and_install_dependencies()
-
-# Import other necessary modules after ensuring dependencies
-
-from time import sleep
+import pyperclip
 import pyautogui
-import pytesseract
-from PIL import ImageGrab
+import time
+import random
+import math
+from time import sleep
 import re
 import logging
 import winsound
@@ -53,20 +17,43 @@ import time
 import csv
 import platform
 
-# from twilio.rest import Client
 
-# # Your Twilio Account SID and Auth Token
-# account_sid = 'ACcf5c43d3ca76cbd9cc51b4b2ae1dff6c'
-# auth_token = '6fa491c1275def4ac4d2dd608c6fef09'
+# ---------------------------------------------------------
+# ---------------------------------------------------------
+# ---------------------------------------------------------
+# --------------Assigning values to our axis---------------
+# ---------------------------------------------------------
+# ---------------------------------------------------------
+# ---------------------------------------------------------
+# ---------------------------------------------------------
 
-# # Create a Twilio client
-# client = Client(account_sid, auth_token)
 
-# # Your Twilio phone number (obtained from Twilio)
-# from_phone = '+14144859675'
+# A--axis for BetOnA---------------------------------------
+# 850, 800, 20 -for Santosh Bhaiya Machine-----------------
+A_x = 850
+A_y = 800
 
-# # The recipient's phone number
-# to_phone = '+917786868782'
+# radius is common for moving cursor in round--------------
+# ---------------------------------------------------------
+moving_r = 20 
+# ----------------------------------------------------------
+
+
+# B--axis for BetOnB---------------------------------------
+# 1050, 800, 20-for Santosh Bhaiya Machine-----------------
+B_x = 1050
+B_y = 800
+
+# ---------------------------------------------------------
+# get_text_at_position
+# 1150,135,0.5 -for Santosh Bhaiya Machine-----------------
+textat_x=1150
+textat_y=135
+moving_delay=0.5
+# ---------------------------------------------------------
+
+
+
 
 
 
@@ -147,43 +134,58 @@ def shutdown_system():
         logging.error(f"An error occurred while shutting down the system: {e}", exc_info=True)
 
 
+
+
 def move_cursor_in_random_circles(center_x, center_y, radius, duration=6):
-    """Move the cursor in random circles around the given center point for the specified duration with human-like imperfections."""
+    """Move the cursor in random circles around the given center point for the specified duration with human-like imperfections.
+    Returns the final x and y coordinates of the cursor."""
     
     screen_width, screen_height = pyautogui.size()  # Get screen dimensions
     start_time = time.time()
     
+    # Initialize final position variables
+    final_x = center_x
+    final_y = center_y
+    
     while time.time() - start_time < duration:
-        num_steps = random.randint(10, 20)  # More steps for smoother circles
+        num_steps = random.randint(15, 25)  # More steps for smoother circles
         for step in range(num_steps):
             angle = 2 * math.pi * step / num_steps
             
             # Introduce slight random deviations
             deviation_angle = random.uniform(-0.2, 0.2)
-            x = center_x + (radius + random.uniform(-5, 5)) * math.cos(angle + deviation_angle)
-            y = center_y + (radius + random.uniform(-5, 5)) * math.sin(angle + deviation_angle)
+            deviation_radius = random.uniform(-5, 5)
+            x = center_x + (radius + deviation_radius) * math.cos(angle + deviation_angle)
+            y = center_y + (radius + deviation_radius) * math.sin(angle + deviation_angle)
             
             # Ensure cursor stays within screen bounds
             x = max(0, min(screen_width - 1, x))
             y = max(0, min(screen_height - 1, y))
             
             # Move cursor with variable speed
-            move_duration = random.uniform(0.1, 0.5)  # Slightly longer durations
+            move_duration = random.uniform(0.1, 0.3)  # Slightly variable durations
             pyautogui.moveTo(x, y, duration=move_duration)
             
+            # Update final position
+            final_x, final_y = x, y
+            
             # Add a variable delay for more natural movement
-            time.sleep(random.uniform(0.05, 0.2))
+            time.sleep(random.uniform(0.05, 0.15))
         
         # Randomly adjust radius and center for the next circle
         radius = max(5, radius + random.uniform(-10, 10))  # Prevent radius from going too small
         center_x = max(0, min(screen_width - 1, center_x + random.uniform(-20, 20)))  # Adjust center with bounds check
         center_y = max(0, min(screen_height - 1, center_y + random.uniform(-20, 20)))  # Adjust center with bounds check
+    
+    # Return the final x and y coordinates
+    return final_x, final_y
+
 
 def betonA(no_click):
     # pyautogui.click(x=600,y= 600,clicks=no_click)
-    move_cursor_in_random_circles(850, 800, 30)  # Move cursor in random circles around the betting point
+    final_x, final_y =move_cursor_in_random_circles(A_x, A_y, moving_r)  # Move cursor in random circles around the betting point
     sleep(1)  # Short delay to mimic human behavior
-    pyautogui.click(x=850, y=800,clicks=no_click)
+    pyautogui.click(x=final_x, y=final_y,clicks=no_click)
     # logging.info("Betting on A --Current value:{starting_value_final} Target Value:{target_amt}  Loss Count: {loss_count} Win Count:{win_count} Repeat_count:{repeat_count}")
     logging.info(f"A,{startingvaluefinal},{target_amt},{loss_count},{win_count}")
     write_to_csv(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),'A', startingvaluefinal, target_amt, loss_count, win_count)
@@ -193,9 +195,9 @@ def betonA(no_click):
 def betonB(no_click):
     # pyautogui.click(x=740,y= 600,clicks=no_click)
     """Perform betting action on B."""
-    move_cursor_in_random_circles(1050, 800, 30)  # Move cursor in random circles around the betting point
+    final_x, final_y =move_cursor_in_random_circles(B_x,B_y,moving_r)  # Move cursor in random circles around the betting point
     sleep(1)  # Short delay to mimic human behavior
-    pyautogui.click(x=1050,y= 800,clicks=no_click)
+    pyautogui.click(x=final_x,y=final_y,clicks=no_click)
     # logging.info("Betting on B --Loss Count: {loss_count} Win Count:{win_count} Repeat_count:{repeat_count}")
     logging.info(f"B,{startingvaluefinal},{target_amt},{loss_count},{win_count}")
     write_to_csv(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),'B', startingvaluefinal, target_amt, loss_count, win_count)
@@ -216,9 +218,6 @@ def extract_numbers(text):
     else:
         return None  # Return None if no number is found
 
-# get Teserect Executable Location
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-
 #to take screen out of this ide
 target_amt=pyautogui.prompt(text="",title="Enter your target")
 sleep(2)
@@ -233,8 +232,42 @@ def set_last_value_at(value):
     global at_last_value
     at_last_value = value
 
-starting_value = ImageGrab.grab(bbox=(1109, 131, 1239, 152))
-txt = extract_numbers(pytesseract.image_to_string(starting_value,config='--psm 6'))
+def get_text_at_position(x, y, duration=0.5):
+    """
+    Move the cursor to the given position (x, y), select the text by double-clicking, 
+    and return the copied text.
+    
+    Parameters:
+    x (int): The x-coordinate of the position.
+    y (int): The y-coordinate of the position.
+    duration (float): The duration for cursor movement (optional).
+    
+    Returns:
+    str: The text copied from the specified position.
+    """
+    # Move the cursor to the specified location
+    pyautogui.moveTo(x, y, duration=duration)
+    
+    # Double-click to select the text
+    pyautogui.doubleClick()
+    
+    # Give a short delay to ensure text selection and copying
+    time.sleep(1)
+    
+    # Simulate pressing the copy keyboard shortcut (Ctrl+C on Windows/Linux, Command+C on macOS)
+    pyautogui.hotkey('ctrl', 'c')  # Use 'command', 'c' on macOS
+    
+    # Give a short delay to ensure the clipboard is updated
+    time.sleep(1)
+    
+    # Retrieve the text from the clipboard
+    copied_text = pyperclip.paste()
+    
+    return copied_text
+
+
+starting_value = get_text_at_position(textat_x,textat_y,moving_delay)
+txt = extract_numbers(starting_value)
 flag=False
 targetyes=0
 
@@ -250,7 +283,7 @@ try:
         while startingvaluefinal<target_amt_final:
             try:               
                 lock_check = pyautogui.locateOnScreen("placeyourbets.png", confidence=0.8)
-                pyautogui.click(1150,135)
+                pyautogui.click(textat_x,textat_y)
                 sleep(1)
                 # print(lock_check)
                 bet_count=bet_count+1
@@ -261,8 +294,7 @@ try:
                 strLockcheck=''
             if(len(strLockcheck)==44) :
                 sleep(2)
-                current_value = ImageGrab.grab(bbox=(1109, 131, 1239, 152))
-                current_txt = pytesseract.image_to_string(current_value,config='--psm 6')
+                current_txt = get_text_at_position(textat_x,textat_y,moving_delay)
                 current_value_final=float(extract_numbers(current_txt))
                 if(loop_count!=0):
                     # print(last_value)
@@ -316,10 +348,9 @@ try:
                                 betonA(repeat_count)
 
                         function_change=2
-                        pyautogui.click(1150,135)
-                        sleep(2)
-                        last_value_pic = ImageGrab.grab(bbox=(1109, 131, 1239, 152))
-                        last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
+                        pyautogui.click(textat_x,textat_y)
+                        sleep(3)                  
+                        last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
                         set_last_value(float(extract_numbers(last_value_txt)))
                         
                     elif function_change==2:  # Call function_one() twice for every even iteration
@@ -334,10 +365,9 @@ try:
                             else:
                                 betonA(repeat_count)
                         function_change=3
-                        pyautogui.click(1150,135)
-                        sleep(2)                   
-                        last_value_pic = ImageGrab.grab(bbox=(1109, 131, 1239, 152))
-                        last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
+                        pyautogui.click(textat_x,textat_y)
+                        sleep(3)                  
+                        last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
                         set_last_value(float(extract_numbers(last_value_txt)))
                     elif function_change==3:  # Call function_one() twice for every even iteration
                         # if bet_count%3==0:
@@ -351,10 +381,9 @@ try:
                             else:
                                 betonB(repeat_count)
                         function_change=4
-                        pyautogui.click(1150,135)
-                        sleep(2)
-                        last_value_pic = ImageGrab.grab(bbox=(1109, 131, 1239, 152))
-                        last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
+                        pyautogui.click(textat_x,textat_y)
+                        sleep(3)                  
+                        last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
                         set_last_value(float(extract_numbers(last_value_txt)))
                     elif function_change==4:  # Call function_one() twice for every even iteration
                         # if bet_count%3==0:
@@ -368,14 +397,12 @@ try:
                             else:
                                 betonB(repeat_count)
                         function_change=1
-                        pyautogui.click(1150,135)
-                        sleep(2)
-                        last_value_pic = ImageGrab.grab(bbox=(1109, 131, 1239, 152))
-                        last_value_txt = pytesseract.image_to_string(last_value_pic,config='--psm 6')
+                        pyautogui.click(textat_x,textat_y)
+                        sleep(3)                  
+                        last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
                         set_last_value(float(extract_numbers(last_value_txt)))
                     loop_count=loop_count+1
-                    starting_value = ImageGrab.grab(bbox=(1109, 131, 1239, 152))
-                    txt = pytesseract.image_to_string(starting_value,config='--psm 6')
+                    txt = get_text_at_position(textat_x,textat_y,moving_delay)
                     startingvaluefinal=float(extract_numbers(txt))
                     sleep(20)    
                 except Exception as e:
@@ -389,7 +416,8 @@ try:
             close_chrome_tabs()
             sleep(10)
             shutdown_system()
-            # logging.info("Condition not met, alarm beeped.")
+            logging.info("Condition not met, alarm beeped.")
+            break
             # sleep(10)  # Wait before rechecking
 except Exception as e:
     logging.error(f"An error occurred in the main function: {e}", exc_info=True)
