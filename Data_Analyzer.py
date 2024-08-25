@@ -109,10 +109,19 @@ class BetAnalyzerApp:
             lambda row: row['Betted On'] if row['Next Wincount'] > 0 else ('B' if row['Betted On'] == 'A' else 'A'),
             axis=1
         )
-        df['Correct Prediction'] = df['Betted On'] == df['Actual Bet']
 
-        # Compute additional statistics
-        self.success_rate = df['Correct Prediction'].mean() * 100
+
+        
+        # Calculate 'Correct Prediction' excluding the last value
+        df['Correct Prediction'] = (df['Betted On'] == df['Actual Bet']).iloc[:-1]
+
+        # Fill NaN values with False (or True depending on your logic)
+        df['Correct Prediction'] = df['Correct Prediction'].fillna(False)
+
+        # Compute additional statistics excluding the last record
+        self.success_rate = (df['Correct Prediction'].iloc[:-1]).mean() * 100
+
+        # Calculate correct and incorrect average values
         self.correct_avg_value = df[df['Correct Prediction']]['CurrentValue'].mean()
         self.incorrect_avg_value = df[~df['Correct Prediction']]['CurrentValue'].mean()
 
@@ -182,42 +191,168 @@ class BetAnalyzerApp:
 
     def display_tables_html(self, df, success_rate, correct_avg_value, incorrect_avg_value):
         html = f"""
-        <html>
-        <head><style>
-        table {{font-family: Arial, sans-serif; border-collapse: collapse; width: 100%;}}
-        th, td {{border: 1px solid #ddd; padding: 8px;}}
-        th {{background-color: #f2f2f2;}}
-        </style></head>
-        <body>
-        <h2>Detailed Analysis</h2>
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap">
+    <style>
+        body {{
+            font-family: 'Roboto Mono', monospace;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }}
+        .light-mode {{
+            background-color: #ffffff;
+            color: #000000;
+        }}
+        .dark-mode {{
+            background-color: #121212;
+            color: #e0e0e0;
+        }}
+        .progress-bar-success {{
+            transition: width 0.3s;
+        }}
+        .progress-bar-success.green {{
+            background-color: #28a745; /* Bootstrap green */
+        }}
+        .progress-bar-success.yellow {{
+            background-color: #ffc107; /* Bootstrap yellow */
+        }}
+        .progress-bar-success.red {{
+            background-color: #dc3545; /* Bootstrap red */
+        }}
+        .toggle-content {{
+            display: none; /* Hidden by default */
+        }}
+        .toggle-button {{
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+        }}
+        /* Enhanced table styling for light mode */
+        .table-custom.light-mode {{
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }}
+        .table-custom.light-mode thead th {{
+            background-color: #007bff;
+            color: white;
+        }}
+        .table-custom.light-mode tbody tr:nth-child(even) {{
+            background-color: #f9f9f9;
+        }}
+        .table-custom.light-mode tbody tr:nth-child(odd) {{
+            background-color: #ffffff;
+        }}
+        .table-custom.light-mode tbody tr:hover {{
+            background-color: #e9ecef;
+        }}
+        /* Enhanced table styling for dark mode */
+        .table-custom.dark-mode {{
+            border: 2px solid #333;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }}
+        .table-custom.dark-mode thead th {{
+            background-color: #444;
+            color: #e0e0e0;
+        }}
+        .table-custom.dark-mode tbody tr:nth-child(even) {{
+            background-color: #1e1e1e;
+        }}
+        .table-custom.dark-mode tbody tr:nth-child(odd) {{
+            background-color: #121212;
+        }}
+        .table-custom.dark-mode tbody tr:hover {{
+            background-color: #333;
+        }}
+    </style>
+    <script>
+        function toggleContent() {{
+            var content = document.getElementById('actual-bet-data');
+            var button = document.getElementById('toggle-button');
+            if (content.style.display === 'none') {{
+                content.style.display = 'block';
+                button.innerText = 'Hide Data with Actual Bet Column';
+            }} else {{
+                content.style.display = 'none';
+                button.innerText = 'Show Data with Actual Bet Column';
+            }}
+        }}
         
-        <h3>Overall Data Summary</h3>
-        {df.describe(include='all').to_html()}
-        
-        <h3>Win and Loss Counts</h3>
-        {df.groupby('Betted On')[['Wincount', 'Losscount']].sum().to_html()}
-        
-        <h3>Summary Statistics by Bet Type</h3>
-        {df.groupby('Betted On').agg(
-            total_wins=pd.NamedAgg(column='Wincount', aggfunc='sum'),
-            total_losses=pd.NamedAgg(column='Losscount', aggfunc='sum'),
-            average_value=pd.NamedAgg(column='CurrentValue', aggfunc='mean'),
-            min_value=pd.NamedAgg(column='CurrentValue', aggfunc='min'),
-            max_value=pd.NamedAgg(column='CurrentValue', aggfunc='max')
-        ).reset_index().to_html()}
-        
-        <h3>Data with Actual Bet Column</h3>
-        {df.head(10).to_html()}
-        
-        <h3>Success Rate</h3>
-        <p>Success Rate: {success_rate:.2f}%</p>
-        
-        <h3>Average Current Value</h3>
-        <p>Correct Bets: {correct_avg_value:.2f}</p>
-        <p>Incorrect Bets: {incorrect_avg_value:.2f}</p>
-        </body>
-        </html>
-        """
+        function toggleMode() {{
+            var body = document.body;
+            var button = document.getElementById('mode-toggle');
+            var tables = document.querySelectorAll('.table-custom');
+            var headers = document.querySelectorAll('th');
+            
+            if (body.classList.contains('dark-mode')) {{
+                body.classList.remove('dark-mode');
+                body.classList.add('light-mode');
+                button.innerText = 'Dark Mode';
+                tables.forEach(table => table.classList.remove('dark-mode'));
+                tables.forEach(table => table.classList.add('light-mode'));
+                headers.forEach(th => th.classList.remove('dark-mode'));
+                headers.forEach(th => th.classList.add('light-mode'));
+            }} else {{
+                body.classList.remove('light-mode');
+                body.classList.add('dark-mode');
+                button.innerText = 'Light Mode';
+                tables.forEach(table => table.classList.remove('light-mode'));
+                tables.forEach(table => table.classList.add('dark-mode'));
+                headers.forEach(th => th.classList.remove('light-mode'));
+                headers.forEach(th => th.classList.add('dark-mode'));
+            }}
+        }}
+    </script>
+</head>
+<body class="container dark-mode">
+    <button id="mode-toggle" class="btn btn-secondary toggle-button" onclick="toggleMode()">Light Mode</button>
+    
+    <h2 class="mt-4">Detailed Analysis</h2>
+    
+    <h3>Success Rate:</h3>
+    <div class="progress">
+        <div class="progress-bar progress-bar-success { 'green' if success_rate > 50 else 'yellow' if success_rate > 45 else 'red' }"
+            role="progressbar"
+            style="width: {success_rate:.2f}%;"
+            aria-valuenow="{success_rate:.2f}"
+            aria-valuemin="0"
+            aria-valuemax="100">
+            {success_rate:.2f}%
+        </div>
+    </div>
+    
+    <h3>Win and Loss Counts:</h3>
+    {df.groupby('Betted On')[['Wincount', 'Losscount']].sum().to_html(classes='table table-custom dark-mode')}
+    
+    <h3>Average Current Value:</h3>
+    <p>Correct Bets: {correct_avg_value:.2f}</p>
+    <p>Incorrect Bets: {incorrect_avg_value:.2f}</p>
+    
+    <h3>Summary Statistics by Bet Type:</h3>
+    {df.groupby('Betted On').agg(
+        total_wins=pd.NamedAgg(column='Wincount', aggfunc='sum'),
+        total_losses=pd.NamedAgg(column='Losscount', aggfunc='sum'),
+        average_value=pd.NamedAgg(column='CurrentValue', aggfunc='mean'),
+        min_value=pd.NamedAgg(column='CurrentValue', aggfunc='min'),
+        max_value=pd.NamedAgg(column='CurrentValue', aggfunc='max')
+    ).reset_index().to_html(classes='table table-custom dark-mode')}
+    
+    <h3>Data with Actual Bet Column:</h3>
+    <button id="toggle-button" class="btn btn-primary" onclick="toggleContent()">Show Data with Actual Bet Column</button>
+    <div id="actual-bet-data" class="toggle-content">
+        {df.iloc[:-1].to_html(classes='table table-custom dark-mode')}
+    </div>
+</body>
+</html>
+"""
+
 
         with open("table_analysis.html", "w") as file:
             file.write(html)
