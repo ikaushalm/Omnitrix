@@ -1,3 +1,4 @@
+import base64
 import bet_analyzer
 import math
 import random
@@ -17,7 +18,7 @@ import time
 import csv
 import platform
 
-bet_analyzer.analyze_and_push()
+
 # ---------------------------------------------------------
 # ---------------------------------------------------------
 # ---------------------------------------------------------
@@ -51,11 +52,16 @@ textat_x=1150
 textat_y=135
 moving_delay=0.5
 # ---------------------------------------------------------
-
-
-
-
-
+# Baseuri
+# Your base64 encoded string
+encoded_string = "aW5kaWEuMXhiZXQuY29tLw=="
+# Decode the base64 string
+decoded_bytes = base64.b64decode(encoded_string)
+BaseUrl = decoded_bytes.decode('utf-8')
+# ---------------------------------------------------------
+# ---------------------------------------------------------
+# ---------------------------------------------------------
+# ---------------------------------------------------------
 
 
 function_one=1
@@ -67,13 +73,6 @@ loop_count=0
 repeat_count=1
 bet_count=0
 startingvaluefinal=0
-
-
-at_last_value=None
-at_loss_count=0
-at_loop_count=0
-at_repeat_count=1
-at_function_change=1
 
 
 # Define the log directory and ensure it exists
@@ -132,6 +131,28 @@ def shutdown_system():
             print("Unsupported OS")
     except Exception as e:
         logging.error(f"An error occurred while shutting down the system: {e}", exc_info=True)
+
+def open_incognito_website(url):
+    # Determine the platform and path to Chrome executable
+    if platform.system() == "Windows":
+        chrome_path = "C:/Program Files/Google/Chrome/Application/chrome.exe"
+    elif platform.system() == "Darwin":  # macOS
+        chrome_path = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+    elif platform.system() == "Linux":
+        chrome_path = "/usr/bin/google-chrome"
+    else:
+        raise OSError("Unsupported operating system")
+
+    # Prepare the command for launching Chrome in incognito mode
+    command = [chrome_path, '--incognito', url]
+
+    # Launch Chrome in incognito mode with the specified URL
+    try:
+        subprocess.run(command, check=True)
+    except FileNotFoundError:
+        print(f"Error: Chrome executable not found at {chrome_path}")
+    except subprocess.CalledProcessError as e:
+        print(f"Error running command: {e}")
 
 
 
@@ -218,9 +239,12 @@ def extract_numbers(text):
     else:
         return None  # Return None if no number is found
 
+open_incognito_website(url=BaseUrl)
+
 #to take screen out of this ide
 target_amt=pyautogui.prompt(text="",title="Enter your target")
 sleep(2)
+
 
 
 def set_last_value(value):
@@ -411,7 +435,7 @@ try:
             else:
                 strLockcheck=''
         else:
-            # bet_analyzer.analyze_and_push()
+            bet_analyzer.analyze_and_push()
             play_alarm() 
             close_chrome_tabs()
             sleep(10)
