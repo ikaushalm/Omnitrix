@@ -1,6 +1,5 @@
 import pandas as pd
 import os
-import webbrowser
 import subprocess
 from datetime import datetime
 
@@ -75,12 +74,35 @@ def process_data(df):
     return df, success_rate, correct_avg_value, incorrect_avg_value
 
 def generate_html(df, success_rate, correct_avg_value, incorrect_avg_value):
-    """Generate an HTML file with analysis results."""
+    if df.empty:
+        raise ValueError("DataFrame is empty. No HTML report generated.")
+    
+    success_rate_data = df[['Time', 'Correct Prediction']].groupby('Time').sum().reset_index()
+    win_loss_data = df.groupby('Betted On')[['Wincount', 'Losscount']].sum().reset_index()
+    average_value_data = df.groupby('Betted On').agg(
+        average_value=('CurrentValue', 'mean')
+    ).reset_index()
+    
+    # Calculate totals for Win and Loss Counts
+    totals = win_loss_data[['Wincount', 'Losscount']].sum()
+    totals_df = pd.DataFrame({
+        'Betted On': ['Total'],
+        'Wincount': [totals['Wincount']],
+        'Losscount': [totals['Losscount']]
+    })
+
+    # Append totals row to win_loss_data
+    win_loss_data = pd.concat([win_loss_data, totals_df], ignore_index=True)
+
+    # Prepare data for the new chart
+    current_value_data = df[['Time', 'CurrentValue']].groupby('Time').mean().reset_index()
+
     html = f"""
 <html>
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {{
             font-family: 'Roboto Mono', monospace;
@@ -100,22 +122,46 @@ def generate_html(df, success_rate, correct_avg_value, incorrect_avg_value):
             transition: width 0.3s;
         }}
         .progress-bar-success.green {{
-            background-color: #28a745; /* Bootstrap green */
+            background-color: #28a745;
         }}
         .progress-bar-success.yellow {{
-            background-color: #ffc107; /* Bootstrap yellow */
+            background-color: #ffc107;
         }}
         .progress-bar-success.red {{
-            background-color: #dc3545; /* Bootstrap red */
+            background-color: #dc3545;
         }}
         .toggle-content {{
-            display: none; /* Hidden by default */
+            display: none;
         }}
         .toggle-button {{
             position: fixed;
             top: 10px;
             right: 10px;
             z-index: 1000;
+        }}
+        .chart-grid {{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 10px; /* Space between charts */
+            height: 100vh; /* Full viewport height */
+            padding: 10px; /* Optional padding around the grid */
+        }}
+
+        .chart-container {{
+            background-color: #fff; /* Background color for containers */
+            border: 1px solid #ddd; /* Border around containers */
+            border-radius: 8px; /* Rounded corners */
+            padding: 10px; /* Padding inside containers */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for a card-like effect */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }}
+
+        canvas {{
+            width: 100% !important; /* Make sure canvas takes full width of its container */
+            height: auto !important; /* Maintain aspect ratio */
         }}
         /* Enhanced table styling for light mode */
         .table-custom.light-mode {{
@@ -175,7 +221,6 @@ def generate_html(df, success_rate, correct_avg_value, incorrect_avg_value):
             var body = document.body;
             var button = document.getElementById('mode-toggle');
             var tables = document.querySelectorAll('.table-custom');
-            var headers = document.querySelectorAll('th');
             
             if (body.classList.contains('dark-mode')) {{
                 body.classList.remove('dark-mode');
@@ -183,23 +228,146 @@ def generate_html(df, success_rate, correct_avg_value, incorrect_avg_value):
                 button.innerText = 'Dark Mode';
                 tables.forEach(table => table.classList.remove('dark-mode'));
                 tables.forEach(table => table.classList.add('light-mode'));
-                headers.forEach(th => th.classList.remove('dark-mode'));
-                headers.forEach(th => th.classList.add('light-mode'));
             }} else {{
                 body.classList.remove('light-mode');
                 body.classList.add('dark-mode');
                 button.innerText = 'Light Mode';
                 tables.forEach(table => table.classList.remove('light-mode'));
                 tables.forEach(table => table.classList.add('dark-mode'));
-                headers.forEach(th => th.classList.remove('light-mode'));
-                headers.forEach(th => th.classList.add('dark-mode'));
             }}
         }}
+
+        document.addEventListener('DOMContentLoaded', function () {{
+            var ctx1 = document.getElementById('successRateChart').getContext('2d');
+            var successRateChart = new Chart(ctx1, {{
+                type: 'line',
+                data: {{
+                    labels: {success_rate_data['Time'].astype('str').tolist()},
+                    datasets: [{{
+                        label: 'Correct Predictions',
+                        data: {success_rate_data['Correct Prediction'].tolist()},
+                        borderColor: '#28a745',
+                        backgroundColor: 'rgba(40, 167, 69, 0.2)',
+                        fill: true
+                    }}]
+                }},
+                options: {{
+                    scales: {{
+                        x: {{
+                            title: {{
+                                display: true,
+                                text: 'Time'
+                            }}
+                        }},
+                        y: {{
+                            title: {{
+                                display: true,
+                                text: 'Count'
+                            }}
+                        }}
+                    }}
+                }}
+            }});
+
+            var ctx2 = document.getElementById('winLossChart').getContext('2d');
+            var winLossChart = new Chart(ctx2, {{
+                type: 'bar',
+                data: {{
+                    labels: {win_loss_data['Betted On'].tolist()},
+                    datasets: [
+                        {{
+                            label: 'Wins',
+                            data: {win_loss_data['Wincount'].tolist()},
+                            backgroundColor: '#007bff'
+                        }},
+                        {{
+                            label: 'Losses',
+                            data: {win_loss_data['Losscount'].tolist()},
+                            backgroundColor: '#dc3545'
+                        }}
+                    ]
+                }},
+                options: {{
+                    scales: {{
+                        x: {{
+                            title: {{
+                                display: true,
+                                text: 'Bet Type'
+                            }}
+                        }},
+                        y: {{
+                            title: {{
+                                display: true,
+                                text: 'Count'
+                            }}
+                        }}
+                    }}
+                }}
+            }});
+
+            var ctx3 = document.getElementById('averageValueChart').getContext('2d');
+            var averageValueChart = new Chart(ctx3, {{
+                type: 'pie',
+                data: {{
+                    labels: {average_value_data['Betted On'].tolist()},
+                    datasets: [{{
+                        label: 'Average Current Value',
+                        data: {average_value_data['average_value'].tolist()},
+                        backgroundColor: ['#007bff', '#28a745']
+                    }}]
+                }},
+                options: {{
+                    responsive: true,
+                    plugins: {{
+                        legend: {{
+                            position: 'top',
+                        }},
+                        tooltip: {{
+                            callbacks: {{
+                                label: function(tooltipItem) {{
+                                    return tooltipItem.label + ': $' + tooltipItem.raw.toFixed(2);
+                                }}
+                            }}
+                        }}
+                    }}
+                }}
+            }});
+
+            var ctx4 = document.getElementById('currentValueChart').getContext('2d');
+            var currentValueChart = new Chart(ctx4, {{
+                type: 'line',
+                data: {{
+                    labels: {current_value_data['Time'].astype('str').tolist()},
+                    datasets: [{{
+                        label: 'Current Value',
+                        data: {current_value_data['CurrentValue'].tolist()},
+                        borderColor: '#007bff',
+                        backgroundColor: 'rgba(0, 123, 255, 0.2)',
+                        fill: true
+                    }}]
+                }},
+                options: {{
+                    scales: {{
+                        x: {{
+                            title: {{
+                                display: true,
+                                text: 'Time'
+                            }}
+                        }},
+                        y: {{
+                            title: {{
+                                display: true,
+                                text: 'Current Value'
+                            }}
+                        }}
+                    }}
+                }}
+            }});
+        }});
     </script>
 </head>
 <body class="container dark-mode">
     <button id="mode-toggle" class="btn btn-secondary toggle-button" onclick="toggleMode()">Light Mode</button>
-    
     <h2 class="mt-4">Detailed Analysis</h2>
     
     <h3>Success Rate:</h3>
@@ -213,13 +381,37 @@ def generate_html(df, success_rate, correct_avg_value, incorrect_avg_value):
             {success_rate:.2f}%
         </div>
     </div>
-    
+
     <h3>Win and Loss Counts:</h3>
-    {df.groupby('Betted On')[['Wincount', 'Losscount']].sum().to_html(classes='table table-custom dark-mode')}
+    {win_loss_data.to_html(index=False, classes='table table-custom dark-mode', border=0)}
+
+    <h3>Charts:</h3>
+
+    <div class="chart-grid">
+        <div class="chart-container">
+            <canvas id="successRateChart"></canvas>
+        </div>
+         <div class="chart-container">
+            <canvas id="currentValueChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="winLossChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="averageValueChart"></canvas>
+        </div>
+       
+    </div>
+    
+
+
+
+
+
     
     <h3>Average Current Value:</h3>
-    <p>Correct Bets: {correct_avg_value:.2f}</p>
-    <p>Incorrect Bets: {incorrect_avg_value:.2f}</p>
+    <p>Correct Bets: ${correct_avg_value:.2f}</p>
+    <p>Incorrect Bets: ${incorrect_avg_value:.2f}</p>
     
     <h3>Summary Statistics by Bet Type:</h3>
     {df.groupby('Betted On').agg(
@@ -233,17 +425,16 @@ def generate_html(df, success_rate, correct_avg_value, incorrect_avg_value):
     <h3>Data with Actual Bet Column:</h3>
     <button id="toggle-button" class="btn btn-primary" onclick="toggleContent()">Show Data with Actual Bet Column</button>
     <div id="actual-bet-data" class="toggle-content">
-        {df.iloc[:-1].to_html(classes='table table-custom dark-mode')}
+        {df.to_html(classes='table table-striped table-custom')}
     </div>
 </body>
 </html>
 """
 
-    with open(OUTPUT_HTML_FILE, "w") as file:
+    # Save the HTML content to the file
+    with open(OUTPUT_HTML_FILE, 'w') as file:
         file.write(html)
-    
-    # Optionally open the HTML file in a web browser
-    # webbrowser.open(OUTPUT_HTML_FILE)
+    print(f"HTML report generated at {OUTPUT_HTML_FILE}")
 
 def analyze_and_push():
     """Main function to analyze data and push results to Git."""
@@ -258,3 +449,5 @@ def analyze_and_push():
     except Exception as e:
         print(f"An error occurred: {e}")
 
+if __name__ == "__main__":
+    analyze_and_push()
