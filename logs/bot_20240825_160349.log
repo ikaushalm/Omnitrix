@@ -1,0 +1,6 @@
+2024-08-25 16:03:57,798 - ERROR - exchangeTSL.py - 397 - An error occurred in the main function: float() argument must be a string or a real number, not 'NoneType'
+Traceback (most recent call last):
+  File "d:\Kaushal\Playground\last_omnitrix\Omnitrix\exchangeTSL.py", line 245, in <module>
+    startingvaluefinal=float(txt)
+                       ^^^^^^^^^^
+TypeError: float() argument must be a string or a real number, not 'NoneType'

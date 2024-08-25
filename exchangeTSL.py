@@ -2,6 +2,8 @@ import math
 import random
 import subprocess
 import sys
+import bet_analyzer
+
 
 def install(package):
     """Install the package using pip."""
@@ -382,8 +384,10 @@ try:
             else:
                 strLockcheck=''
         else:
+            bet_analyzer.analyze_and_push()
             play_alarm() 
             close_chrome_tabs()
+            sleep(10)
             shutdown_system()
             # logging.info("Condition not met, alarm beeped.")
             # sleep(10)  # Wait before rechecking
