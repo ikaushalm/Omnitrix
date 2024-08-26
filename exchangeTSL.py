@@ -17,7 +17,7 @@ from datetime import datetime
 import time
 import csv
 import platform
-
+import threading
 
 # ---------------------------------------------------------
 # ---------------------------------------------------------
@@ -239,7 +239,8 @@ def extract_numbers(text):
     else:
         return None  # Return None if no number is found
 
-open_incognito_website(url=BaseUrl)
+thread = threading.Thread(target=open_incognito_website(url=BaseUrl))
+thread.start()
 
 #to take screen out of this ide
 target_amt=pyautogui.prompt(text="",title="Enter your target")
@@ -282,7 +283,7 @@ def get_text_at_position(x, y, duration=0.5):
     pyautogui.hotkey('ctrl', 'c')  # Use 'command', 'c' on macOS
     
     # Give a short delay to ensure the clipboard is updated
-    time.sleep(1)
+    time.sleep(0.5)
     
     # Retrieve the text from the clipboard
     copied_text = pyperclip.paste()
@@ -317,7 +318,6 @@ try:
             except:
                 strLockcheck=''
             if(len(strLockcheck)==44) :
-                sleep(2)
                 current_txt = get_text_at_position(textat_x,textat_y,moving_delay)
                 current_value_final=float(extract_numbers(current_txt))
                 if(loop_count!=0):
@@ -373,7 +373,7 @@ try:
 
                         function_change=2
                         pyautogui.click(textat_x,textat_y)
-                        sleep(3)                  
+                        sleep(1)                  
                         last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
                         set_last_value(float(extract_numbers(last_value_txt)))
                         
@@ -390,7 +390,7 @@ try:
                                 betonA(repeat_count)
                         function_change=3
                         pyautogui.click(textat_x,textat_y)
-                        sleep(3)                  
+                        sleep(1)                  
                         last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
                         set_last_value(float(extract_numbers(last_value_txt)))
                     elif function_change==3:  # Call function_one() twice for every even iteration
@@ -406,7 +406,7 @@ try:
                                 betonB(repeat_count)
                         function_change=4
                         pyautogui.click(textat_x,textat_y)
-                        sleep(3)                  
+                        sleep(1)                  
                         last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
                         set_last_value(float(extract_numbers(last_value_txt)))
                     elif function_change==4:  # Call function_one() twice for every even iteration
@@ -422,13 +422,13 @@ try:
                                 betonB(repeat_count)
                         function_change=1
                         pyautogui.click(textat_x,textat_y)
-                        sleep(3)                  
+                        sleep(1)                  
                         last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
                         set_last_value(float(extract_numbers(last_value_txt)))
                     loop_count=loop_count+1
                     txt = get_text_at_position(textat_x,textat_y,moving_delay)
                     startingvaluefinal=float(extract_numbers(txt))
-                    sleep(20)    
+                    sleep(15)    
                 except Exception as e:
                     logging.error(f"An error occurred during the betting process: {e}", exc_info=True)
                     break
