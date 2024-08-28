@@ -29,7 +29,7 @@ import threading
 # ---------------------------------------------------------
 
 global fibo_series
-fibo_series=[1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
+fibo_series=[1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89,144]
 # A--axis for BetOnA---------------------------------------
 # 850, 800, 20 -for Santosh Bhaiya Machine-----------------
 A_x = 850
@@ -242,6 +242,7 @@ def extract_numbers(text):
 
 thread = threading.Thread(target=open_incognito_website(url=BaseUrl))
 thread.start()
+thread.join()
 
 #to take screen out of this ide
 target_amt=pyautogui.prompt(text="",title="Enter your target")
@@ -307,18 +308,23 @@ try:
     logging.info("Betted On,CurrentValue,TargetAmt,Losscount,Wincount")
     while True:     
         while startingvaluefinal<target_amt_final:
-            if(loop_count==0):
-                try:               
-                    lock_check = pyautogui.locateOnScreen("placeyourbets.png", confidence=0.8)
-                    pyautogui.click(textat_x,textat_y)
-                    sleep(1)
-                    # print(lock_check)
-                    bet_count=bet_count+1
-                    strLockcheck = str(lock_check)
-                    # print(len(strLockcheck))                   
-                except:
-                    strLockcheck=''
-                
+            try:               
+                lock_check = pyautogui.locateOnScreen("placeyourbets.png", confidence=0.8)
+                pyautogui.click(textat_x,textat_y)
+                sleep(1)
+                # print(lock_check)
+                bet_count=bet_count+1
+                strLockcheck = str(lock_check)
+                if(loop_count!=0):
+                    current_txt = get_text_at_position(textat_x,textat_y,moving_delay)
+                    startingvaluefinal=float(extract_numbers(current_txt))
+                    if(startingvaluefinal>target_amt_final):
+                        break
+
+                # print(len(strLockcheck))                   
+            except:
+                strLockcheck=''
+            
             if(len(strLockcheck)==44) :
                 current_txt = get_text_at_position(textat_x,textat_y,moving_delay)
                 current_value_final=float(extract_numbers(current_txt))
@@ -351,6 +357,8 @@ try:
                             repeat_count=fibo_series[loss_count]
                         elif loss_count==11:
                             repeat_count=fibo_series[loss_count]
+                        elif loss_count==12:
+                            repeat_count=fibo_series[loss_count]
                         else:
                             repeat_count=loss_count*2   
                     # checks if its a tie                    
@@ -359,10 +367,9 @@ try:
                         repeat_count=repeat_count
                         win_count=win_count
                     else:
-                        if(loss_count>0):
-                            loss_count=loss_count-1
                         if(loss_count-2>=0):
                             repeat_count=fibo_series[loss_count-2]
+                            loss_count=loss_count-1
                         else:
                             repeat_count=fibo_series[0]
 
@@ -441,12 +448,8 @@ try:
                         last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
                         set_last_value(float(extract_numbers(last_value_txt)))
                     loop_count=loop_count+1
-                    txt = get_text_at_position(textat_x,textat_y,moving_delay)
-                    startingvaluefinal=float(extract_numbers(txt))
+                    startingvaluefinal=last_value
                     sleep(15)
-                
-
-
                 except Exception as e:
                     logging.error(f"An error occurred during the betting process: {e}", exc_info=True)
                     break
