@@ -305,7 +305,7 @@ try:
     logging.info(f"Target amount: {target_amt}")
     logging.info("Betted On,CurrentValue,TargetAmt,Losscount,Wincount")
     while True:     
-        while startingvaluefinal<target_amt_final:
+        while last_value<target_amt_final:
             try:               
                 lock_check = pyautogui.locateOnScreen("placeyourbets.png", confidence=0.8)
                 pyautogui.click(textat_x,textat_y)
@@ -314,6 +314,12 @@ try:
                 bet_count=bet_count+1
                 strLockcheck = str(lock_check)
                 # print(len(strLockcheck))
+                if(loop_count!=0):
+                    current_txt = get_text_at_position(textat_x,textat_y,moving_delay)
+                    startingvaluefinal=float(extract_numbers(current_txt))
+                    if(startingvaluefinal>target_amt_final):
+                        break
+
                 
             except:
                 strLockcheck=''
@@ -426,8 +432,6 @@ try:
                         last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
                         set_last_value(float(extract_numbers(last_value_txt)))
                     loop_count=loop_count+1
-                    txt = get_text_at_position(textat_x,textat_y,moving_delay)
-                    startingvaluefinal=float(extract_numbers(txt))
                     sleep(15)    
                 except Exception as e:
                     logging.error(f"An error occurred during the betting process: {e}", exc_info=True)
