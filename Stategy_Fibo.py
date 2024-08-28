@@ -28,12 +28,19 @@ import threading
 # ---------------------------------------------------------
 # ---------------------------------------------------------
 
+
+
+screenWidth, screenHeight = pyautogui.size()
+
 global fibo_series
 fibo_series=[1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89,144]
 # A--axis for BetOnA---------------------------------------
 # 850, 800, 20 -for Santosh Bhaiya Machine-----------------
-A_x = 850
-A_y = 800
+
+relative_Ax = 850 / 1920  # Relative position on X-axis
+relative_Ay = 800 / 1080   # Relative position on Y-axis
+A_x = screenWidth*relative_Ax
+A_y = screenHeight*relative_Ay
 
 # radius is common for moving cursor in round--------------
 # ---------------------------------------------------------
@@ -43,14 +50,23 @@ moving_r = 20
 
 # B--axis for BetOnB---------------------------------------
 # 1050, 800, 20-for Santosh Bhaiya Machine-----------------
-B_x = 1050
-B_y = 800
+
+
+relative_Bx = 1050 / 1920  # Relative position on X-axis
+relative_By = 800 / 1080   # Relative position on Y-axis
+
+B_x = screenWidth*relative_Bx
+B_y = screenHeight*relative_By
 
 # ---------------------------------------------------------
 # get_text_at_position
 # 1150,135,0.5 -for Santosh Bhaiya Machine-----------------
-textat_x=1150
-textat_y=135
+
+relative_x = 1150 / 1920  # Relative position on X-axis
+relative_y = 135 / 1080   # Relative position on Y-axis
+
+textat_x= screenWidth*relative_x
+textat_y=screenHeight*relative_y
 moving_delay=0.5
 # ---------------------------------------------------------
 # Baseuri
@@ -63,6 +79,8 @@ BaseUrl = decoded_bytes.decode('utf-8')
 # ---------------------------------------------------------
 # ---------------------------------------------------------
 # ---------------------------------------------------------
+
+
 
 
 function_one=1
