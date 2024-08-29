@@ -387,7 +387,7 @@ try:
                     else:
                         if(loss_count-2>=0):
                             repeat_count=fibo_series[loss_count-2]
-                            loss_count=loss_count-1
+                            loss_count=loss_count-2
                         else:
                             repeat_count=fibo_series[0]
 
@@ -476,9 +476,9 @@ try:
         else:
             bet_analyzer.analyze_and_push()
             play_alarm() 
-            close_chrome_tabs()
+            # close_chrome_tabs()
             sleep(10)
-            shutdown_system()
+            # shutdown_system()
             logging.info("Condition not met, alarm beeped.")
             break
             # sleep(10)  # Wait before rechecking
