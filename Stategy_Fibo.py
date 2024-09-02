@@ -387,7 +387,8 @@ try:
                     else:
                         if(loss_count-2>=0):
                             repeat_count=fibo_series[loss_count-2]
-                            loss_count=loss_count-2
+                            #risk taking strategy
+                            loss_count=loss_count-1
                         else:
                             repeat_count=fibo_series[0]
 
@@ -406,7 +407,7 @@ try:
                         if win_count>=2:
                             betonA(repeat_count)
                         else:
-                            if loss_count<=2:
+                            if loss_count<=3:
                                 betonB(repeat_count)
                             else:
                                 betonA(repeat_count)
@@ -424,7 +425,7 @@ try:
                         if win_count>=2:
                             betonA(repeat_count)
                         else:
-                            if loss_count<=2:
+                            if loss_count<=3:
                                 betonB(repeat_count)
                             else:
                                 betonA(repeat_count)
@@ -440,7 +441,7 @@ try:
                         if win_count>=2:
                             betonB(repeat_count)
                         else:
-                            if loss_count<=2:
+                            if loss_count<=3:
                                 betonA(repeat_count)
                             else:
                                 betonB(repeat_count)
@@ -456,7 +457,7 @@ try:
                         if win_count>=2:
                             betonB(repeat_count)
                         else:
-                            if loss_count<=2:
+                            if loss_count<=3:
                                 betonA(repeat_count)
                             else:
                                 betonB(repeat_count)
@@ -474,6 +475,7 @@ try:
             else:
                 strLockcheck=''
         else:
+
             bet_analyzer.analyze_and_push()
             play_alarm() 
             # close_chrome_tabs()
