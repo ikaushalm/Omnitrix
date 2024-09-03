@@ -353,7 +353,9 @@ try:
                         # print('inside true loop')
                         win_count=0
                         loss_count=loss_count+1
-                        if loss_count==1:
+                        if loss_count==0:
+                            repeat_count=fibo_series[0]
+                        elif loss_count==1:
                             repeat_count=fibo_series[loss_count]
                         elif loss_count==2: 
                             repeat_count=fibo_series[loss_count]
@@ -391,7 +393,9 @@ try:
                             loss_count=loss_count-1
                         else:
                             repeat_count=fibo_series[0]
-
+                            if(loss_count!=0):
+                                loss_count=loss_count-1
+                                
                         win_count=win_count+1
                 try:
                     if loss_count>=6:
@@ -407,7 +411,7 @@ try:
                         if win_count>=2:
                             betonA(repeat_count)
                         else:
-                            if loss_count<=3:
+                            if loss_count<=2:
                                 betonB(repeat_count)
                             else:
                                 betonA(repeat_count)
@@ -425,7 +429,7 @@ try:
                         if win_count>=2:
                             betonA(repeat_count)
                         else:
-                            if loss_count<=3:
+                            if loss_count<=2:
                                 betonB(repeat_count)
                             else:
                                 betonA(repeat_count)
@@ -441,7 +445,7 @@ try:
                         if win_count>=2:
                             betonB(repeat_count)
                         else:
-                            if loss_count<=3:
+                            if loss_count<=2:
                                 betonA(repeat_count)
                             else:
                                 betonB(repeat_count)
@@ -457,7 +461,7 @@ try:
                         if win_count>=2:
                             betonB(repeat_count)
                         else:
-                            if loss_count<=3:
+                            if loss_count<=2:
                                 betonA(repeat_count)
                             else:
                                 betonB(repeat_count)
