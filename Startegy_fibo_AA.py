@@ -353,9 +353,7 @@ try:
                         # print('inside true loop')
                         win_count=0
                         loss_count=loss_count+1
-                        if loss_count==0:
-                            repeat_count=fibo_series[0]
-                        elif loss_count==1:
+                        if loss_count==1:
                             repeat_count=fibo_series[loss_count]
                         elif loss_count==2: 
                             repeat_count=fibo_series[loss_count]
@@ -389,13 +387,10 @@ try:
                     else:
                         if(loss_count-2>=0):
                             repeat_count=fibo_series[loss_count-2]
-                            #risk taking strategy
                             loss_count=loss_count-1
                         else:
                             repeat_count=fibo_series[0]
-                            if(loss_count!=0):
-                                loss_count=loss_count-1
-                                
+
                         win_count=win_count+1
                 try:
                     if loss_count>=6:
@@ -409,12 +404,12 @@ try:
                         #     betonA(repeat_count)
                         # else:
                         if win_count>=2:
-                            betonA(repeat_count)
+                            betonB(repeat_count)
                         else:
-                            if loss_count<=2:
-                                betonB(repeat_count)
-                            else:
+                            if loss_count<=3:
                                 betonA(repeat_count)
+                            else:
+                                betonB(repeat_count)
 
                         function_change=2
                         pyautogui.click(textat_x,textat_y)
@@ -427,12 +422,12 @@ try:
                         #     betonA(repeat_count)
                         # else:                        
                         if win_count>=2:
-                            betonA(repeat_count)
+                            betonB(repeat_count)
                         else:
-                            if loss_count<=2:
-                                betonB(repeat_count)
-                            else:
+                            if loss_count<=3:
                                 betonA(repeat_count)
+                            else:
+                                betonB(repeat_count)
                         function_change=3
                         pyautogui.click(textat_x,textat_y)
                         sleep(1)                  
@@ -443,12 +438,12 @@ try:
                         #     betonA(repeat_count)
                         # else: 
                         if win_count>=2:
-                            betonB(repeat_count)
+                            betonA(repeat_count)
                         else:
-                            if loss_count<=2:
-                                betonA(repeat_count)
-                            else:
+                            if loss_count<=3:
                                 betonB(repeat_count)
+                            else:
+                                betonA(repeat_count)
                         function_change=4
                         pyautogui.click(textat_x,textat_y)
                         sleep(1)                  
@@ -459,12 +454,12 @@ try:
                         #     betonA(repeat_count)
                         # else:  
                         if win_count>=2:
-                            betonB(repeat_count)
+                            betonA(repeat_count)
                         else:
-                            if loss_count<=2:
-                                betonA(repeat_count)
-                            else:
+                            if loss_count<=3:
                                 betonB(repeat_count)
+                            else:
+                                betonA(repeat_count)
                         function_change=1
                         pyautogui.click(textat_x,textat_y)
                         sleep(1)                  
@@ -479,18 +474,16 @@ try:
             else:
                 strLockcheck=''
         else:
-
             bet_analyzer.analyze_and_push()
             play_alarm() 
-            close_chrome_tabs()
+            # close_chrome_tabs()
             sleep(10)
-            shutdown_system()
+            # shutdown_system()
             logging.info("Condition not met, alarm beeped.")
             break
             # sleep(10)  # Wait before rechecking
 except Exception as e:
     logging.error(f"An error occurred in the main function: {e}", exc_info=True)
     print(f"An error occurred: {e}. Please go to the original screen.")
-
 
 
