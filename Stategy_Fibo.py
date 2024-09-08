@@ -481,7 +481,7 @@ try:
                     
 
                         win_count=win_count+1
-
+                    betted_on=''
 
                 else:
                     current_txt = get_text_at_position(textat_x,textat_y,moving_delay)
