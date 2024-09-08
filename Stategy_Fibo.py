@@ -403,6 +403,8 @@ try:
                     sleep(1)
                     last_char=extract_characters_from_image(image_path)
                     add_to_fixed_length_array(Bethistory,last_char)
+                    last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
+                    set_last_value(float(extract_numbers(last_value_txt)))
                     
                 strLockcheck = str(lock_check)
                 if(loop_count!=0):
@@ -478,8 +480,6 @@ try:
                             repeat_count=fibo_series[loss_count]
                         else:
                             repeat_count=fibo_series[0]
-                    
-
                         win_count=win_count+1
                     betted_on=''
 
