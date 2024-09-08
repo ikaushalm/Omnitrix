@@ -422,7 +422,66 @@ try:
                 bet_count=bet_count+1
                 if(bet_count%5==0):
                     sleep(30)
-                    isFifth=True          
+                    isFifth=True  
+                    current_txt = get_text_at_position(textat_x,textat_y,moving_delay)
+                    current_value_final=float(extract_numbers(current_txt))
+                    if(last_value>current_value_final):
+                        # print('inside true loop')
+                        if(betted_on=='A'):
+                            add_to_fixed_length_array(Bethistory,'B')
+                        if(betted_on=='B'):
+                            add_to_fixed_length_array(Bethistory,'A') 
+                        win_count=0
+                        loss_count=loss_count+1
+                        if loss_count==0:
+                            repeat_count=fibo_series[loss_count]
+                        elif loss_count==1:
+                            repeat_count=fibo_series[loss_count+1]
+                        elif loss_count==2: 
+                            repeat_count=fibo_series[loss_count]
+                        elif loss_count==3:
+                            repeat_count=fibo_series[loss_count]
+                        elif loss_count==4:
+                            repeat_count=fibo_series[loss_count]
+                        elif loss_count==5:
+                            repeat_count=fibo_series[loss_count]
+                        elif loss_count==6:
+                            repeat_count=fibo_series[loss_count]
+                        elif loss_count==7:
+                            repeat_count=fibo_series[loss_count]
+                        elif loss_count==8:
+                            repeat_count=fibo_series[loss_count]
+                        elif loss_count==9:
+                            repeat_count=fibo_series[loss_count]
+                        elif loss_count==10:
+                            repeat_count=fibo_series[loss_count]
+                        elif loss_count==11:
+                            repeat_count=fibo_series[loss_count]
+                        elif loss_count==12:
+                            repeat_count=fibo_series[loss_count]
+                        else:
+                            repeat_count=loss_count*2   
+                    # checks if its a tie                    
+                    elif(last_value==current_value_final):
+                        # add_to_fixed_length_array(Bethistory,'T')
+                        loss_count=loss_count
+                        repeat_count=repeat_count
+                        win_count=win_count
+                    else:
+                        if(betted_on=='A'):
+                            add_to_fixed_length_array(Bethistory,'A')
+                        if(betted_on=='B'):
+                            add_to_fixed_length_array(Bethistory,'B')
+                        
+                        if(loss_count-2>=0):
+                            loss_count=loss_count-2
+                            repeat_count=fibo_series[loss_count]
+                        else:
+                            repeat_count=fibo_series[0]
+                    
+
+                        win_count=win_count+1
+
 
                 else:
                     current_txt = get_text_at_position(textat_x,textat_y,moving_delay)
@@ -554,14 +613,14 @@ try:
                                 #         betonA(repeat_count)
                                 #     else:
                                 #         betonB(repeat_count)
-                                if(len(Bethistory)>=3):
-                                    lenBet=len(Bethistory)
-                                    if(Bethistory[lenBet-3]=='A' and Bethistory[lenBet-2]=='A'and Bethistory[lenBet-1]=='B'):
-                                        betonB(repeat_count)
-                                    else:
-                                        betonA(repeat_count)
-                                else:
-                                    betonA(repeat_count)
+                                # if(len(Bethistory)>=3):
+                                #     lenBet=len(Bethistory)
+                                #     if(Bethistory[lenBet-3]=='A' and Bethistory[lenBet-2]=='A'and Bethistory[lenBet-1]=='B'):
+                                #         betonB(repeat_count)
+                                #     else:
+                                #         betonA(repeat_count)
+                                # else:
+                                betonA(repeat_count)
                                 function_change=4
                                 # pyautogui.click(textat_x,textat_y)
                                 sleep(1)                  
@@ -578,6 +637,7 @@ try:
                                 #         betonA(repeat_count)
                                 #     else:
                                 #         betonB(repeat_count)
+                                # Preventing AABB pattern
                                 if(len(Bethistory)>=3):
                                     lenBet=len(Bethistory)
                                     if(Bethistory[lenBet-3]=='A' and Bethistory[lenBet-2]=='A'and Bethistory[lenBet-1]=='B'):
