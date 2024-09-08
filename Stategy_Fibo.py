@@ -320,7 +320,7 @@ def set_last_value_at(value):
     global at_last_value
     at_last_value = value
 
-def get_text_at_position(x, y, duration=0.5):
+def get_text_at_position(x, y, duration=0.01):
     """
     Move the cursor to the given position (x, y), select the text by double-clicking, 
     and return the copied text.
@@ -410,6 +410,9 @@ try:
                     startingvaluefinal=float(extract_numbers(current_txt))
                     if(startingvaluefinal>target_amt_final):
                         break
+                    if(txt<(startingvaluefinal+100)):
+                        if(loss_count>=6):
+                            loss_count=1
 
                 # print(len(strLockcheck))                   
             except:
@@ -419,66 +422,7 @@ try:
                 bet_count=bet_count+1
                 if(bet_count%5==0):
                     sleep(30)
-                    isFifth=True
-                    current_txt = get_text_at_position(textat_x,textat_y,moving_delay)
-                    current_value_final=float(extract_numbers(current_txt))
-                    if(last_value>current_value_final):
-                            # print('inside true loop')
-                            if(betted_on=='A'):
-                                add_to_fixed_length_array(Bethistory,'B')
-                            if(betted_on=='B'):
-                                add_to_fixed_length_array(Bethistory,'A') 
-                            win_count=0
-                            loss_count=loss_count+1
-                            if loss_count==0:
-                                repeat_count=fibo_series[loss_count]
-                            elif loss_count==1:
-                                repeat_count=fibo_series[loss_count+1]
-                            elif loss_count==2: 
-                                repeat_count=fibo_series[loss_count]
-                            elif loss_count==3:
-                                repeat_count=fibo_series[loss_count]
-                            elif loss_count==4:
-                                repeat_count=fibo_series[loss_count]
-                            elif loss_count==5:
-                                repeat_count=fibo_series[loss_count]
-                            elif loss_count==6:
-                                repeat_count=fibo_series[loss_count]
-                            elif loss_count==7:
-                                repeat_count=fibo_series[loss_count]
-                            elif loss_count==8:
-                                repeat_count=fibo_series[loss_count]
-                            elif loss_count==9:
-                                repeat_count=fibo_series[loss_count]
-                            elif loss_count==10:
-                                repeat_count=fibo_series[loss_count]
-                            elif loss_count==11:
-                                repeat_count=fibo_series[loss_count]
-                            elif loss_count==12:
-                                repeat_count=fibo_series[loss_count]
-                            else:
-                                repeat_count=loss_count*2   
-                        # checks if its a tie                    
-                    elif(last_value==current_value_final):
-                        # add_to_fixed_length_array(Bethistory,'T')
-                        loss_count=loss_count
-                        repeat_count=repeat_count
-                        win_count=win_count
-                    else:
-                        if(betted_on=='A'):
-                            add_to_fixed_length_array(Bethistory,'A')
-                        if(betted_on=='B'):
-                            add_to_fixed_length_array(Bethistory,'B')
-                        
-                        if(loss_count-2>=0):
-                            loss_count=loss_count-2
-                            repeat_count=fibo_series[loss_count]
-                        else:
-                            repeat_count=fibo_series[0]
-                    
-
-                        win_count=win_count+1      
-                    betted_on=''            
+                    isFifth=True          
 
                 else:
                     current_txt = get_text_at_position(textat_x,textat_y,moving_delay)
@@ -649,8 +593,9 @@ try:
                                 set_last_value(float(extract_numbers(last_value_txt)))
                         loop_count=loop_count+1
                         startingvaluefinal=last_value
-                        print('Checking Bet history')
-                        print(Bethistory)
+                        print(f'Checking Bet history {Bethistory}')
+                        # print(Bethistory)
+                        print(f'Loss_count {loss_count}')
                         sleep(15)
 
                     except Exception as e:

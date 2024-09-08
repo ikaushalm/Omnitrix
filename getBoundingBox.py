@@ -4,11 +4,8 @@ import numpy as np
 import pyautogui
 from PIL import ImageGrab
 
-# Scaling factor
-SCALE_FACTOR = 0.5
-
 sleep(3)
-
+# Function to handle mouse events
 def draw_rectangle(event, x, y, flags, param):
     global drawing, top_left, bottom_right
 
@@ -23,30 +20,15 @@ def draw_rectangle(event, x, y, flags, param):
     elif event == cv2.EVENT_LBUTTONUP:
         drawing = False
         bottom_right = (x, y)
-        # Draw rectangle on scaled-down image
         cv2.rectangle(screen_copy, top_left, bottom_right, (0, 255, 0), 2)
-        # Convert coordinates to the full-size image scale
-        full_top_left = (int(top_left[0] / SCALE_FACTOR), int(top_left[1] / SCALE_FACTOR))
-        full_bottom_right = (int(bottom_right[0] / SCALE_FACTOR), int(bottom_right[1] / SCALE_FACTOR))
-        bounding_boxes.append((full_top_left, full_bottom_right))
-
-def capture_screen():
-    try:
-        # Use ImageGrab from PIL for capturing the screen
-        screen = ImageGrab.grab()
-        return np.array(screen)
-    except Exception as e:
-        print(f"Error capturing screen: {e}")
-        exit()
+        bounding_boxes.append((top_left, bottom_right))
 
 # Capture the screen
-screen = capture_screen()
-
-# Scale down the screenshot
-small_screen = cv2.resize(screen, (0, 0), fx=SCALE_FACTOR, fy=SCALE_FACTOR)
+screen = pyautogui.screenshot()
+screen = np.array(screen)
 
 # Make a copy for drawing
-screen_copy = small_screen.copy()
+screen_copy = screen.copy()
 
 # Initialize variables
 drawing = False
@@ -64,7 +46,7 @@ while True:
 
     # Press 'c' to clear selection
     if key == ord('c'):
-        screen_copy = small_screen.copy()
+        screen_copy = screen.copy()
         bounding_boxes.clear()
 
     # Press 'q' to quit selection
