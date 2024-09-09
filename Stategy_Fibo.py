@@ -423,7 +423,7 @@ try:
             if(len(strLockcheck)==44) :
                 bet_count=bet_count+1
                 if(bet_count%5==0):
-                    sleep(30)
+                    sleep(25)
                     isFifth=True  
                     current_txt = get_text_at_position(textat_x,textat_y,moving_delay)
                     current_value_final=float(extract_numbers(current_txt))
