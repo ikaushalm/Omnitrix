@@ -315,6 +315,9 @@ def set_last_value(value):
     global last_value
     last_value = value
 
+def set_new_target_val(value):
+    global new_target
+    new_target = value
 
 def set_last_value_at(value):
     global at_last_value
@@ -383,14 +386,48 @@ targetyes=0
 try:    
     # pyautogui.click(x=607, y=640)                                                               
     startingvaluefinal=float(txt)
+    set_new_target_val(startingvaluefinal+144)
     function_change=1
     target_amt_final=float(target_amt)
     logging.info(f"Starting value: {startingvaluefinal}")
     logging.info(f"Target amount: {target_amt}")
     logging.info("Betted On,CurrentValue,TargetAmt,Losscount,Wincount")
-    while True:     
+    while True:             
         while startingvaluefinal<target_amt_final:
-            try:               
+            if(loop_count!=0):
+                current_txt = get_text_at_position(textat_x,textat_y,moving_delay)
+                startingvaluefinal=float(extract_numbers(current_txt))
+            print(f'new target {new_target}')
+            print(f'Starting Value final {startingvaluefinal}')
+
+            if(startingvaluefinal>new_target):
+                print(f'New Target Achieved {new_target}')
+                set_new_target_val(startingvaluefinal+144)
+                #reset values
+                Bethistory=[]
+                function_one=1
+                function_change=1
+                loss_count=0
+                win_count=0
+                repeat_count=1
+                isFifth=False
+                sleep_test=0
+                next_multiple_of_5 = (bet_count + 4) // 5 * 5
+                loop_condition=next_multiple_of_5-bet_count
+                while(sleep_test<loop_condition):
+                    sleep_lock_check = pyautogui.locateOnScreen("placeyourbets.png", confidence=0.8)
+                    try:
+                        if(len(strLockcheck)==44):
+                            sleep_test=sleep_test+1
+                            bet_count=bet_count+1
+                            print(f'bet count {bet_count}')
+                    except:
+                        strLockcheck=''
+                sleep(15)
+                loop_count=0
+                
+            try:  
+         
                 lock_check = pyautogui.locateOnScreen("placeyourbets.png", confidence=0.8)
                 pyautogui.click(textat_x,textat_y)
                 sleep(1)
@@ -408,8 +445,6 @@ try:
                     
                 strLockcheck = str(lock_check)
                 if(loop_count!=0):
-                    current_txt = get_text_at_position(textat_x,textat_y,moving_delay)
-                    startingvaluefinal=float(extract_numbers(current_txt))
                     if(startingvaluefinal>target_amt_final):
                         break
                     if(txt<(startingvaluefinal+100)):
@@ -569,16 +604,14 @@ try:
                                 # if bet_count%3==0:
                                 #     betonA(repeat_count)
                                 # else:
-                                # if win_count>=3:
-                                #     betonA(repeat_count)
-                                # else:
-                                #     if loss_count<=2:
-                                #         betonB(repeat_count)
-                                #     else:
-                                #         betonA(repeat_count)
-
-                                
-                                betonB(repeat_count)
+                                if win_count>=3:
+                                    betonA(repeat_count)
+                                else:
+                                    if loss_count<=3:
+                                        betonB(repeat_count)
+                                    else:
+                                        betonA(repeat_count)
+                                # betonB(repeat_count)
                                 function_change=2
                                 # pyautogui.click(textat_x,textat_y)
                                 sleep(1)                  
@@ -589,14 +622,14 @@ try:
                                 # if bet_count%3==0:
                                 #     betonA(repeat_count)
                                 # else:                        
-                                # if win_count>=3:
-                                #     betonA(repeat_count)
-                                # else:
-                                #     if loss_count<=2:
-                                #         betonB(repeat_count)
-                                #     else:
-                                #         betonA(repeat_count)
-                                betonB(repeat_count)
+                                if win_count>=3:
+                                    betonA(repeat_count)
+                                else:
+                                    if loss_count<=3:
+                                        betonB(repeat_count)
+                                    else:
+                                        betonA(repeat_count)
+                                # betonB(repeat_count)
                                 function_change=3
                                 # pyautogui.click(textat_x,textat_y)
                                 sleep(1)                  
@@ -606,13 +639,13 @@ try:
                                 # if bet_count%3==0:
                                 #     betonA(repeat_count)
                                 # else: 
-                                # if win_count>=3:
-                                #     betonB(repeat_count)
-                                # else:
-                                #     if loss_count<=2:
-                                #         betonA(repeat_count)
-                                #     else:
-                                #         betonB(repeat_count)
+                                if win_count>=3:
+                                    betonB(repeat_count)
+                                else:
+                                    if loss_count<=3:
+                                        betonA(repeat_count)
+                                    else:
+                                        betonB(repeat_count)
                                 # if(len(Bethistory)>=3):
                                 #     lenBet=len(Bethistory)
                                 #     if(Bethistory[lenBet-3]=='A' and Bethistory[lenBet-2]=='A'and Bethistory[lenBet-1]=='B'):
@@ -620,7 +653,7 @@ try:
                                 #     else:
                                 #         betonA(repeat_count)
                                 # else:
-                                betonA(repeat_count)
+                                # betonA(repeat_count)
                                 function_change=4
                                 # pyautogui.click(textat_x,textat_y)
                                 sleep(1)                  
@@ -641,11 +674,12 @@ try:
                                 if(len(Bethistory)>=3):
                                     lenBet=len(Bethistory)
                                     if(Bethistory[lenBet-3]=='A' and Bethistory[lenBet-2]=='A'and Bethistory[lenBet-1]=='B'):
-                                        betonB(repeat_count)
-                                    else:
-                                        betonA(repeat_count)
+                                        betonB(repeat_count)     
                                 else:
-                                    betonA(repeat_count)
+                                    if loss_count<=3:
+                                        betonA(repeat_count)
+                                    else:
+                                        betonB(repeat_count)
                                 function_change=1
                                 # pyautogui.click(textat_x,textat_y)
                                 sleep(1)                  
