@@ -14,7 +14,7 @@ import logging
 import winsound
 import os
 from datetime import datetime
-import time
+import time 
 import csv
 import platform
 import threading
@@ -400,7 +400,7 @@ targetyes=0
 try:    
     # pyautogui.click(x=607, y=640)                                                               
     startingvaluefinal=float(txt)
-    set_new_target_val(startingvaluefinal+400)
+    set_new_target_val(startingvaluefinal+300)
     function_change=1
     target_amt_final=float(target_amt)
     logging.info(f"Starting value: {startingvaluefinal}")
@@ -413,35 +413,37 @@ try:
                 startingvaluefinal=float(extract_numbers(current_txt))
             print(f'new target {new_target}')
             print(f'Starting Value final {startingvaluefinal}')
+            if(all_equal(Bethistory)):
+                set_new_target_val(startingvaluefinal+300)
+            else:
+                if(startingvaluefinal>new_target):
 
-            if(startingvaluefinal>new_target):
+                    print(f'New Target Achieved {new_target}')
+                    set_new_target_val(startingvaluefinal+300)
+                    #reset values
+                    Bethistory=[]
+                    function_one=1
+                    function_change=1
+                    loss_count=0
+                    win_count=0
+                    repeat_count=1
+                    isFifth=False
+                    sleep_test=0
+                    next_multiple_of_5 = (bet_count + 4) // 5 * 5
+                    loop_condition=next_multiple_of_5-bet_count
+                    while(sleep_test<loop_condition):
 
-                print(f'New Target Achieved {new_target}')
-                set_new_target_val(startingvaluefinal+400)
-                #reset values
-                Bethistory=[]
-                function_one=1
-                function_change=1
-                loss_count=0
-                win_count=0
-                repeat_count=1
-                isFifth=False
-                sleep_test=0
-                next_multiple_of_5 = (bet_count + 4) // 5 * 5
-                loop_condition=next_multiple_of_5-bet_count
-                while(sleep_test<loop_condition):
-
-                    try:
-                        sleepstrLockcheck = pyautogui.locateOnScreen("placeyourbets.png", confidence=0.8)                       
-                        if(len(str(sleepstrLockcheck))==44):
-                            sleep_test=sleep_test+1
-                            bet_count=bet_count+1
-                            print(f' sleep bet count {bet_count}')
-                            sleep(25)
-                    except:
-                        sleepstrLockcheck=''
-                
-                loop_count=0
+                        try:
+                            sleepstrLockcheck = pyautogui.locateOnScreen("placeyourbets.png", confidence=0.8)                       
+                            if(len(str(sleepstrLockcheck))==44):
+                                sleep_test=sleep_test+1
+                                bet_count=bet_count+1
+                                print(f' sleep bet count {bet_count}')
+                                sleep(30)
+                        except:
+                            sleepstrLockcheck=''
+                    
+                    loop_count=0
                 
             try:  
                 lock_check = pyautogui.locateOnScreen("placeyourbets.png", confidence=0.8)
@@ -474,7 +476,7 @@ try:
                 strLockcheck=''
             
             if(len(strLockcheck)==44) :
-
+ 
                 bet_count=bet_count+1
                 
                 if (bet_count % 5 == 0) and (not all_equal(Bethistory)):
@@ -617,6 +619,13 @@ try:
                         if loss_count>=6:
                             pic = pyautogui.screenshot()
                             pic.save("screenshot_"+str(loss_count)+".png")
+                        if(loop_count==0):
+                                pic = ImageGrab.grab(bbox=(499, 813, 706, 829))
+                                pic.save("ZeroLoop.png")
+                                sleep(1)
+                                Bethistory=[]
+                                last_char=extract_characters_from_image("ZeroLoop.png")
+                                add_to_fixed_length_array(Bethistory,last_char)
                         
                         if (all_equal(Bethistory)):
                             if(Bethistory[0]=='A'):
