@@ -1,0 +1,10 @@
+2024-09-17 22:13:41,735 - INFO - Stategy_Fibo copy.py - 392 - Starting value: 13830.6
+2024-09-17 22:13:41,736 - INFO - Stategy_Fibo copy.py - 393 - Target amount: 15000
+2024-09-17 22:13:41,736 - INFO - Stategy_Fibo copy.py - 394 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-09-17 22:14:18,191 - INFO - Stategy_Fibo copy.py - 285 - B,13830.6,15000,0,0
+2024-09-17 22:14:21,556 - ERROR - Stategy_Fibo copy.py - 745 - An error occurred during the betting process: float() argument must be a string or a real number, not 'NoneType'
+Traceback (most recent call last):
+  File "d:\Kaushal\Playground\Omnitrix\Omnitrix\Stategy_Fibo copy.py", line 658, in <module>
+    set_last_value(float(extract_numbers(last_value_txt)))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: float() argument must be a string or a real number, not 'NoneType'

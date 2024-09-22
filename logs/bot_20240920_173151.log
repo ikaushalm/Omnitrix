@@ -1,0 +1,28 @@
+2024-09-20 17:34:30,696 - INFO - Stategy_Fibo copy.py - 406 - Starting value: 37213.1
+2024-09-20 17:34:30,696 - INFO - Stategy_Fibo copy.py - 407 - Target amount: 40000
+2024-09-20 17:34:30,696 - INFO - Stategy_Fibo copy.py - 408 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-09-20 17:35:03,633 - INFO - Stategy_Fibo copy.py - 299 - B,37213.1,40000,0,0
+2024-09-20 17:35:07,004 - INFO - Stategy_Fibo copy.py - 747 - Checking Bet history []
+2024-09-20 17:39:25,801 - INFO - Stategy_Fibo copy.py - 299 - B,37688.1,40000,0,0
+2024-09-20 17:39:29,189 - INFO - Stategy_Fibo copy.py - 747 - Checking Bet history []
+2024-09-20 17:40:22,725 - INFO - Stategy_Fibo copy.py - 299 - B,38163.1,40000,0,1
+2024-09-20 17:40:26,160 - INFO - Stategy_Fibo copy.py - 747 - Checking Bet history ['B']
+2024-09-20 17:41:10,982 - INFO - Stategy_Fibo copy.py - 285 - A,37663.1,40000,1,0
+2024-09-20 17:41:14,352 - INFO - Stategy_Fibo copy.py - 747 - Checking Bet history ['B', 'A']
+2024-09-20 17:42:06,402 - INFO - Stategy_Fibo copy.py - 285 - A,36663.1,40000,2,0
+2024-09-20 17:42:09,771 - INFO - Stategy_Fibo copy.py - 747 - Checking Bet history ['B', 'A', 'B']
+2024-09-20 17:43:49,208 - INFO - Stategy_Fibo copy.py - 299 - B,37613.1,40000,0,1
+2024-09-20 17:43:52,577 - INFO - Stategy_Fibo copy.py - 747 - Checking Bet history ['A', 'B', 'A', 'B']
+2024-09-20 17:44:38,379 - INFO - Stategy_Fibo copy.py - 299 - B,38088.1,40000,0,2
+2024-09-20 17:44:41,745 - ERROR - Stategy_Fibo copy.py - 755 - An error occurred during the betting process: float() argument must be a string or a real number, not 'NoneType'
+Traceback (most recent call last):
+  File "d:\Kaushal\Playground\Omnitrix\Omnitrix\Stategy_Fibo copy.py", line 679, in <module>
+    set_last_value(float(extract_numbers(last_value_txt)))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: float() argument must be a string or a real number, not 'NoneType'
+2024-09-20 17:44:44,117 - ERROR - Stategy_Fibo copy.py - 769 - An error occurred in the main function: float() argument must be a string or a real number, not 'NoneType'
+Traceback (most recent call last):
+  File "d:\Kaushal\Playground\Omnitrix\Omnitrix\Stategy_Fibo copy.py", line 413, in <module>
+    startingvaluefinal=float(extract_numbers(current_txt))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: float() argument must be a string or a real number, not 'NoneType'

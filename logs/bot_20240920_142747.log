@@ -1,0 +1,19 @@
+2024-09-20 14:28:52,134 - INFO - Stategy_Fibo copy.py - 392 - Starting value: 26504.1
+2024-09-20 14:28:52,134 - INFO - Stategy_Fibo copy.py - 393 - Target amount: 28000
+2024-09-20 14:28:52,134 - INFO - Stategy_Fibo copy.py - 394 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-09-20 14:29:08,591 - INFO - Stategy_Fibo copy.py - 285 - B,26504.1,28000,0,0
+2024-09-20 14:29:11,961 - INFO - Stategy_Fibo copy.py - 756 - Checking Bet history []
+2024-09-20 14:29:53,126 - INFO - Stategy_Fibo copy.py - 285 - B,26004.1,28000,1,0
+2024-09-20 14:29:56,496 - INFO - Stategy_Fibo copy.py - 756 - Checking Bet history ['A']
+2024-09-20 14:30:25,565 - INFO - Stategy_Fibo copy.py - 426 - new target check  length: 4
+2024-09-20 14:31:16,064 - INFO - Stategy_Fibo copy.py - 426 - new target check  length: 4
+2024-09-20 14:32:02,899 - INFO - Stategy_Fibo copy.py - 426 - new target check  length: 4
+2024-09-20 14:33:00,087 - INFO - Stategy_Fibo copy.py - 285 - B,26954.1,28000,0,0
+2024-09-20 14:33:03,466 - INFO - Stategy_Fibo copy.py - 756 - Checking Bet history []
+2024-09-20 14:33:35,164 - INFO - Stategy_Fibo copy.py - 426 - new target check  length: 4
+2024-09-20 14:34:21,527 - INFO - Stategy_Fibo copy.py - 426 - new target check  length: 4
+2024-09-20 14:35:11,856 - INFO - Stategy_Fibo copy.py - 426 - new target check  length: 4
+2024-09-20 14:35:58,074 - INFO - Stategy_Fibo copy.py - 426 - new target check  length: 4
+2024-09-20 14:36:54,302 - INFO - Stategy_Fibo copy.py - 285 - B,27429.1,28000,0,0
+2024-09-20 14:36:57,671 - INFO - Stategy_Fibo copy.py - 756 - Checking Bet history []
+2024-09-20 14:37:29,262 - INFO - Stategy_Fibo copy.py - 426 - new target check  length: 4

@@ -1,6 +1,0 @@
-2024-08-24 23:00:00,793 - ERROR - Testss.py - 462 - An error occurred in the main function: float() argument must be a string or a real number, not 'NoneType'
-Traceback (most recent call last):
-  File "d:\Kaushal\Playground\last_omnitrix\Omnitrix\Testss.py", line 312, in run_omnitrix
-    startingvaluefinal=float(txt)
-                       ^^^^^^^^^^
-TypeError: float() argument must be a string or a real number, not 'NoneType'

@@ -1,0 +1,50 @@
+2024-09-20 13:57:09,314 - INFO - Stategy_Fibo copy.py - 392 - Starting value: 23570.1
+2024-09-20 13:57:09,314 - INFO - Stategy_Fibo copy.py - 393 - Target amount: 26000
+2024-09-20 13:57:09,314 - INFO - Stategy_Fibo copy.py - 394 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-09-20 13:57:23,104 - INFO - Stategy_Fibo copy.py - 285 - B,23570.1,26000,0,0
+2024-09-20 13:57:26,472 - INFO - Stategy_Fibo copy.py - 756 - Checking Bet history []
+2024-09-20 13:57:55,622 - INFO - Stategy_Fibo copy.py - 426 - new target check  length: 4
+2024-09-20 13:58:46,618 - INFO - Stategy_Fibo copy.py - 426 - new target check  length: 4
+2024-09-20 13:59:35,895 - INFO - Stategy_Fibo copy.py - 426 - new target check  length: 4
+2024-09-20 14:00:25,666 - INFO - Stategy_Fibo copy.py - 426 - new target check  length: 4
+2024-09-20 14:01:26,929 - INFO - Stategy_Fibo copy.py - 285 - B,24045.1,26000,0,0
+2024-09-20 14:01:30,365 - INFO - Stategy_Fibo copy.py - 756 - Checking Bet history []
+2024-09-20 14:02:18,183 - INFO - Stategy_Fibo copy.py - 285 - B,23545.1,26000,1,0
+2024-09-20 14:02:21,678 - INFO - Stategy_Fibo copy.py - 756 - Checking Bet history ['A']
+2024-09-20 14:03:11,416 - INFO - Stategy_Fibo copy.py - 285 - B,22554.1,26000,2,0
+2024-09-20 14:03:14,938 - INFO - Stategy_Fibo copy.py - 756 - Checking Bet history ['A', 'A']
+2024-09-20 14:03:56,340 - INFO - Stategy_Fibo copy.py - 285 - B,23504.1,26000,0,1
+2024-09-20 14:03:59,710 - INFO - Stategy_Fibo copy.py - 756 - Checking Bet history ['A', 'A', 'B']
+2024-09-20 14:05:48,106 - INFO - Stategy_Fibo copy.py - 285 - B,23979.1,26000,0,2
+2024-09-20 14:05:51,545 - INFO - Stategy_Fibo copy.py - 756 - Checking Bet history ['A', 'B', 'B', 'A']
+2024-09-20 14:06:33,044 - INFO - Stategy_Fibo copy.py - 285 - B,23479.1,26000,1,0
+2024-09-20 14:06:36,412 - INFO - Stategy_Fibo copy.py - 756 - Checking Bet history ['B', 'B', 'A', 'A']
+2024-09-20 14:07:05,565 - INFO - Stategy_Fibo copy.py - 426 - new target check  length: 4
+2024-09-20 14:07:57,242 - INFO - Stategy_Fibo copy.py - 426 - new target check  length: 4
+2024-09-20 14:08:46,673 - INFO - Stategy_Fibo copy.py - 426 - new target check  length: 4
+2024-09-20 14:09:47,466 - INFO - Stategy_Fibo copy.py - 285 - B,24429.1,26000,0,0
+2024-09-20 14:09:50,840 - INFO - Stategy_Fibo copy.py - 756 - Checking Bet history []
+2024-09-20 14:10:34,777 - INFO - Stategy_Fibo copy.py - 426 - new target check  length: 4
+2024-09-20 14:11:26,170 - INFO - Stategy_Fibo copy.py - 426 - new target check  length: 4
+2024-09-20 14:12:13,859 - INFO - Stategy_Fibo copy.py - 426 - new target check  length: 4
+2024-09-20 14:13:00,687 - INFO - Stategy_Fibo copy.py - 426 - new target check  length: 4
+2024-09-20 14:14:00,912 - INFO - Stategy_Fibo copy.py - 285 - B,24904.1,26000,0,0
+2024-09-20 14:14:04,282 - INFO - Stategy_Fibo copy.py - 756 - Checking Bet history []
+2024-09-20 14:14:47,596 - INFO - Stategy_Fibo copy.py - 285 - B,24404.1,26000,1,0
+2024-09-20 14:14:50,964 - INFO - Stategy_Fibo copy.py - 756 - Checking Bet history ['A']
+2024-09-20 14:15:33,371 - INFO - Stategy_Fibo copy.py - 285 - B,23404.1,26000,2,0
+2024-09-20 14:15:36,747 - INFO - Stategy_Fibo copy.py - 756 - Checking Bet history ['A', 'A']
+2024-09-20 14:16:15,663 - INFO - Stategy_Fibo copy.py - 285 - B,24354.1,26000,0,1
+2024-09-20 14:16:19,030 - INFO - Stategy_Fibo copy.py - 756 - Checking Bet history ['A', 'A', 'B']
+2024-09-20 14:17:51,478 - INFO - Stategy_Fibo copy.py - 285 - B,24820.1,26000,0,2
+2024-09-20 14:17:54,846 - INFO - Stategy_Fibo copy.py - 756 - Checking Bet history ['A', 'B', 'B', 'A']
+2024-09-20 14:18:32,063 - INFO - Stategy_Fibo copy.py - 271 - A,24820.1,26000,0,3
+2024-09-20 14:18:35,429 - ERROR - Stategy_Fibo copy.py - 764 - An error occurred during the betting process: float() argument must be a string or a real number, not 'NoneType'
+Traceback (most recent call last):
+  File "d:\Kaushal\Playground\Omnitrix\Omnitrix\Stategy_Fibo copy.py", line 684, in <module>
+    set_last_value(float(extract_numbers(last_value_txt)))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: float() argument must be a string or a real number, not 'NoneType'
+2024-09-20 14:18:37,933 - INFO - Stategy_Fibo copy.py - 426 - new target check  length: 4
+2024-09-20 14:19:05,028 - INFO - Stategy_Fibo copy.py - 426 - new target check  length: 4
+2024-09-20 14:19:37,330 - INFO - Stategy_Fibo copy.py - 426 - new target check  length: 4

@@ -1,6 +1,0 @@
-2024-08-24 22:00:48,393 - ERROR - MainMenu.py - 359 - An error occurred in the main function: float() argument must be a string or a real number, not 'NoneType'
-Traceback (most recent call last):
-  File "d:\Kaushal\Playground\last_omnitrix\Omnitrix\MainMenu.py", line 209, in __init__
-    startingvaluefinal=float(txt)
-                       ^^^^^^^^^^
-TypeError: float() argument must be a string or a real number, not 'NoneType'

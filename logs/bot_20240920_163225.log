@@ -1,0 +1,25 @@
+2024-09-20 16:34:40,275 - INFO - Stategy_Fibo copy.py - 406 - Starting value: 28563.1
+2024-09-20 16:34:40,276 - INFO - Stategy_Fibo copy.py - 407 - Target amount: 30000
+2024-09-20 16:34:40,276 - INFO - Stategy_Fibo copy.py - 408 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-09-20 16:35:08,293 - INFO - Stategy_Fibo copy.py - 299 - B,28563.1,30000,0,0
+2024-09-20 16:35:11,663 - INFO - Stategy_Fibo copy.py - 773 - Checking Bet history []
+2024-09-20 16:35:44,220 - INFO - Stategy_Fibo copy.py - 440 - new target check  length: 4
+2024-09-20 16:36:29,262 - INFO - Stategy_Fibo copy.py - 440 - new target check  length: 4
+2024-09-20 16:37:14,347 - INFO - Stategy_Fibo copy.py - 440 - new target check  length: 4
+2024-09-20 16:38:00,090 - INFO - Stategy_Fibo copy.py - 440 - new target check  length: 4
+2024-09-20 16:38:56,768 - INFO - Stategy_Fibo copy.py - 299 - B,29038.1,30000,0,0
+2024-09-20 16:39:00,139 - INFO - Stategy_Fibo copy.py - 773 - Checking Bet history []
+2024-09-20 16:39:41,425 - INFO - Stategy_Fibo copy.py - 299 - B,28538.1,30000,1,0
+2024-09-20 16:39:44,794 - INFO - Stategy_Fibo copy.py - 773 - Checking Bet history ['A']
+2024-09-20 16:40:27,513 - INFO - Stategy_Fibo copy.py - 299 - B,27538.1,30000,2,0
+2024-09-20 16:40:30,882 - INFO - Stategy_Fibo copy.py - 773 - Checking Bet history ['A', 'A']
+2024-09-20 16:41:15,201 - INFO - Stategy_Fibo copy.py - 285 - A,26538.1,30000,3,0
+2024-09-20 16:41:18,570 - INFO - Stategy_Fibo copy.py - 773 - Checking Bet history ['A', 'A', 'A']
+2024-09-20 16:42:47,162 - INFO - Stategy_Fibo copy.py - 299 - B,25038.1,30000,4,0
+2024-09-20 16:42:50,531 - INFO - Stategy_Fibo copy.py - 773 - Checking Bet history ['A', 'A', 'B', 'B']
+2024-09-20 16:43:35,334 - INFO - Stategy_Fibo copy.py - 299 - B,22538.1,30000,5,0
+2024-09-20 16:43:38,701 - INFO - Stategy_Fibo copy.py - 773 - Checking Bet history ['A', 'B', 'B', 'A']
+2024-09-20 16:44:22,004 - INFO - Stategy_Fibo copy.py - 285 - A,26338.1,30000,3,1
+2024-09-20 16:44:25,373 - INFO - Stategy_Fibo copy.py - 773 - Checking Bet history ['B', 'B', 'A', 'B']
+2024-09-20 16:45:01,992 - INFO - Stategy_Fibo copy.py - 285 - A,26338.1,30000,1,2
+2024-09-20 16:45:05,363 - INFO - Stategy_Fibo copy.py - 773 - Checking Bet history ['B', 'A', 'B', 'A']
