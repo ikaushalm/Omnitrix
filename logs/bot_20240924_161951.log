@@ -1,0 +1,6 @@
+2024-09-24 16:20:05,135 - INFO - new.py - 406 - Starting value: 8086.3
+2024-09-24 16:20:05,135 - INFO - new.py - 407 - Target amount: 8500
+2024-09-24 16:20:05,135 - INFO - new.py - 408 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-09-24 16:20:31,550 - INFO - new.py - 707 - Checking Bet history []
+2024-09-24 16:21:27,665 - INFO - new.py - 285 - A,7986.3,8500,1,0
+2024-09-24 16:21:31,034 - INFO - new.py - 707 - Checking Bet history ['B']

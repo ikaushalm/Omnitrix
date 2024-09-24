@@ -65,7 +65,7 @@ B_y = screenHeight*relative_By
 # get_text_at_position
 # 1150,135,0.5 -for Santosh Bhaiya Machine-----------------
 
-relative_x = 1150 / 1920  # Relative position on X-axis
+relative_x = 1115 / 1920  # Relative position on X-axis
 relative_y = 135 / 1080   # Relative position on Y-axis
 
 textat_x= screenWidth*relative_x
@@ -400,7 +400,7 @@ targetyes=0
 try:    
     # pyautogui.click(x=607, y=640)                                                               
     startingvaluefinal=float(txt)
-    set_new_target_val(startingvaluefinal+300)
+    set_new_target_val(startingvaluefinal+40)
     function_change=1
     target_amt_final=float(target_amt)
     logging.info(f"Starting value: {startingvaluefinal}")
@@ -414,12 +414,34 @@ try:
             print(f'new target {new_target}')
             print(f'Starting Value final {startingvaluefinal}')
             if(all_equal(Bethistory)):
-                set_new_target_val(startingvaluefinal+300)
+                set_new_target_val(startingvaluefinal+40)
             else:
+                if(len(Bethistory)>=4):
+                    if(Bethistory[0]=='B' and Bethistory[1]=='B' and Bethistory[2]=='A' and Bethistory[3]=='B'):
+                        Bethistory=[]
+                        function_one=1
+                        function_change=1
+                        sleep_test=0
+                        next_multiple_of_5 = (bet_count + 4) // 5 * 5
+                        loop_condition=next_multiple_of_5-bet_count
+                        loop_condition=loop_condition+5
+                        while(sleep_test<loop_condition):
+
+                            try:
+                                sleepstrLockcheck = pyautogui.locateOnScreen("placeyourbets.png", confidence=0.8)                       
+                                if(len(str(sleepstrLockcheck))==44):
+                                    sleep_test=sleep_test+1
+                                    bet_count=bet_count+1
+                                    print(f' sleep bet count {bet_count}')
+                                    sleep(30)
+                            except:
+                                sleepstrLockcheck=''
+                        
+                        loop_count=0
                 if(startingvaluefinal>new_target):
 
                     print(f'New Target Achieved {new_target}')
-                    set_new_target_val(startingvaluefinal+300)
+                    set_new_target_val(startingvaluefinal+40)
                     #reset values
                     Bethistory=[]
                     function_one=1
@@ -497,9 +519,9 @@ try:
                         elif loss_count==1:
                             repeat_count=fibo_series[loss_count+1]
                         elif loss_count==2: 
-                            repeat_count=fibo_series[loss_count]
+                            repeat_count=fibo_series[loss_count+1]
                         elif loss_count==3:
-                            repeat_count=fibo_series[loss_count]
+                            repeat_count=fibo_series[loss_count+1]
                         elif loss_count==4:
                             repeat_count=fibo_series[loss_count]
                         elif loss_count==5:
@@ -522,16 +544,12 @@ try:
                             repeat_count=loss_count*2   
                     # checks if its a tie                    
                     elif(last_value==current_value_final):
-
-
                         # add_to_fixed_length_array(Bethistory,'T')
                         loss_count=loss_count
                         repeat_count=repeat_count
                         win_count=win_count
                         
                     else:
-
-
                         if(betted_on=='A'):
                             add_to_fixed_length_array(Bethistory,'A')
                         if(betted_on=='B'):
@@ -551,13 +569,10 @@ try:
                     current_value_final=float(extract_numbers(current_txt))
                     if(loop_count!=0):
                         try:
-                     
 
                             # print(last_value)
                             # print(current_value_final)
                             if(last_value>current_value_final):
-                               
-
                                 # print('inside true loop')
                                 if(betted_on=='A'):
                                     add_to_fixed_length_array(Bethistory,'B')
@@ -570,9 +585,9 @@ try:
                                 elif loss_count==1:
                                     repeat_count=fibo_series[loss_count+1]
                                 elif loss_count==2: 
-                                    repeat_count=fibo_series[loss_count]
+                                    repeat_count=fibo_series[loss_count+1]
                                 elif loss_count==3:
-                                    repeat_count=fibo_series[loss_count]
+                                    repeat_count=fibo_series[loss_count+1]
                                 elif loss_count==4:
                                     repeat_count=fibo_series[loss_count]
                                 elif loss_count==5:
@@ -642,43 +657,25 @@ try:
                             set_last_value(float(extract_numbers(last_value_txt)))
                         else:
                             if function_change==1:  # Call function_one() twice for every even iteration
-                                # if bet_count%3==0:
-                                #     betonA(repeat_count)
-                                # else:
-                                if win_count>=3:
-                                    betonA(repeat_count)
-                                else:
-                                    betonB(repeat_count)                                    
-                                    # if loss_count<=4:
-                                    #     betonB(repeat_count)
-                                    # else:
-                                    #     betonA(repeat_count)
-                                # betonB(repeat_count)
                                 function_change=2
-                                # pyautogui.click(textat_x,textat_y)
                                 sleep(1)                  
                                 last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
                                 set_last_value(float(extract_numbers(last_value_txt)))
                                 
                             elif function_change==2:  # Call function_one() twice for every even iteration
-                               
-                                # if bet_count%3==0:
-                                #     betonA(repeat_count)
-                                # else:                        
-                                # if win_count>=3:
-                                #     betonA(repeat_count)
-                                # else:
-                                #     if loss_count<=4:
-                                #         betonB(repeat_count)
-                                #     else:
-                                #         betonA(repeat_count)
-                                # if(Bethistory[lenBet-2]=='A'and Bethistory[lenBet-1]=='A'):
-                                #         betonB(repeat_count)     
-                                # else:
-                                if win_count>=3:
+
+                                # Top-left: (446, 757)
+                                # Bottom-right: (705, 773)
+                                pic = ImageGrab.grab(bbox=(446, 757, 705, 773))
+                                pic.save("function2.png")
+                                sleep(1)
+                                Bethistory=[]
+                                last_char=extract_characters_from_image("function2.png")
+                                print(f'Extracted Char : {last_char}')
+                                add_to_fixed_length_array(Bethistory,last_char) 
+
+                                if(last_char=='B'):
                                     betonA(repeat_count)
-                                else:
-                                    betonB(repeat_count)  
                                 
                                 # betonB(repeat_count)
                                 function_change=3
@@ -687,62 +684,16 @@ try:
                                 last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
                                 set_last_value(float(extract_numbers(last_value_txt)))
                             elif function_change==3:  # Call function_one() twice for every even iteration
-                                # if bet_count%3==0:
-                                #     betonA(repeat_count)
-                                # else: 
-                                if(len(Bethistory)>=2):
-                                    lenBet=len(Bethistory)
-                                    if(Bethistory[lenBet-2]=='A'and Bethistory[lenBet-1]=='A'):
-                                        betonB(repeat_count)     
-                                    else:
-                                        if win_count>=3:
-                                            betonB(repeat_count)
-                                        else:
-                                            betonA(repeat_count)
-                                            # if loss_count<=4:
-                                            #     betonA(repeat_count)
-                                            # else:
-                                            #     betonB(repeat_count)
-                                # if(len(Bethistory)>=3):
-                                #     lenBet=len(Bethistory)
-                                #     if(Bethistory[lenBet-3]=='A' and Bethistory[lenBet-2]=='A'and Bethistory[lenBet-1]=='B'):
-                                #         betonB(repeat_count)
-                                #     else:
-                                #         betonA(repeat_count)
-                                # else:
-                                # betonA(repeat_count)
+                                if(Bethistory[0]=='B'):
+                                    betonB(repeat_count)
                                 function_change=4
                                 # pyautogui.click(textat_x,textat_y)
                                 sleep(1)                  
                                 last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
                                 set_last_value(float(extract_numbers(last_value_txt)))
                             elif function_change==4:  # Call function_one() twice for every even iteration
-                                # if bet_count%3==0:
-                                #     betonA(repeat_count)
-                                # else:  
-                                # if win_count>=3:
-                                #     betonB(repeat_count)
-                                # else:
-                                #     if loss_count<=2:
-                                #         betonA(repeat_count)
-                                #     else:
-                                #         betonB(repeat_count)
-                                # Preventing AABB pattern
-                               
-
-                                if(len(Bethistory)>=3):
-                                    lenBet=len(Bethistory)
-                                    if(Bethistory[lenBet-3]=='A' and Bethistory[lenBet-2]=='A'and Bethistory[lenBet-1]=='B'):
-                                        betonB(repeat_count)     
-                                    else:
-                                        if win_count>=3:
-                                            betonB(repeat_count)
-                                        else:
-                                            betonA(repeat_count)
-                                            # if loss_count<=4:
-                                            #     betonA(repeat_count)
-                                            # else:
-                                            #     betonB(repeat_count)
+                                if(Bethistory[0]=='B'):
+                                    betonA(repeat_count)
                                 function_change=1
                                 # pyautogui.click(textat_x,textat_y)
                                 sleep(1)                  
@@ -758,6 +709,7 @@ try:
                         # print(Bethistory)
                         print(f'Loss_count {loss_count}')
                         print(f'betcount  {bet_count}')
+                        print(f' target amount{target_amt}')
                         sleep(23)
 
                     except Exception as e:

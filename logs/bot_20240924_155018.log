@@ -1,0 +1,14 @@
+2024-09-24 15:52:56,124 - INFO - new.py - 406 - Starting value: 8006.3
+2024-09-24 15:52:56,124 - INFO - new.py - 407 - Target amount: 10000
+2024-09-24 15:52:56,125 - INFO - new.py - 408 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-09-24 15:53:03,139 - INFO - new.py - 707 - Checking Bet history []
+2024-09-24 15:53:55,218 - INFO - new.py - 285 - A,8006.3,10000,0,0
+2024-09-24 15:53:58,592 - INFO - new.py - 707 - Checking Bet history ['B']
+2024-09-24 15:54:38,841 - INFO - new.py - 299 - B,8006.3,10000,0,1
+2024-09-24 15:54:42,231 - INFO - new.py - 707 - Checking Bet history ['B', 'A']
+2024-09-24 15:55:07,604 - ERROR - new.py - 729 - An error occurred in the main function: float() argument must be a string or a real number, not 'NoneType'
+Traceback (most recent call last):
+  File "d:\Kaushal\Playground\Omnitrix\Omnitrix\new.py", line 413, in <module>
+    startingvaluefinal=float(extract_numbers(current_txt))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: float() argument must be a string or a real number, not 'NoneType'

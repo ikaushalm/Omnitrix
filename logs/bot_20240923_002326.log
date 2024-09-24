@@ -1,0 +1,9 @@
+2024-09-23 00:25:53,803 - INFO - Stategy_Fibo copy.py - 406 - Starting value: 37274.86
+2024-09-23 00:25:53,803 - INFO - Stategy_Fibo copy.py - 407 - Target amount: 45000
+2024-09-23 00:25:53,803 - INFO - Stategy_Fibo copy.py - 408 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-09-23 00:26:07,549 - INFO - Stategy_Fibo copy.py - 299 - B,37274.86,45000,0,0
+2024-09-23 00:26:10,956 - INFO - Stategy_Fibo copy.py - 747 - Checking Bet history []
+2024-09-23 00:26:50,255 - INFO - Stategy_Fibo copy.py - 299 - B,37274.86,45000,0,1
+2024-09-23 00:26:53,652 - INFO - Stategy_Fibo copy.py - 747 - Checking Bet history ['B']
+2024-09-23 00:30:09,719 - INFO - Stategy_Fibo copy.py - 299 - B,39649.86,45000,0,0
+2024-09-23 00:30:13,100 - INFO - Stategy_Fibo copy.py - 747 - Checking Bet history []

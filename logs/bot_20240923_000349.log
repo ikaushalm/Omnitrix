@@ -1,0 +1,36 @@
+2024-09-23 00:04:23,716 - INFO - Stategy_Fibo copy.py - 406 - Starting value: 37999.86
+2024-09-23 00:04:23,719 - INFO - Stategy_Fibo copy.py - 407 - Target amount: 40000
+2024-09-23 00:04:23,719 - INFO - Stategy_Fibo copy.py - 408 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-09-23 00:04:43,191 - INFO - Stategy_Fibo copy.py - 299 - B,37999.86,40000,0,0
+2024-09-23 00:04:46,574 - INFO - Stategy_Fibo copy.py - 747 - Checking Bet history []
+2024-09-23 00:05:27,471 - ERROR - Stategy_Fibo copy.py - 755 - An error occurred during the betting process: PyAutoGUI fail-safe triggered from mouse moving to a corner of the screen. To disable this fail-safe, set pyautogui.FAILSAFE to False. DISABLING FAIL-SAFE IS NOT RECOMMENDED.
+Traceback (most recent call last):
+  File "d:\Kaushal\Playground\Omnitrix\Omnitrix\Stategy_Fibo copy.py", line 672, in <module>
+    betonB(repeat_count)
+  File "d:\Kaushal\Playground\Omnitrix\Omnitrix\Stategy_Fibo copy.py", line 293, in betonB
+    final_x, final_y =move_cursor_in_random_circles(B_x,B_y,moving_r)  # Move cursor in random circles around the betting point
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Kaushal\Playground\Omnitrix\Omnitrix\Stategy_Fibo copy.py", line 261, in move_cursor_in_random_circles
+    pyautogui.moveTo(x, y, duration=move_duration)
+  File "C:\Users\Umesh Patel\AppData\Local\Programs\Python\Python312\Lib\site-packages\pyautogui\__init__.py", line 594, in wrapper
+    returnVal = wrappedFunction(*args, **kwargs)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Umesh Patel\AppData\Local\Programs\Python\Python312\Lib\site-packages\pyautogui\__init__.py", line 1288, in moveTo
+    _mouseMoveDrag("move", x, y, 0, 0, duration, tween)
+  File "C:\Users\Umesh Patel\AppData\Local\Programs\Python\Python312\Lib\site-packages\pyautogui\__init__.py", line 1504, in _mouseMoveDrag
+    failSafeCheck()
+  File "C:\Users\Umesh Patel\AppData\Local\Programs\Python\Python312\Lib\site-packages\pyautogui\__init__.py", line 1734, in failSafeCheck
+    raise FailSafeException(
+pyautogui.FailSafeException: PyAutoGUI fail-safe triggered from mouse moving to a corner of the screen. To disable this fail-safe, set pyautogui.FAILSAFE to False. DISABLING FAIL-SAFE IS NOT RECOMMENDED.
+2024-09-23 00:05:27,481 - ERROR - Stategy_Fibo copy.py - 769 - An error occurred in the main function: PyAutoGUI fail-safe triggered from mouse moving to a corner of the screen. To disable this fail-safe, set pyautogui.FAILSAFE to False. DISABLING FAIL-SAFE IS NOT RECOMMENDED.
+Traceback (most recent call last):
+  File "d:\Kaushal\Playground\Omnitrix\Omnitrix\Stategy_Fibo copy.py", line 412, in <module>
+    current_txt = get_text_at_position(textat_x,textat_y,moving_delay)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Kaushal\Playground\Omnitrix\Omnitrix\Stategy_Fibo copy.py", line 354, in get_text_at_position
+    pyautogui.moveTo(x, y, duration=duration)
+  File "C:\Users\Umesh Patel\AppData\Local\Programs\Python\Python312\Lib\site-packages\pyautogui\__init__.py", line 593, in wrapper
+    failSafeCheck()
+  File "C:\Users\Umesh Patel\AppData\Local\Programs\Python\Python312\Lib\site-packages\pyautogui\__init__.py", line 1734, in failSafeCheck
+    raise FailSafeException(
+pyautogui.FailSafeException: PyAutoGUI fail-safe triggered from mouse moving to a corner of the screen. To disable this fail-safe, set pyautogui.FAILSAFE to False. DISABLING FAIL-SAFE IS NOT RECOMMENDED.

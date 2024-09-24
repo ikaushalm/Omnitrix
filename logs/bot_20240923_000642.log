@@ -1,0 +1,14 @@
+2024-09-23 00:08:03,090 - INFO - Stategy_Fibo copy.py - 406 - Starting value: 38449.86
+2024-09-23 00:08:03,090 - INFO - Stategy_Fibo copy.py - 407 - Target amount: 40000
+2024-09-23 00:08:03,090 - INFO - Stategy_Fibo copy.py - 408 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-09-23 00:08:31,832 - INFO - Stategy_Fibo copy.py - 299 - B,38449.86,40000,0,0
+2024-09-23 00:08:35,231 - INFO - Stategy_Fibo copy.py - 747 - Checking Bet history []
+2024-09-23 00:09:21,102 - INFO - Stategy_Fibo copy.py - 299 - B,37949.86,40000,1,0
+2024-09-23 00:09:24,500 - INFO - Stategy_Fibo copy.py - 747 - Checking Bet history ['A']
+2024-09-23 00:13:03,958 - INFO - Stategy_Fibo copy.py - 299 - B,38899.86,40000,0,0
+2024-09-23 00:13:07,355 - INFO - Stategy_Fibo copy.py - 747 - Checking Bet history []
+2024-09-23 00:17:24,557 - INFO - Stategy_Fibo copy.py - 299 - B,39374.86,40000,0,0
+2024-09-23 00:17:27,953 - INFO - Stategy_Fibo copy.py - 747 - Checking Bet history []
+2024-09-23 00:21:44,420 - INFO - Stategy_Fibo copy.py - 299 - B,39849.86,40000,0,0
+2024-09-23 00:21:47,816 - INFO - Stategy_Fibo copy.py - 747 - Checking Bet history []
+2024-09-23 00:22:22,824 - INFO - Stategy_Fibo copy.py - 765 - Condition not met, alarm beeped.

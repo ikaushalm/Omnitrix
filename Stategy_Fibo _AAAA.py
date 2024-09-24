@@ -230,7 +230,7 @@ def open_incognito_website(url):
 
 
 
-def move_cursor_in_random_circles(center_x, center_y, radius, duration=6):
+def move_cursor_in_random_circles(center_x, center_y, radius, duration=3):
     """Move the cursor in random circles around the given center point for the specified duration with human-like imperfections.
     Returns the final x and y coordinates of the cursor."""
     
@@ -400,7 +400,7 @@ targetyes=0
 try:    
     # pyautogui.click(x=607, y=640)                                                               
     startingvaluefinal=float(txt)
-    set_new_target_val(startingvaluefinal+300)
+    set_new_target_val(startingvaluefinal+220)
     function_change=1
     target_amt_final=float(target_amt)
     logging.info(f"Starting value: {startingvaluefinal}")
@@ -414,12 +414,12 @@ try:
             print(f'new target {new_target}')
             print(f'Starting Value final {startingvaluefinal}')
             if(all_equal(Bethistory)):
-                set_new_target_val(startingvaluefinal+300)
+                set_new_target_val(startingvaluefinal+220)
             else:
                 if(startingvaluefinal>new_target):
 
                     print(f'New Target Achieved {new_target}')
-                    set_new_target_val(startingvaluefinal+300)
+                    set_new_target_val(startingvaluefinal+220)
                     #reset values
                     Bethistory=[]
                     function_one=1
@@ -497,11 +497,11 @@ try:
                         elif loss_count==1:
                             repeat_count=fibo_series[loss_count+1]
                         elif loss_count==2: 
-                            repeat_count=fibo_series[loss_count]
+                            repeat_count=4
                         elif loss_count==3:
-                            repeat_count=fibo_series[loss_count]
+                            repeat_count=9
                         elif loss_count==4:
-                            repeat_count=fibo_series[loss_count]
+                            repeat_count=16
                         elif loss_count==5:
                             repeat_count=fibo_series[loss_count]
                         elif loss_count==6:

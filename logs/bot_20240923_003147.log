@@ -1,0 +1,27 @@
+2024-09-23 00:33:41,410 - INFO - Stategy_Fibo copy.py - 406 - Starting value: 40574.86
+2024-09-23 00:33:41,410 - INFO - Stategy_Fibo copy.py - 407 - Target amount: 45000
+2024-09-23 00:33:41,410 - INFO - Stategy_Fibo copy.py - 408 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-09-23 00:34:09,305 - INFO - Stategy_Fibo copy.py - 299 - B,40574.86,45000,0,0
+2024-09-23 00:34:12,685 - INFO - Stategy_Fibo copy.py - 747 - Checking Bet history []
+2024-09-23 00:37:59,043 - INFO - Stategy_Fibo copy.py - 299 - B,41049.86,45000,0,0
+2024-09-23 00:38:02,415 - INFO - Stategy_Fibo copy.py - 747 - Checking Bet history []
+2024-09-23 00:38:47,409 - INFO - Stategy_Fibo copy.py - 299 - B,40549.86,45000,1,0
+2024-09-23 00:38:50,787 - INFO - Stategy_Fibo copy.py - 747 - Checking Bet history ['A']
+2024-09-23 00:39:35,752 - INFO - Stategy_Fibo copy.py - 299 - B,39549.86,45000,2,0
+2024-09-23 00:39:39,126 - INFO - Stategy_Fibo copy.py - 747 - Checking Bet history ['A', 'A']
+2024-09-23 00:40:19,991 - INFO - Stategy_Fibo copy.py - 285 - A,38549.86,45000,3,0
+2024-09-23 00:40:23,361 - INFO - Stategy_Fibo copy.py - 747 - Checking Bet history ['A', 'A', 'A']
+2024-09-23 00:41:51,694 - INFO - Stategy_Fibo copy.py - 285 - A,40924.86,45000,1,1
+2024-09-23 00:41:55,083 - INFO - Stategy_Fibo copy.py - 747 - Checking Bet history ['A', 'A', 'A', 'A']
+2024-09-23 00:42:36,621 - INFO - Stategy_Fibo copy.py - 285 - A,41399.86,45000,1,2
+2024-09-23 00:42:40,001 - INFO - Stategy_Fibo copy.py - 747 - Checking Bet history ['A', 'A', 'A', 'A']
+2024-09-23 00:43:22,122 - INFO - Stategy_Fibo copy.py - 285 - A,40899.86,45000,2,0
+2024-09-23 00:43:25,509 - INFO - Stategy_Fibo copy.py - 747 - Checking Bet history ['A', 'A', 'A', 'B']
+2024-09-23 00:44:05,213 - INFO - Stategy_Fibo copy.py - 285 - A,39899.86,45000,3,0
+2024-09-23 00:44:08,596 - INFO - Stategy_Fibo copy.py - 747 - Checking Bet history ['A', 'A', 'B', 'B']
+2024-09-23 00:44:36,467 - ERROR - Stategy_Fibo copy.py - 769 - An error occurred in the main function: float() argument must be a string or a real number, not 'NoneType'
+Traceback (most recent call last):
+  File "d:\Kaushal\Playground\Omnitrix\Omnitrix\Stategy_Fibo copy.py", line 413, in <module>
+    startingvaluefinal=float(extract_numbers(current_txt))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: float() argument must be a string or a real number, not 'NoneType'

@@ -1,0 +1,11 @@
+2024-09-22 20:29:08,759 - INFO - Stategy_Fibo copy.py - 406 - Starting value: 26749.86
+2024-09-22 20:29:08,759 - INFO - Stategy_Fibo copy.py - 407 - Target amount: 30000
+2024-09-22 20:29:08,759 - INFO - Stategy_Fibo copy.py - 408 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-09-22 20:29:20,046 - INFO - Stategy_Fibo copy.py - 299 - B,26749.86,30000,0,0
+2024-09-22 20:29:23,416 - INFO - Stategy_Fibo copy.py - 747 - Checking Bet history []
+2024-09-22 20:29:48,791 - ERROR - Stategy_Fibo copy.py - 769 - An error occurred in the main function: float() argument must be a string or a real number, not 'NoneType'
+Traceback (most recent call last):
+  File "d:\Kaushal\Playground\Omnitrix\Omnitrix\Stategy_Fibo copy.py", line 413, in <module>
+    startingvaluefinal=float(extract_numbers(current_txt))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: float() argument must be a string or a real number, not 'NoneType'

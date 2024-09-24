@@ -1,0 +1,23 @@
+2024-09-23 14:47:13,732 - INFO - Stategy_Fibo _AAAA.py - 406 - Starting value: 59406.3
+2024-09-23 14:47:13,732 - INFO - Stategy_Fibo _AAAA.py - 407 - Target amount: 65000
+2024-09-23 14:47:13,732 - INFO - Stategy_Fibo _AAAA.py - 408 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-09-23 14:47:35,898 - INFO - Stategy_Fibo _AAAA.py - 299 - B,59406.3,65000,0,0
+2024-09-23 14:47:39,288 - INFO - Stategy_Fibo _AAAA.py - 756 - Checking Bet history []
+2024-09-23 14:51:37,712 - INFO - Stategy_Fibo _AAAA.py - 299 - B,59881.3,65000,0,0
+2024-09-23 14:51:41,129 - INFO - Stategy_Fibo _AAAA.py - 756 - Checking Bet history []
+2024-09-23 14:55:43,810 - INFO - Stategy_Fibo _AAAA.py - 299 - B,60356.3,65000,0,0
+2024-09-23 14:55:47,363 - INFO - Stategy_Fibo _AAAA.py - 756 - Checking Bet history []
+2024-09-23 14:59:45,123 - INFO - Stategy_Fibo _AAAA.py - 299 - B,60831.3,65000,0,0
+2024-09-23 14:59:48,551 - INFO - Stategy_Fibo _AAAA.py - 756 - Checking Bet history []
+2024-09-23 15:00:31,079 - INFO - Stategy_Fibo _AAAA.py - 299 - B,60331.3,65000,1,0
+2024-09-23 15:00:34,528 - INFO - Stategy_Fibo _AAAA.py - 756 - Checking Bet history ['A']
+2024-09-23 15:01:19,681 - INFO - Stategy_Fibo _AAAA.py - 299 - B,59331.3,65000,2,0
+2024-09-23 15:01:23,077 - INFO - Stategy_Fibo _AAAA.py - 756 - Checking Bet history ['A', 'A']
+2024-09-23 15:02:05,947 - INFO - Stategy_Fibo _AAAA.py - 285 - A,58331.3,65000,3,0
+2024-09-23 15:02:09,341 - INFO - Stategy_Fibo _AAAA.py - 756 - Checking Bet history ['A', 'A', 'A']
+2024-09-23 15:03:27,023 - ERROR - Stategy_Fibo _AAAA.py - 778 - An error occurred in the main function: float() argument must be a string or a real number, not 'NoneType'
+Traceback (most recent call last):
+  File "d:\Kaushal\Playground\Omnitrix\Omnitrix\Stategy_Fibo _AAAA.py", line 413, in <module>
+    startingvaluefinal=float(extract_numbers(current_txt))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: float() argument must be a string or a real number, not 'NoneType'
