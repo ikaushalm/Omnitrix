@@ -21,6 +21,8 @@ import threading
 from PIL import ImageGrab
 import pytesseract
 from PIL import Image
+import random
+import itertools
 
 # ---------------------------------------------------------
 # ---------------------------------------------------------
@@ -85,6 +87,7 @@ BaseUrl = decoded_bytes.decode('utf-8')
 
 
 Bethistory=[]
+Losshistory=[]
 function_one=1
 function_change=1
 last_value=None
@@ -93,6 +96,7 @@ win_count=0
 loop_count=0
 repeat_count=1
 bet_count=0
+lstbet_count=0
 startingvaluefinal=0
 isFifth=False
 
@@ -111,7 +115,28 @@ def compare_betted_on(value):
         return False
 
 
+def generate_unique_random_combinations(chars, length, num_combinations):
+    # Generate all possible combinations
+    all_combinations = list(itertools.product(chars, repeat=length))
+    
+    # Shuffle the list to get random order
+    random.shuffle(all_combinations)
+    
+    # Select the desired number of unique combinations
+    selected_combinations = all_combinations[:num_combinations]
+    
+    return [list(combo) for combo in selected_combinations]  # Convert tuples to lists
 
+# Define the characters and the length of the combination
+chars = ['A', 'B']
+length = 3
+num_combinations = 3
+
+# Get the unique random combinations as an array of arrays
+random_combinations = generate_unique_random_combinations(chars, length, num_combinations)
+
+
+betindex=0
 
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 # Load the image
@@ -379,6 +404,19 @@ def add_to_fixed_length_array(arr, new_value):
         arr.pop(0)  # Remove the oldest element
     return arr
 
+def add_to_Loss(arr, new_value):
+    arr.append(new_value)
+    # If the length of the array exceeds the fixed length, remove the oldest element
+    if len(arr) > 3:
+        arr.pop(0)  # Remove the oldest element
+    return arr
+
+def is_incremental_by_one(loss_history):
+    for i in range(1, len(loss_history)):
+        if loss_history[i] != loss_history[i - 1] + 1:
+            return False
+    return True
+
 # To check values are equal
 def all_equal(arr):
     # Check if the length of the array is less than 4
@@ -631,16 +669,17 @@ try:
                         except Exception as e:
                             logging.error(f"An error occurred during the betting process: {e}", exc_info=True) 
                     try:
+                        add_to_Loss(Losshistory,loss_count)
                         if loss_count>=6:
                             pic = pyautogui.screenshot()
                             pic.save("screenshot_"+str(loss_count)+".png")
-                        # if(loop_count==0):
-                        #         pic = ImageGrab.grab(bbox=(499, 813, 706, 829))
-                        #         pic.save("ZeroLoop.png")
-                        #         sleep(1)
-                        #         Bethistory=[]
-                        #         last_char=extract_characters_from_image("ZeroLoop.png")
-                        #         add_to_fixed_length_array(Bethistory,last_char)
+                        if(lstbet_count+3>=bet_count):
+                            if is_incremental_by_one(Losshistory):
+                                lstbet_count=bet_count
+                                if(betindex==2):
+                                    betindex=0
+                                else:
+                                    betindex=betindex+1
                         
                         if (all_equal(Bethistory)):
                             if(Bethistory[0]=='A'):
@@ -675,7 +714,10 @@ try:
                                 add_to_fixed_length_array(Bethistory,last_char) 
 
                                 if(last_char=='B'):
-                                    betonA(repeat_count)
+                                    if('A'==num_combinations[betindex][0]):
+                                        betonA(repeat_count)
+                                    else:
+                                        betonB(repeat_count)
                                 
                                 # betonB(repeat_count)
                                 function_change=3
@@ -685,7 +727,10 @@ try:
                                 set_last_value(float(extract_numbers(last_value_txt)))
                             elif function_change==3:  # Call function_one() twice for every even iteration
                                 if(Bethistory[0]=='B'):
-                                    betonB(repeat_count)
+                                    if('A'==num_combinations[betindex][1]):
+                                        betonA(repeat_count)
+                                    else:
+                                        betonB(repeat_count)
                                 function_change=4
                                 # pyautogui.click(textat_x,textat_y)
                                 sleep(1)                  
@@ -693,7 +738,10 @@ try:
                                 set_last_value(float(extract_numbers(last_value_txt)))
                             elif function_change==4:  # Call function_one() twice for every even iteration
                                 if(Bethistory[0]=='B'):
-                                    betonA(repeat_count)
+                                    if('A'==num_combinations[betindex][2]):
+                                        betonA(repeat_count)
+                                    else:
+                                        betonB(repeat_count)
                                 function_change=1
                                 # pyautogui.click(textat_x,textat_y)
                                 sleep(1)                  
