@@ -119,11 +119,15 @@ def generate_unique_random_combinations(chars, length, num_combinations):
     # Generate all possible combinations
     all_combinations = list(itertools.product(chars, repeat=length))
     
-    # Shuffle the list to get random order
-    random.shuffle(all_combinations)
+    # Filter out combinations where all characters are the same
+    all_combinations = [combo for combo in all_combinations if len(set(combo)) > 1]
     
-    # Select the desired number of unique combinations
-    selected_combinations = all_combinations[:num_combinations]
+    # Check if num_combinations exceeds available combinations
+    if num_combinations > len(all_combinations):
+        raise ValueError("num_combinations exceeds the number of available combinations.")
+    
+    # Randomly sample the desired number of unique combinations
+    selected_combinations = random.sample(all_combinations, num_combinations)
     
     return [list(combo) for combo in selected_combinations]  # Convert tuples to lists
 
@@ -343,7 +347,7 @@ def extract_numbers(text):
 thread = threading.Thread(target=open_incognito_website(url=BaseUrl))
 thread.start()
 thread.join()
-
+print(random_combinations)
 #to take screen out of this ide
 target_amt=pyautogui.prompt(text="",title="Enter your target")
 sleep(2)
@@ -376,10 +380,10 @@ def get_text_at_position(x, y, duration=0.01):
     str: The text copied from the specified position.
     """
     # Move the cursor to the specified location
-    pyautogui.moveTo(x, y, duration=duration)
+    # pyautogui.moveTo(x, y, duration=duration)
     
     # Double-click to select the text
-    pyautogui.doubleClick()
+    pyautogui.doubleClick(x, y)
     
     # Give a short delay to ensure text selection and copying
     time.sleep(1)
@@ -412,10 +416,13 @@ def add_to_Loss(arr, new_value):
     return arr
 
 def is_incremental_by_one(loss_history):
-    for i in range(1, len(loss_history)):
-        if loss_history[i] != loss_history[i - 1] + 1:
-            return False
-    return True
+    # Return False if 0 is in the array
+    if 0 in loss_history:
+        return False
+    
+    # Check if values are incremental by one
+    return all(loss_history[i] == loss_history[i - 1] + 1 for i in range(1, len(loss_history)))
+
 
 # To check values are equal
 def all_equal(arr):
@@ -435,24 +442,26 @@ txt = extract_numbers(starting_value)
 flag=False
 targetyes=0
 
+
 try:    
     # pyautogui.click(x=607, y=640)                                                               
     startingvaluefinal=float(txt)
-    set_new_target_val(startingvaluefinal+40)
+    set_new_target_val(startingvaluefinal+70)
     function_change=1
     target_amt_final=float(target_amt)
     logging.info(f"Starting value: {startingvaluefinal}")
     logging.info(f"Target amount: {target_amt}")
     logging.info("Betted On,CurrentValue,TargetAmt,Losscount,Wincount")
-    while True:             
+    while True: 
+                    
         while startingvaluefinal<target_amt_final:
             if(loop_count!=0):
                 current_txt = get_text_at_position(textat_x,textat_y,moving_delay)
                 startingvaluefinal=float(extract_numbers(current_txt))
-            print(f'new target {new_target}')
-            print(f'Starting Value final {startingvaluefinal}')
+            # print(f'new target {new_target}')
+            # print(f'Starting Value final {startingvaluefinal}')
             if(all_equal(Bethistory)):
-                set_new_target_val(startingvaluefinal+40)
+                set_new_target_val(startingvaluefinal+70)
             else:
                 if(len(Bethistory)>=4):
                     if(Bethistory[0]=='B' and Bethistory[1]=='B' and Bethistory[2]=='A' and Bethistory[3]=='B'):
@@ -479,7 +488,7 @@ try:
                 if(startingvaluefinal>new_target):
 
                     print(f'New Target Achieved {new_target}')
-                    set_new_target_val(startingvaluefinal+40)
+                    set_new_target_val(startingvaluefinal+70)
                     #reset values
                     Bethistory=[]
                     function_one=1
@@ -669,17 +678,21 @@ try:
                         except Exception as e:
                             logging.error(f"An error occurred during the betting process: {e}", exc_info=True) 
                     try:
+                        
                         add_to_Loss(Losshistory,loss_count)
                         if loss_count>=6:
                             pic = pyautogui.screenshot()
                             pic.save("screenshot_"+str(loss_count)+".png")
-                        if(lstbet_count+3>=bet_count):
-                            if is_incremental_by_one(Losshistory):
-                                lstbet_count=bet_count
-                                if(betindex==2):
-                                    betindex=0
-                                else:
-                                    betindex=betindex+1
+                        if(lstbet_count+3<=bet_count):
+                            if(len(Losshistory)>=3):
+                                if is_incremental_by_one(Losshistory):
+                                    lstbet_count=bet_count
+                                    if(betindex==2):
+                                        betindex=0
+                                    else:
+                                        betindex=betindex+1
+                                    print(f'bet index changed')
+                                
                         
                         if (all_equal(Bethistory)):
                             if(Bethistory[0]=='A'):
@@ -703,21 +716,10 @@ try:
                                 
                             elif function_change==2:  # Call function_one() twice for every even iteration
 
-                                # Top-left: (446, 757)
-                                # Bottom-right: (705, 773)
-                                pic = ImageGrab.grab(bbox=(446, 757, 705, 773))
-                                pic.save("function2.png")
-                                sleep(1)
-                                Bethistory=[]
-                                last_char=extract_characters_from_image("function2.png")
-                                print(f'Extracted Char : {last_char}')
-                                add_to_fixed_length_array(Bethistory,last_char) 
-
-                                if(last_char=='B'):
-                                    if('A'==num_combinations[betindex][0]):
-                                        betonA(repeat_count)
-                                    else:
-                                        betonB(repeat_count)
+                                if('A'==random_combinations[betindex][0]):
+                                    betonA(repeat_count)
+                                else:
+                                    betonB(repeat_count)
                                 
                                 # betonB(repeat_count)
                                 function_change=3
@@ -726,22 +728,22 @@ try:
                                 last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
                                 set_last_value(float(extract_numbers(last_value_txt)))
                             elif function_change==3:  # Call function_one() twice for every even iteration
-                                if(Bethistory[0]=='B'):
-                                    if('A'==num_combinations[betindex][1]):
-                                        betonA(repeat_count)
-                                    else:
-                                        betonB(repeat_count)
+                                # if(Bethistory[0]=='B'):
+                                if('A'==random_combinations[betindex][1]):
+                                    betonA(repeat_count)
+                                else:
+                                    betonB(repeat_count)
                                 function_change=4
                                 # pyautogui.click(textat_x,textat_y)
                                 sleep(1)                  
                                 last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
                                 set_last_value(float(extract_numbers(last_value_txt)))
                             elif function_change==4:  # Call function_one() twice for every even iteration
-                                if(Bethistory[0]=='B'):
-                                    if('A'==num_combinations[betindex][2]):
-                                        betonA(repeat_count)
-                                    else:
-                                        betonB(repeat_count)
+                                # if(Bethistory[0]=='B'):
+                                if('A'==random_combinations[betindex][2]):
+                                    betonA(repeat_count)
+                                else:
+                                    betonB(repeat_count)
                                 function_change=1
                                 # pyautogui.click(textat_x,textat_y)
                                 sleep(1)                  
@@ -751,7 +753,7 @@ try:
                         startingvaluefinal=last_value
                         
 
-                        print(f'Checking Bet history {Bethistory}')
+                        # print(f'Checking Bet history {Bethistory}')
                         logging.info(f'Checking Bet history {Bethistory}')
                         
                         # print(Bethistory)
