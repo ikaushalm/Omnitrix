@@ -227,7 +227,7 @@ def open_incognito_website(url):
 
 
 
-def move_cursor_in_random_circles(center_x, center_y, radius, duration=6):
+def move_cursor_in_random_circles(center_x, center_y, radius, duration=1):
     """Move the cursor in random circles around the given center point for the specified duration with human-like imperfections.
     Returns the final x and y coordinates of the cursor."""
     
@@ -239,7 +239,7 @@ def move_cursor_in_random_circles(center_x, center_y, radius, duration=6):
     final_y = center_y
     
     while time.time() - start_time < duration:
-        num_steps = random.randint(15, 25)  # More steps for smoother circles
+        num_steps = random.randint(5,10)  # More steps for smoother circles
         for step in range(num_steps):
             angle = 2 * math.pi * step / num_steps
             
@@ -320,13 +320,7 @@ thread.join()
 target_amt=pyautogui.prompt(text="",title="Enter your target")
 sleep(2)
 
-
-
-
-Target_break=pyautogui.prompt(text="",title="Enter your Multiple Amount")
-sleep(2)
-
-
+Target_break=30
 
 def set_last_value(value):
     global last_value
@@ -437,7 +431,17 @@ try:
                     next_multiple_of_5 = (bet_count + 4) // 5 * 5
                     loop_condition=next_multiple_of_5-bet_count
                     while(sleep_test<loop_condition):
-
+                        try:
+                            connection_check = pyautogui.locateOnScreen("Connnection.png", confidence=0.8)
+                            # Check if the image was found and reload the page if it is
+                            if connection_check is not None:
+                                print(f'{str(connection_check)} length of this connection check: {len(str(connection_check))}')
+                                pyautogui.click(1419, 263) 
+                            else:
+                                print("Image not found.")
+                        except Exception as e:
+                            logging.error(f"An error occurred in the connection function: {e}", exc_info=True)
+                            print(f"An error occurred: {e}")                       
                         try:
                             sleepstrLockcheck = pyautogui.locateOnScreen("placeyourbets.png", confidence=0.8)                       
                             if(len(str(sleepstrLockcheck))==44):
@@ -458,10 +462,11 @@ try:
                     # Check if the image was found and reload the page if it is
                     if connection_check is not None:
                         print(f'{str(connection_check)} length of this connection check: {len(str(connection_check))}')
-                        pyautogui.hotkey('ctrl', 'r')   
+                        pyautogui.click(1419, 263) 
                     else:
                         print("Image not found.")
                 except Exception as e:
+                    logging.error(f"An error occurred in the connection function: {e}", exc_info=True)
                     print(f"An error occurred: {e}")
                 
                 #checking place your bets lock
@@ -674,118 +679,86 @@ try:
                             else:
                                 function_change=1
                             # pyautogui.click(textat_x,textat_y)
-                            sleep(1)                  
-                            last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
-                            set_last_value(float(extract_numbers(last_value_txt)))
                         else:
                             if(BestStrategy=='B'):
                                 if function_change==1:  # Call function_one() twice for every even iteration
 
-                                    if win_count>=4:
-                                        betonA(repeat_count)
-                                    else:
-                                        betonB(repeat_count)                                    
+                                    # if win_count>=4:
+                                    #     betonA(repeat_count)
+                                    # else:
+                                    betonB(repeat_count)                                    
     
                                     function_change=2
                                     # pyautogui.click(textat_x,textat_y)
-                                    sleep(1)                  
-                                    last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
-                                    set_last_value(float(extract_numbers(last_value_txt)))
+
                                     
                                 elif function_change==2:  # Call function_one() twice for every even iteration
 
-                                    if win_count>=4:
-                                        betonA(repeat_count)
-                                    else:
-                                        betonB(repeat_count)  
+                                    # if win_count>=4:
+                                    #     betonA(repeat_count)
+                                    # else:
+                                    betonB(repeat_count)  
                                     function_change=3
-                                    sleep(1)                  
-                                    last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
-                                    set_last_value(float(extract_numbers(last_value_txt)))
+
                                 elif function_change==3:  # Call function_one() twice for every even iteration
                                     if(len(Bethistory)>=2):
                                         lenBet=len(Bethistory)
                                         if(Bethistory[lenBet-2]=='A'and Bethistory[lenBet-1]=='A'):
                                             betonB(repeat_count)     
-                                        else:
-                                            if win_count>=4:
-                                                betonB(repeat_count)
-                                            else:
-                                                betonA(repeat_count)
+                                        # else:
+                                        #     if win_count>=4:
+                                        #         betonB(repeat_count)
+                                            # else:
+                                        betonA(repeat_count)
 
                                     function_change=4
-                                    sleep(1)                  
-                                    last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
-                                    set_last_value(float(extract_numbers(last_value_txt)))
+
                                 elif function_change==4:  # Call function_one() twice for every even iteration
                                     if(len(Bethistory)>=3):
                                         lenBet=len(Bethistory)
                                         if(Bethistory[lenBet-3]=='A' and Bethistory[lenBet-2]=='A'and Bethistory[lenBet-1]=='B'):
                                             betonB(repeat_count)     
-                                        else:
-                                            if win_count>=4:
-                                                betonB(repeat_count)
-                                            else:
-                                                betonA(repeat_count)
+                                        # else:
+                                        #     if win_count>=4:
+                                        #         betonB(repeat_count)
+                                            # else:
+                                        betonA(repeat_count)
 
                                     function_change=1
                                     # pyautogui.click(textat_x,textat_y)
-                                    sleep(1)                  
-                                    last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
-                                    set_last_value(float(extract_numbers(last_value_txt)))
+
                             else:
                                 if function_change==1:  # Call function_one() twice for every even iteration
-
-                                    if win_count>=4:
-                                        betonB(repeat_count)
-                                    else:
-                                        betonA(repeat_count)                                    
+                                    betonA(repeat_count)                                    
     
                                     function_change=2
                                     # pyautogui.click(textat_x,textat_y)
-                                    sleep(1)                  
-                                    last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
-                                    set_last_value(float(extract_numbers(last_value_txt)))
+
                                     
                                 elif function_change==2:  # Call function_one() twice for every even iteration
-                                    
-                                    if win_count>=4:
-                                        betonB(repeat_count)
-                                    else:
-                                        betonA(repeat_count)  
+
+                                    betonB(repeat_count)  
                                     function_change=3
 
-                                    sleep(1)                  
-                                    last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
-                                    set_last_value(float(extract_numbers(last_value_txt)))
+
                                 elif function_change==3:  # Call function_one() twice for every even iteration
 
                                     if(len(Bethistory)>=2):
                                         # lenBet=len(Bethistory)
-                                        # if(Bethistory[lenBet-2]=='A'and Bethistory[lenBet-1]=='A'):
-                                        #     betonB(repeat_count)     
-                                        # else:
-                                        if win_count>=4:
-                                            betonA(repeat_count)
+                                        if(Bethistory[lenBet-2]=='A'and Bethistory[lenBet-1]=='A'):
+                                            betonB(repeat_count)     
                                         else:
-                                            betonB(repeat_count)
+                                            betonA(repeat_count)
                                     function_change=4
                                     # pyautogui.click(textat_x,textat_y)
-                                    sleep(1)                  
-                                    last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
-                                    set_last_value(float(extract_numbers(last_value_txt)))
+
                                 elif function_change==4:  # Call function_one() twice for every even iteration
 
-                                    # Preventing AABB pattern
-                                    if(len(Bethistory)>=3):
-                                        if win_count>=4:
-                                            betonA(repeat_count)
-                                        else:
-                                            betonB(repeat_count)
+                                    betonB(repeat_count)
                                     function_change=1
-                                    sleep(1)                  
-                                    last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
-                                    set_last_value(float(extract_numbers(last_value_txt)))
+                        sleep(1)                  
+                        last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
+                        set_last_value(float(extract_numbers(last_value_txt)))
 
                         loop_count=loop_count+1
                         startingvaluefinal=last_value
@@ -807,16 +780,16 @@ try:
         else:
             # bet_analyzer.analyze_and_push()
             # pyautogui.alert('Target Achieved')
-            play_alarm() 
-            # close_chrome_tabs()
+            # play_alarm() 
+            close_chrome_tabs()
             sleep(10)
-            # shutdown_system()
+            shutdown_system()
             logging.info("Condition not met, alarm beeped.")
             break
             # sleep(10)  # Wait before rechecking
 except Exception as e:
     logging.error(f"An error occurred in the main function: {e}", exc_info=True)
     print(f"An error occurred: {e}. Please go to the original screen.")
-    pyautogui.alert(f"An error occurred: {e}. Please go to the original screen.")
+    # pyautogui.alert(f"An error occurred: {e}. Please go to the original screen.")
 
 
