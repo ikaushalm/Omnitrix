@@ -321,6 +321,8 @@ target_amt=pyautogui.prompt(text="",title="Enter your target")
 sleep(2)
 
 
+
+
 Target_break=pyautogui.prompt(text="",title="Enter your Multiple Amount")
 sleep(2)
 
@@ -448,8 +450,23 @@ try:
                     
                     loop_count=0
                 
-            try:  
+            try: 
+                #checking is connected or not
+                pyautogui.click(textat_x,textat_y)
+                try:
+                    connection_check = pyautogui.locateOnScreen("Connnection.png", confidence=0.8)
+                    # Check if the image was found and reload the page if it is
+                    if connection_check is not None:
+                        print(f'{str(connection_check)} length of this connection check: {len(str(connection_check))}')
+                        pyautogui.hotkey('ctrl', 'r')   
+                    else:
+                        print("Image not found.")
+                except Exception as e:
+                    print(f"An error occurred: {e}")
+                
+                #checking place your bets lock
                 lock_check = pyautogui.locateOnScreen("placeyourbets.png", confidence=0.8)
+                
                 pyautogui.click(textat_x,textat_y)
                 sleep(1)
                 # print(lock_check)
@@ -491,12 +508,13 @@ try:
                     current_value_final=float(extract_numbers(current_txt))
                     if(last_value>current_value_final):
                         # print('inside true loop')
+                        win_count=0
+                        loss_count=loss_count+1
                         if(betted_on=='A'):
                             add_to_fixed_length_array(Bethistory,'B')
                         if(betted_on=='B'):
                             add_to_fixed_length_array(Bethistory,'A') 
-                        win_count=0
-                        loss_count=loss_count+1
+                        
                         if loss_count==0:
                             repeat_count=fibo_series[loss_count]
                         elif loss_count==1:
@@ -544,13 +562,11 @@ try:
                         
                         if(loss_count-2>=0):
                             loss_count=loss_count-2
-                            repeat_count=fibo_series[loss_count]
-                        elif(loss_count==1):
-                            loss_count=0
-                            repeat_count=fibo_series[0]    
+                            repeat_count=fibo_series[loss_count]  
                         else:
+                            loss_count=0
                             repeat_count=fibo_series[0]
-                        win_count=win_count+1
+                    win_count=win_count+1
                     betted_on=''
 
                 else:
@@ -561,12 +577,13 @@ try:
                         try:
                             if(last_value>current_value_final):
                                 # print('inside true loop')
+                                win_count=0
+                                loss_count=loss_count+1
                                 if(betted_on=='A'):
                                     add_to_fixed_length_array(Bethistory,'B')
                                 if(betted_on=='B'):
                                     add_to_fixed_length_array(Bethistory,'A') 
-                                win_count=0
-                                loss_count=loss_count+1
+                                
                                 if loss_count==0:
                                     repeat_count=fibo_series[loss_count]
                                 elif loss_count==1:
@@ -597,7 +614,7 @@ try:
                                     repeat_count=loss_count*2   
                             # checks if its a tie                    
                             elif(last_value==current_value_final):
-                                # add_to_fixed_length_array(Bethistory,'T')
+                                
                                 loss_count=loss_count
                                 repeat_count=repeat_count
                                 win_count=win_count
@@ -611,6 +628,7 @@ try:
                                     loss_count=loss_count-2
                                     repeat_count=fibo_series[loss_count]
                                 else:
+                                    loss_count=0
                                     repeat_count=fibo_series[0]
                             
                                 win_count=win_count+1
