@@ -435,13 +435,13 @@ try:
                             connection_check = pyautogui.locateOnScreen("Connnection.png", confidence=0.8)
                             # Check if the image was found and reload the page if it is
                             if connection_check is not None:
-                                print(f'{str(connection_check)} length of this connection check: {len(str(connection_check))}')
+                                # print(f'{str(connection_check)} length of this connection check: {len(str(connection_check))}')
                                 pyautogui.click(1419, 263) 
+                                sleep(5)
                             else:
                                 print("Image not found.")
-                        except Exception as e:
-                            logging.error(f"An error occurred in the connection function: {e}", exc_info=True)
-                            print(f"An error occurred: {e}")                       
+                        except:
+                            print('Unable to locate connection')                    
                         try:
                             sleepstrLockcheck = pyautogui.locateOnScreen("placeyourbets.png", confidence=0.8)                       
                             if(len(str(sleepstrLockcheck))==44):
@@ -463,11 +463,10 @@ try:
                     if connection_check is not None:
                         print(f'{str(connection_check)} length of this connection check: {len(str(connection_check))}')
                         pyautogui.click(1419, 263) 
-                    else:
-                        print("Image not found.")
-                except Exception as e:
-                    logging.error(f"An error occurred in the connection function: {e}", exc_info=True)
-                    print(f"An error occurred: {e}")
+                        sleep(5)
+
+                except :
+                    print('Unable to locate connection')
                 
                 #checking place your bets lock
                 lock_check = pyautogui.locateOnScreen("placeyourbets.png", confidence=0.8)
@@ -750,12 +749,14 @@ try:
                                         else:
                                             betonA(repeat_count)
                                     function_change=4
-                                    # pyautogui.click(textat_x,textat_y)
 
                                 elif function_change==4:  # Call function_one() twice for every even iteration
 
                                     betonB(repeat_count)
                                     function_change=1
+                                    
+                        pyautogui.click(textat_x,textat_y)
+                        
                         sleep(1)                  
                         last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
                         set_last_value(float(extract_numbers(last_value_txt)))
