@@ -456,7 +456,7 @@ try:
                 
             try: 
                 #checking is connected or not
-                pyautogui.click(textat_x,textat_y)
+                # pyautogui.click(textat_x,textat_y)
                 try:
                     connection_check = pyautogui.locateOnScreen("Connnection.png", confidence=0.8)
                     # Check if the image was found and reload the page if it is
@@ -741,9 +741,9 @@ try:
 
 
                                 elif function_change==3:  # Call function_one() twice for every even iteration
-
+                                    
                                     if(len(Bethistory)>=2):
-                                        # lenBet=len(Bethistory)
+                                        lenBet=len(Bethistory)
                                         if(Bethistory[lenBet-2]=='A'and Bethistory[lenBet-1]=='A'):
                                             betonB(repeat_count)     
                                         else:
