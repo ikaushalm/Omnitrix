@@ -1,0 +1,24 @@
+2024-10-04 16:11:26,434 - INFO - Stategy_Fibo copy.py - 410 - Starting value: 10199.54
+2024-10-04 16:11:26,435 - INFO - Stategy_Fibo copy.py - 411 - Target amount: 15000
+2024-10-04 16:11:26,435 - INFO - Stategy_Fibo copy.py - 412 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-10-04 16:11:42,966 - INFO - Stategy_Fibo copy.py - 282 - A,10199.54,15000,0,0
+2024-10-04 16:11:46,356 - INFO - Stategy_Fibo copy.py - 795 - Checking Bet history []
+2024-10-04 16:12:25,853 - INFO - Stategy_Fibo copy.py - 282 - A,10199.54,15000,0,0
+2024-10-04 16:12:29,245 - INFO - Stategy_Fibo copy.py - 795 - Checking Bet history []
+2024-10-04 16:13:03,690 - INFO - Stategy_Fibo copy.py - 795 - Checking Bet history []
+2024-10-04 16:13:38,151 - INFO - Stategy_Fibo copy.py - 795 - Checking Bet history []
+2024-10-04 16:15:17,431 - INFO - Stategy_Fibo copy.py - 282 - A,10199.54,15000,0,1
+2024-10-04 16:15:20,820 - INFO - Stategy_Fibo copy.py - 795 - Checking Bet history []
+2024-10-04 16:15:45,604 - ERROR - Stategy_Fibo copy.py - 818 - An error occurred in the main function: PyAutoGUI fail-safe triggered from mouse moving to a corner of the screen. To disable this fail-safe, set pyautogui.FAILSAFE to False. DISABLING FAIL-SAFE IS NOT RECOMMENDED.
+Traceback (most recent call last):
+  File "c:\Users\Umesh Patel\Omnitrix\Stategy_Fibo copy.py", line 416, in <module>
+    current_txt = get_text_at_position(textat_x,textat_y,moving_delay)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Umesh Patel\Omnitrix\Stategy_Fibo copy.py", line 366, in get_text_at_position
+    pyautogui.hotkey('ctrl', 'c')  # Use 'command', 'c' on macOS
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Umesh Patel\AppData\Local\Programs\Python\Python312\Lib\site-packages\pyautogui\__init__.py", line 593, in wrapper
+    failSafeCheck()
+  File "C:\Users\Umesh Patel\AppData\Local\Programs\Python\Python312\Lib\site-packages\pyautogui\__init__.py", line 1734, in failSafeCheck
+    raise FailSafeException(
+pyautogui.FailSafeException: PyAutoGUI fail-safe triggered from mouse moving to a corner of the screen. To disable this fail-safe, set pyautogui.FAILSAFE to False. DISABLING FAIL-SAFE IS NOT RECOMMENDED.

@@ -1,5 +1,6 @@
 from PIL import Image
 import pytesseract  
+from collections import Counter
 
 
 
@@ -10,7 +11,7 @@ pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tessera
 
 
 
-image_path = 'fifthtext.png'  # Replace with your image path
+image_path = 'ZeroLoop.png'  # Replace with your image path
 
 from PIL import Image
 import pytesseract
@@ -44,4 +45,24 @@ def extract_characters_from_image(image_path):
         return filtered_text[-1] if filtered_text else None
 
 
-print(extract_characters_from_image(image_path))
+def extract_maxcount_from_image(image_path):
+    # Load the image
+    img = Image.open(image_path)
+
+    # Convert image to RGB and extract pixels
+    pixels = img.load()
+    width, height = img.size
+
+    recognized_characters = []
+
+    # Iterate through pixels to detect red and blue areas
+   
+    # Fallback to OCR if no colors were detected
+    text = pytesseract.image_to_string(img, config='--psm ')
+    filtered_text = ''.join(c for c in text if c in 'AB')
+    if filtered_text:
+        return max(filtered_text, key=filtered_text.count)  # Return the character with the highest count from OCR
+    else:
+        return None
+
+print(extract_maxcount_from_image(image_path))

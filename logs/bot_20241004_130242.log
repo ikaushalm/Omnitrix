@@ -1,0 +1,4 @@
+2024-10-04 13:03:06,295 - INFO - Stategy_Fibo copy.py - 410 - Starting value: 1.04
+2024-10-04 13:03:06,295 - INFO - Stategy_Fibo copy.py - 411 - Target amount: 2500
+2024-10-04 13:03:06,295 - INFO - Stategy_Fibo copy.py - 412 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-10-04 13:06:00,810 - INFO - Stategy_Fibo copy.py - 296 - B,1.04,2500,0,0

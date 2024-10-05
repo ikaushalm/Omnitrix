@@ -1,0 +1,17 @@
+2024-10-05 04:08:52,877 - INFO - Stategy_Fibo copy.py - 404 - Starting value: 6363.64
+2024-10-05 04:08:52,877 - INFO - Stategy_Fibo copy.py - 405 - Target amount: 10000
+2024-10-05 04:08:52,877 - INFO - Stategy_Fibo copy.py - 406 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-10-05 04:08:53,060 - ERROR - Stategy_Fibo copy.py - 781 - An error occurred in the main function: name 'e' is not defined
+Traceback (most recent call last):
+  File "c:\Users\Umesh Patel\Omnitrix\Stategy_Fibo copy.py", line 413, in <module>
+    print(f'length of connection check {lenconnection_check}')
+                                        ^^^^^^^^^^^^^^^^^^^
+NameError: name 'lenconnection_check' is not defined. Did you mean: 'connection_check'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\Umesh Patel\Omnitrix\Stategy_Fibo copy.py", line 420, in <module>
+    logging.error(f"An error occurred in the connection function: {e}", exc_info=True)
+                                                                   ^
+NameError: name 'e' is not defined

@@ -1,0 +1,37 @@
+2024-10-04 18:01:05,873 - INFO - DragonTiger.py - 403 - Starting value: 11072.14
+2024-10-04 18:01:05,873 - INFO - DragonTiger.py - 404 - Target amount: 15000
+2024-10-04 18:01:05,873 - INFO - DragonTiger.py - 405 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-10-04 18:01:12,890 - INFO - DragonTiger.py - 281 - D,11072.14,15000,0,0
+2024-10-04 18:01:12,891 - ERROR - DragonTiger.py - 595 - An error occurred during the betting process: list index out of range
+Traceback (most recent call last):
+  File "c:\Users\Umesh Patel\Omnitrix\DragonTiger.py", line 573, in <module>
+    if(Bethistory[len(Bethistory)-1]=='D'):
+       ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+IndexError: list index out of range
+2024-10-04 18:01:31,718 - INFO - DragonTiger.py - 281 - D,11072.14,15000,0,0
+2024-10-04 18:01:31,718 - ERROR - DragonTiger.py - 595 - An error occurred during the betting process: list index out of range
+Traceback (most recent call last):
+  File "c:\Users\Umesh Patel\Omnitrix\DragonTiger.py", line 573, in <module>
+    if(Bethistory[len(Bethistory)-1]=='D'):
+       ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+IndexError: list index out of range
+2024-10-04 18:01:38,037 - INFO - DragonTiger.py - 281 - D,11072.14,15000,0,0
+2024-10-04 18:01:38,037 - ERROR - DragonTiger.py - 595 - An error occurred during the betting process: list index out of range
+Traceback (most recent call last):
+  File "c:\Users\Umesh Patel\Omnitrix\DragonTiger.py", line 573, in <module>
+    if(Bethistory[len(Bethistory)-1]=='D'):
+       ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+IndexError: list index out of range
+2024-10-04 18:02:00,991 - INFO - DragonTiger.py - 281 - D,11072.14,15000,0,0
+2024-10-04 18:02:00,995 - ERROR - DragonTiger.py - 595 - An error occurred during the betting process: list index out of range
+Traceback (most recent call last):
+  File "c:\Users\Umesh Patel\Omnitrix\DragonTiger.py", line 573, in <module>
+    if(Bethistory[len(Bethistory)-1]=='D'):
+       ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+IndexError: list index out of range
+2024-10-04 18:02:30,883 - ERROR - DragonTiger.py - 610 - An error occurred in the main function: '>' not supported between instances of 'NoneType' and 'float'
+Traceback (most recent call last):
+  File "c:\Users\Umesh Patel\Omnitrix\DragonTiger.py", line 438, in <module>
+    if(last_value>current_value_final):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '>' not supported between instances of 'NoneType' and 'float'

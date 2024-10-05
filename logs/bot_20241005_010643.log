@@ -1,0 +1,23 @@
+2024-10-05 01:09:18,214 - INFO - Stategy_Fibo copy.py - 410 - Starting value: 5856.14
+2024-10-05 01:09:18,214 - INFO - Stategy_Fibo copy.py - 411 - Target amount: 10000
+2024-10-05 01:09:18,214 - INFO - Stategy_Fibo copy.py - 412 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-10-05 01:09:38,391 - INFO - Stategy_Fibo copy.py - 296 - B,5856.14,10000,0,0
+2024-10-05 01:09:41,773 - INFO - Stategy_Fibo copy.py - 795 - Checking Bet history []
+2024-10-05 01:10:24,311 - INFO - Stategy_Fibo copy.py - 296 - B,5806.14,10000,1,0
+2024-10-05 01:10:27,696 - INFO - Stategy_Fibo copy.py - 795 - Checking Bet history ['A']
+2024-10-05 01:11:25,262 - INFO - Stategy_Fibo copy.py - 282 - A,5853.64,10000,0,1
+2024-10-05 01:11:28,677 - INFO - Stategy_Fibo copy.py - 795 - Checking Bet history ['A', 'B']
+2024-10-05 01:12:18,783 - INFO - Stategy_Fibo copy.py - 296 - B,5803.64,10000,1,0
+2024-10-05 01:12:22,235 - INFO - Stategy_Fibo copy.py - 795 - Checking Bet history ['A', 'B', 'B']
+2024-10-05 01:14:06,762 - INFO - Stategy_Fibo copy.py - 296 - B,5753.64,10000,2,1
+2024-10-05 01:14:10,169 - INFO - Stategy_Fibo copy.py - 795 - Checking Bet history []
+2024-10-05 01:14:54,857 - INFO - Stategy_Fibo copy.py - 296 - B,5848.64,10000,0,2
+2024-10-05 01:14:58,316 - INFO - Stategy_Fibo copy.py - 795 - Checking Bet history ['B']
+2024-10-05 01:15:51,609 - INFO - Stategy_Fibo copy.py - 282 - A,5896.14,10000,0,3
+2024-10-05 01:15:55,051 - INFO - Stategy_Fibo copy.py - 795 - Checking Bet history ['B', 'B']
+2024-10-05 01:17:59,786 - INFO - Stategy_Fibo copy.py - 282 - A,5943.64,10000,0,0
+2024-10-05 01:18:03,234 - INFO - Stategy_Fibo copy.py - 795 - Checking Bet history []
+2024-10-05 01:18:36,818 - INFO - Stategy_Fibo copy.py - 296 - B,5943.64,10000,0,0
+2024-10-05 01:18:40,267 - INFO - Stategy_Fibo copy.py - 795 - Checking Bet history []
+2024-10-05 01:19:14,222 - INFO - Stategy_Fibo copy.py - 795 - Checking Bet history []
+2024-10-05 01:20:04,024 - INFO - Stategy_Fibo copy.py - 795 - Checking Bet history []

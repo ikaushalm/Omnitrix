@@ -1,6 +1,0 @@
-2024-09-24 15:33:11,553 - ERROR - new.py - 729 - An error occurred in the main function: float() argument must be a string or a real number, not 'NoneType'
-Traceback (most recent call last):
-  File "d:\Kaushal\Playground\Omnitrix\Omnitrix\new.py", line 402, in <module>
-    startingvaluefinal=float(txt)
-                       ^^^^^^^^^^
-TypeError: float() argument must be a string or a real number, not 'NoneType'

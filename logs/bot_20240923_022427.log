@@ -1,6 +1,0 @@
-2024-09-23 02:25:09,668 - ERROR - Stategy_Fibo copy.py - 778 - An error occurred in the main function: float() argument must be a string or a real number, not 'NoneType'
-Traceback (most recent call last):
-  File "d:\Kaushal\Playground\Omnitrix\Omnitrix\Stategy_Fibo copy.py", line 402, in <module>
-    startingvaluefinal=float(txt)
-                       ^^^^^^^^^^
-TypeError: float() argument must be a string or a real number, not 'NoneType'
