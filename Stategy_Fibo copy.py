@@ -348,6 +348,11 @@ def get_text_at_position(x, y, duration=0.01):
     str: The text copied from the specified position.
     """
     # Move the cursor to the specified location
+
+    pyautogui.click(x,y)
+
+    time.sleep(2)
+
     pyautogui.moveTo(x, y, duration=duration)
     
     # Double-click to select the text
@@ -409,14 +414,14 @@ try:
             if(loop_count!=0):
                 current_txt = get_text_at_position(textat_x,textat_y,moving_delay)
                 startingvaluefinal=float(extract_numbers(current_txt))
-            print(f'new target {new_target}')
-            print(f'Starting Value final {startingvaluefinal}')
+            # print(f'new target {new_target}')
+            # print(f'Starting Value final {startingvaluefinal}')
             if(all_equal(Bethistory)):
                 set_new_target_val(startingvaluefinal+Target_break_final)
             else:
                 if(startingvaluefinal>new_target):
 
-                    print(f'New Target Achieved {new_target}')
+                    # print(f'New Target Achieved {new_target}')
                     set_new_target_val(startingvaluefinal+Target_break_final)
                     #reset values
                     Bethistory=[]
@@ -438,10 +443,9 @@ try:
                                 # print(f'{str(connection_check)} length of this connection check: {len(str(connection_check))}')
                                 pyautogui.click(1419, 263) 
                                 sleep(5)
-                            else:
-                                print("Image not found.")
                         except:
-                            print('Unable to locate connection')                    
+                            exc=''
+                            # print('Unable to locate connection')                    
                         try:
                             sleepstrLockcheck = pyautogui.locateOnScreen("placeyourbets.png", confidence=0.8)                       
                             if(len(str(sleepstrLockcheck))==44):
@@ -466,7 +470,8 @@ try:
                         sleep(5)
 
                 except :
-                    print('Unable to locate connection')
+                    exc=''
+                    # print('Unable to locate connection')
                 
                 #checking place your bets lock
                 lock_check = pyautogui.locateOnScreen("placeyourbets.png", confidence=0.8)
@@ -570,8 +575,8 @@ try:
                         else:
                             loss_count=0
                             repeat_count=fibo_series[0]
-                    win_count=win_count+1
-                    betted_on=''
+                        win_count=win_count+1
+                        betted_on=''
 
                 else:
 
@@ -636,6 +641,7 @@ try:
                                     repeat_count=fibo_series[0]
                             
                                 win_count=win_count+1
+                                betted_on=''
                         except Exception as e:
                             logging.error(f"An error occurred during the betting process: {e}", exc_info=True) 
                     try:
@@ -650,7 +656,7 @@ try:
                                 # last_char=extract_characters_from_image("ZeroLoop.png")
                                 # add_to_fixed_length_array(Bethistory,last_char)
                                 BestStrategy=extract_maxcount_from_image("ZeroLoop.png")
-                                print(f'best strategy picked from loop_count==0  {BestStrategy}')
+                                # print(f'best strategy picked from loop_count==0  {BestStrategy}')
                         else:
                             if(len(Bethistory)>=1):
                                 if(BestStrategy=='B' and Bethistory[0]=='A'):
@@ -663,7 +669,7 @@ try:
                                 sleep(1)
                                 Bethistory=[]
                                 BestStrategy=extract_maxcount_from_image("ZeroLoop.png")
-                                print(f'best strategy picked from loop_count==0  {BestStrategy}')
+                                # print(f'best strategy picked from loop_count==0  {BestStrategy}')
                                 
                     
 
@@ -765,12 +771,12 @@ try:
                         startingvaluefinal=last_value
                         
 
-                        print(f'Checking Bet history {Bethistory}')
-                        logging.info(f'Checking Bet history {Bethistory}')
+                        # print(f'Checking Bet history {Bethistory}')
+                        # logging.info(f'Checking Bet history {Bethistory}')
                         
                         # print(Bethistory)
-                        print(f'Loss_count {loss_count}')
-                        print(f'betcount  {bet_count}')
+                        # print(f'Loss_count {loss_count}')
+                        # print(f'betcount  {bet_count}')
                         sleep(23)
 
                     except Exception as e:
