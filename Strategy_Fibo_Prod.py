@@ -22,6 +22,29 @@ import pytesseract
 from PIL import Image
 
 
+def set_First_target(value):
+    global First_target
+    First_target = value
+
+
+set_First_target(0)
+
+def set_last_value(value):
+    global last_value
+    last_value = value
+
+def set_new_target_val(value):
+    global new_target
+    new_target = value
+
+def set_last_value_at(value):
+    global at_last_value
+    at_last_value = value
+
+def set_betted_on(value):
+    global betted_on
+    betted_on = value
+        
 
 def main():
     # ---------------------------------------------------------
@@ -89,7 +112,7 @@ def main():
     Bethistory=[]
     function_one=1
     function_change=1
-    last_value=None
+    set_last_value(None)
     loss_count=0
     win_count=0
     loop_count=0
@@ -102,9 +125,7 @@ def main():
     # Define the global variable
     betted_on = None
 
-    def set_betted_on(value):
-        global betted_on
-        betted_on = value
+  
 
     def compare_betted_on(value):
         global betted_on
@@ -315,9 +336,10 @@ def main():
         else:
             return None  # Return None if no number is found
 
-    thread = threading.Thread(target=open_incognito_website(url=BaseUrl))
-    thread.start()
-    thread.join()
+    if(First_target==0):
+        thread = threading.Thread(target=open_incognito_website(url=BaseUrl))
+        thread.start()
+        thread.join()
 
     #to take screen out of this ide
     target_amt=pyautogui.prompt(text="",title="Enter your target")
@@ -325,17 +347,7 @@ def main():
 
     Target_break=250
 
-    def set_last_value(value):
-        global last_value
-        last_value = value
-
-    def set_new_target_val(value):
-        global new_target
-        new_target = value
-
-    def set_last_value_at(value):
-        global at_last_value
-        at_last_value = value
+    
 
     def get_text_at_position(x, y, duration=0.01):
         """
@@ -374,6 +386,43 @@ def main():
         copied_text = pyperclip.paste()
         
         return copied_text
+    
+    def get_text_wupdate_position(x, y, duration=0.5):
+        """
+        Move the cursor to the given position (x, y), select the text by double-clicking, 
+        and return the copied text.
+        
+        Parameters:
+        x (int): The x-coordinate of the position.
+        y (int): The y-coordinate of the position.
+        duration (float): The duration for cursor movement (optional).
+        
+        Returns:
+        str: The text copied from the specified position.
+        """
+        # Move the cursor to the specified location
+
+        pyautogui.moveTo(x, y, duration=duration)
+        
+        # Double-click to select the text
+        pyautogui.doubleClick(x,y)
+        
+        # Give a short delay to ensure text selection and copying
+        time.sleep(1)
+        
+        # Simulate pressing the copy keyboard shortcut (Ctrl+C on Windows/Linux, Command+C on macOS)
+        pyautogui.hotkey('ctrl', 'c')  # Use 'command', 'c' on macOS
+        
+        # Give a short delay to ensure the clipboard is updated
+        time.sleep(0.5)
+        
+        # Retrieve the text from the clipboard
+        copied_text = pyperclip.paste()
+        
+        return copied_text
+
+
+
 
 
 
@@ -393,8 +442,8 @@ def main():
         return all(x == arr[0] for x in arr)
 
     try: 
-        pyautogui.click(textat_x,textat_y)
-        sleep(2)
+        # pyautogui.click(textat_x,textat_y)
+        # sleep(2)
 
         starting_value = get_text_at_position(textat_x,textat_y,moving_delay)
         txt = extract_numbers(starting_value)
@@ -421,8 +470,8 @@ def main():
                     set_new_target_val(startingvaluefinal+Target_break_final)
                 else:
                     if(startingvaluefinal>new_target):
-
-                        # pyautogui.alert(f'{new_target} Please withdraw money and dont let it go ! Press Ok to Play again')
+                        set_First_target(1)
+                        pyautogui.alert(f'{new_target} Mini Target Acheieved 😊 \n Please withdraw money and dont let it go! \n Disclaimer: \n Always do this on starting of 5 line. \n Please use phone to withdraw. \n  Press Ok to Play again.')
                         inputscr=pyautogui.prompt(text="",title="Please withdraw money and dont let it go ! Type 1 to Play again")
                         val=float(inputscr)
                         if(val==1):
@@ -495,7 +544,7 @@ def main():
                         # last_char=extract_characters_from_image(image_path)
                         # add_to_fixed_length_array(Bethistory,last_char)
                         last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
-                        set_last_value(float(extract_numbers(last_value_txt)))
+                        set_last_value(float(last_value_txt))
                         BestStrategy=extract_maxcount_from_image("ZeroLoop.png")
                         print(f'best strategy picked from loop {BestStrategy}')
                         
@@ -766,8 +815,8 @@ def main():
                                         function_change=1
                             
                             sleep(1)                  
-                            last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
-                            set_last_value(float(extract_numbers(last_value_txt)))
+                            last_value_txt = get_text_wupdate_position(textat_x,textat_y,moving_delay)
+                            set_last_value(float(last_value_txt))
 
                             loop_count=loop_count+1
                             startingvaluefinal=last_value
@@ -790,9 +839,9 @@ def main():
                 # bet_analyzer.analyze_and_push()
                 # pyautogui.alert('Target Achieved')
                 # play_alarm() 
-                close_chrome_tabs()
+                # close_chrome_tabs()
                 sleep(10)
-                shutdown_system()
+                # shutdown_system()
                 logging.info("Condition not met, alarm beeped.")
                 break
                 # sleep(10)  # Wait before rechecking
