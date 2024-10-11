@@ -1,9 +1,0 @@
-2024-10-04 17:51:27,426 - INFO - DragonTiger.py - 402 - Starting value: 11081.14
-2024-10-04 17:51:27,426 - INFO - DragonTiger.py - 403 - Target amount: 12000
-2024-10-04 17:51:27,426 - INFO - DragonTiger.py - 404 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
-2024-10-04 17:51:27,426 - ERROR - DragonTiger.py - 610 - An error occurred in the main function: name 'new_target' is not defined
-Traceback (most recent call last):
-  File "c:\Users\Umesh Patel\Omnitrix\DragonTiger.py", line 410, in <module>
-    print(f'new target {new_target}')
-                        ^^^^^^^^^^
-NameError: name 'new_target' is not defined

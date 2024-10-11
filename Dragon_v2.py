@@ -21,42 +21,19 @@ from PIL import ImageGrab
 import pytesseract
 from PIL import Image
 
-import requests
-
-
-def get_balance():
-    # Define the URL
-    url = "https://india.1xbet.com/api/internal/user/balance"
-
-
-
-    # Define headers based on the curl command
-    headers = {
-        "accept": "*/*",
-        "accept-language": "en-US,en;q=0.9",
-        "cookie": "fast_coupon=true; v3fr=1; lng=en; flaglng=en; typeBetNames=full; coefview=0; platform_type=desktop; auid=mjmZBWcIHPJA/03yBk/FAg==; tzo=5.5; ggru=160; completed_user_settings=true; right_side=right; sh.session.id=cbeb26d2-4db9-4978-9861-af214b60e7c8; hdt=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJndWlkIjoiT2gyYmFMcXlMVkNqNVFpSnVGNUt2aFZNYnlxUkJRYmQwUHlxc2JiN0NocHRhZE9PeVMzVFJiQ3lRZnRFNGRmaXFrMndRNk0xaWVRaXVOT1k4bjJBS2pSWS8zMzhWV1M0aE9IRVhKa3RJdXM1OWJXUGsyTEtyNHJyK2JRNXBDc210aHpyMUlFUEYyNzBJY0hNKzlNT242aW03NDNZekN0VENnTXo1ZUg5UmZKODA3aUV5WFRldVJwK2U2OGpPd0YwVWhldkRmbXE5V2tqb3J0UTZQaXMwSWZjcVh3YXBpMUVERUtJYVNqSXJleU1OYWJFY3BwTzJ1OWUxZkN6NjVNNjRTSFU1KzkwNUgrNzJrZXpqOERXai9pNndkU3M5aUlZSTEzZE5QblJQNzVCREtIcmltOD0iLCJleHAiOjE3Mjg1OTkzNjQsImlhdCI6MTcyODU4NDk2NH0.e6oY9FLRgSIkpaLEqY_xigNx9gLZ379XNKMMPZZt3yb0IgQX6XXwVTWSeaic-THn5ehoCO7iqHBw9enx7BBB1Q; _grant_1728602722=ya88op95; ua=835718469; uhash=1c3bc6e92570e21b3da6ea7c93379e5d; cur=INR; SESSION=809323076edbf475cb15820a12e46053; game_cols_count=2; pushfree_status=canceled; disallow_sport=; _glhf=1728602794; visit=2-6bca3b6627ec08102fe727e020dd8c74; _ga=GA1.2.1589909946.1728585021; _gid=GA1.2.1721973767.1728585021; _gat_gtag_UA_43962315_51=1; _gat_gtag_UA_131019888_1=1; _ga_7V60YW2S5H=GS1.1.1728585020.1.1.1728585077.3.1.334842195",
-        "priority": "u=1, i",
-        "referer": "https://india.1xbet.com/en/casino/game/72345/teen-patti-face-off",
-        "sec-ch-ua": "\"Google Chrome\";v=\"129\", \"Not=A?Brand\";v=\"8\", \"Chromium\";v=\"129\"",
-        "sec-ch-ua-mobile": "?0",
-        "sec-ch-ua-platform": "\"Windows\"",
-        "sec-fetch-dest": "empty",
-        "sec-fetch-mode": "cors",
-        "sec-fetch-site": "same-origin",
-        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36",
-        "x-requested-with": "XMLHttpRequest"
-    }
-
-    # Send the GET request with the specified headers
-    response = requests.get(url, headers=headers)
-    data = response.json()
-    print(f' print {data['balance'][0]['money']}')
-    return float(data['balance'][0]['money'])
-
 
 def set_First_target(value):
     global First_target
     First_target = value
+
+
+def set_gtarget_breaking(value):
+    global gtarget_breaking
+    gtarget_breaking=value
+
+def set_gtarget_amt(value):
+    global gtarget_amt
+    gtarget_amt=value
 
 
 set_First_target(0)
@@ -157,8 +134,6 @@ def main():
     # Define the global variable
     betted_on = None
 
-  
-
     def compare_betted_on(value):
         global betted_on
         if betted_on == value:
@@ -166,19 +141,14 @@ def main():
         else:
             return False
 
-
-
-
     pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
     # Load the image
     image_path = 'fifthtext.png'  # Replace with your image path
 
-    def extract_characters_from_image(image_path):
+    def extract_lastcharacters_from_image(image_path):
         # Load the image
         img = Image.open(image_path)
-
         # Convert image to RGB and extract pixels
-    
         # Fallback to OCR if no colors were detected
         text = pytesseract.image_to_string(img, config='--psm 6')
         filtered_text = ''.join(c for c in text if c in 'AB')
@@ -197,6 +167,7 @@ def main():
             return max(filtered_text, key=filtered_text.count)  # Return the character with the highest count from OCR
         else:
             return None
+    
 
     # Define the log directory and ensure it exists
     log_dir = 'logs'
@@ -373,11 +344,18 @@ def main():
         thread.start()
         thread.join()
 
-    #to take screen out of this ide
-    target_amt=pyautogui.prompt(text="",title="Enter your target")
-    sleep(2)
+        target_amt=pyautogui.prompt(text="",title="Enter your target")
+        set_gtarget_amt(target_amt)
+        sleep(2)
 
-    Target_break=250
+        target_breaking=pyautogui.prompt(text="",title="Enter your target break")
+        set_gtarget_breaking(target_breaking)
+        sleep(1)
+    else:
+        target_amt=gtarget_amt
+        target_breaking=gtarget_breaking
+
+    Target_break=float(target_breaking)
 
     
 
@@ -476,12 +454,9 @@ def main():
     try: 
         # pyautogui.click(textat_x,textat_y)
         # sleep(2)
-       
-        starting_value = get_balance()
-        txt = starting_value
-        beginning_value=txt
-        flag=False
-        targetyes=0   
+
+        starting_value = get_text_at_position(textat_x,textat_y,moving_delay)
+        txt = extract_numbers(starting_value) 
         # pyautogui.click(x=607, y=640)                                                               
         startingvaluefinal=float(txt)
         Target_break_final=float(Target_break)
@@ -494,8 +469,8 @@ def main():
         while True:             
             while startingvaluefinal<target_amt_final:
                 if(loop_count!=0):
-                    current_txt = get_balance()
-                    startingvaluefinal=float(current_txt)
+                    current_txt = get_text_at_position(textat_x,textat_y,moving_delay)
+                    startingvaluefinal=float(extract_numbers(current_txt))
                 # print(f'new target {new_target}')
                 # print(f'Starting Value final {startingvaluefinal}')
                 if(all_equal(Bethistory)):
@@ -503,12 +478,14 @@ def main():
                 else:
                     if(startingvaluefinal>new_target):
                         set_First_target(1)
-                        pyautogui.alert(f'{new_target} Mini Target Acheieved 😊 \n Please withdraw money and dont let it go! \n Disclaimer: \n Always do this on starting of 5 line. \n Please use phone to withdraw. \n  Press Ok to Play again.')
-                        inputscr=pyautogui.prompt(text="",title="Please withdraw money and dont let it go ! Type 1 to Play again")
-                        val=float(inputscr)
-                        if(val==1):
+                        user_response=pyautogui.confirm(f' Money is A Dirty thing. \n Mini Target Acheieved 😊 \n Please withdraw money and dont let it go!\n Disclaimer: \n Always do this on starting of 5 line. \n Please use phone to withdraw. \n Press Ok to Play again.')       
+                        # Check the response and act accordingly
+                        if user_response == 'OK':
                             main()
-                        # print(f'New Target Achieved {new_target}')
+                        else:
+                            break
+
+                        print(f'New Target Achieved {new_target}')
                         set_new_target_val(startingvaluefinal+Target_break_final)
                         #reset values
                         Bethistory=[]
@@ -520,7 +497,7 @@ def main():
                         isFifth=False
                         sleep_test=0
                         
-                        next_multiple_of_5 = (bet_count + random.randint(10, 20)) // 5 * 5
+                        next_multiple_of_5 = (bet_count + 4) // 5 * 5
                         loop_condition=next_multiple_of_5-bet_count
                         while(sleep_test<loop_condition):
                             try:
@@ -575,7 +552,7 @@ def main():
                         sleep(1)
                         # last_char=extract_characters_from_image(image_path)
                         # add_to_fixed_length_array(Bethistory,last_char)
-                        last_value_txt = get_balance()
+                        last_value_txt = get_text_at_position(textat_x,textat_y,moving_delay)
                         set_last_value(float(last_value_txt))
                         BestStrategy=extract_maxcount_from_image("ZeroLoop.png")
                         print(f'best strategy picked from loop {BestStrategy}')
@@ -600,8 +577,8 @@ def main():
                     if (bet_count % 5 == 0) and (not all_equal(Bethistory)):
                         sleep(25)
                         isFifth=True  
-                        current_txt = get_balance()
-                        current_value_final=float(current_txt)
+                        current_txt = get_text_at_position(textat_x,textat_y,moving_delay)
+                        current_value_final=float(extract_numbers(current_txt))
                         if(last_value>current_value_final):
                             # print('inside true loop')
                             win_count=0
@@ -665,8 +642,8 @@ def main():
 
                     else:
 
-                        current_txt = get_balance()
-                        current_value_final=float(current_txt)
+                        current_txt = get_text_at_position(textat_x,textat_y,moving_delay)
+                        current_value_final=float(extract_numbers(current_txt))
                         if(loop_count!=0):
                             try:
                                 if(last_value>current_value_final):
@@ -736,11 +713,21 @@ def main():
                             if(loop_count==0):
                                     pic = ImageGrab.grab(bbox=(564, 758, 709, 773))
                                     pic.save("ZeroLoop.png")
+                                    pic = ImageGrab.grab(bbox=(499, 813, 706, 829))
+                                    pic.save("Lastloop.png")
                                     sleep(1)
                                     Bethistory=[]
                                     # last_char=extract_characters_from_image("ZeroLoop.png")
                                     # add_to_fixed_length_array(Bethistory,last_char)
-                                    BestStrategy=extract_maxcount_from_image("ZeroLoop.png")
+                                    BestStrategyFirst=extract_maxcount_from_image("ZeroLoop.png")
+                                    BestStrategySecond=extract_lastcharacters_from_image("Lastloop.png")
+                                    if(BestStrategyFirst==BestStrategySecond):
+                                        BestStrategy=BestStrategyFirst
+                                    else:
+                                        BestStrategy='U'
+
+
+                                    
                                     # print(f'best strategy picked from loop_count==0  {BestStrategy}')
                             else:
                                 if(len(Bethistory)>=1):
@@ -751,10 +738,18 @@ def main():
                                 else:
                                     pic = ImageGrab.grab(bbox=(564, 758, 709, 773))
                                     pic.save("ZeroLoop.png")
+                                    pic = ImageGrab.grab(bbox=(499, 813, 706, 829))
+                                    pic.save("Lastloop.png")
                                     sleep(1)
                                     Bethistory=[]
-                                    BestStrategy=extract_maxcount_from_image("ZeroLoop.png")
-                                    # print(f'best strategy picked from loop_count==0  {BestStrategy}')
+                                    # last_char=extract_characters_from_image("ZeroLoop.png")
+                                    # add_to_fixed_length_array(Bethistory,last_char)
+                                    BestStrategyFirst=extract_maxcount_from_image("ZeroLoop.png")
+                                    BestStrategySecond=extract_lastcharacters_from_image("Lastloop.png")
+                                    if(BestStrategyFirst==BestStrategySecond):
+                                        BestStrategy=BestStrategyFirst
+                                    else:
+                                        BestStrategy='U'
                                     
                         
 
@@ -778,81 +773,27 @@ def main():
                                         # else:
                                         betonB(repeat_count)                                    
         
-                                        function_change=2
-                                        # pyautogui.click(textat_x,textat_y)
-
-                                        
-                                    elif function_change==2:  # Call function_one() twice for every even iteration
-
-                                        # if win_count>=4:
-                                        #     betonA(repeat_count)
-                                        # else:
-                                        betonB(repeat_count)  
-                                        function_change=3
-
-                                    elif function_change==3:  # Call function_one() twice for every even iteration
-                                        if(len(Bethistory)>=2):
-                                            lenBet=len(Bethistory)
-                                            if(Bethistory[lenBet-2]=='A'and Bethistory[lenBet-1]=='A'):
-                                                betonB(repeat_count)     
-                                            # else:
-                                            #     if win_count>=4:
-                                            #         betonB(repeat_count)
-                                                # else:
-                                            betonA(repeat_count)
-
-                                        function_change=4
-
-                                    elif function_change==4:  # Call function_one() twice for every even iteration
-                                        if(len(Bethistory)>=3):
-                                            lenBet=len(Bethistory)
-                                            if(Bethistory[lenBet-3]=='A' and Bethistory[lenBet-2]=='A'and Bethistory[lenBet-1]=='B'):
-                                                betonB(repeat_count)     
-                                            # else:
-                                            #     if win_count>=4:
-                                            #         betonB(repeat_count)
-                                                # else:
-                                            betonA(repeat_count)
-
                                         function_change=1
                                         # pyautogui.click(textat_x,textat_y)
 
-                                else:
+                                elif(BestStrategy=='A'):
                                     if function_change==1:  # Call function_one() twice for every even iteration
                                         betonA(repeat_count)                                    
         
-                                        function_change=2
-                                        # pyautogui.click(textat_x,textat_y)
-
-                                        
-                                    elif function_change==2:  # Call function_one() twice for every even iteration
-
-                                        betonA(repeat_count)  
-                                        function_change=3
-
-
-                                    elif function_change==3:  # Call function_one() twice for every even iteration
-                                        
-                                        if(len(Bethistory)>=2):
-                                            lenBet=len(Bethistory)
-                                            if(Bethistory[lenBet-2]=='A'and Bethistory[lenBet-1]=='A'):
-                                                betonB(repeat_count)     
-                                            else:
-                                                betonA(repeat_count)
-                                        function_change=4
-
-                                    elif function_change==4:  # Call function_one() twice for every even iteration
-
-                                        betonB(repeat_count)
                                         function_change=1
+                                        # pyautogui.click(textat_x,textat_y)
+                                else:
+                                    print('not getting')
+
                             
                             sleep(1)                  
-                            last_value_txt = get_balance()
+                            last_value_txt = get_text_wupdate_position(textat_x,textat_y,moving_delay)
                             set_last_value(float(last_value_txt))
 
                             loop_count=loop_count+1
                             startingvaluefinal=last_value
                             
+
 
                             # print(f'Checking Bet history {Bethistory}')
                             # logging.info(f'Checking Bet history {Bethistory}')
@@ -861,6 +802,30 @@ def main():
                             # print(f'Loss_count {loss_count}')
                             # print(f'betcount  {bet_count}')
                             sleep(23)
+
+                            sleep_test=0
+                            next_multiple_of_5 = (bet_count + 4) // 5 * 5
+                            loop_condition=next_multiple_of_5-bet_count
+                            while(sleep_test<loop_condition):
+                                try:
+                                    connection_check = pyautogui.locateOnScreen("Connnection.png", confidence=0.8)
+                                    # Check if the image was found and reload the page if it is
+                                    if connection_check is not None:
+                                        # print(f'{str(connection_check)} length of this connection check: {len(str(connection_check))}')
+                                        pyautogui.click(1419, 263) 
+                                        sleep(5)
+                                except:
+                                    exc=''
+                                    # print('Unable to locate connection')                    
+                                try:
+                                    sleepstrLockcheck = pyautogui.locateOnScreen("placeyourbets.png", confidence=0.8)                       
+                                    if(len(str(sleepstrLockcheck))==44):
+                                        sleep_test=sleep_test+1
+                                        bet_count=bet_count+1
+                                        print(f'sleep bet count {bet_count}')
+                                        sleep(30)
+                                except:
+                                    sleepstrLockcheck=''
 
                         except Exception as e:
                             logging.error(f"An error occurred during the betting process: {e}", exc_info=True)

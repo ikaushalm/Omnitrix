@@ -1,0 +1,43 @@
+2024-10-12 00:34:43,013 - INFO - DragonTiger.py - 550 - Starting value: 43749.01
+2024-10-12 00:34:43,013 - INFO - DragonTiger.py - 551 - Target amount: 45000
+2024-10-12 00:34:43,013 - INFO - DragonTiger.py - 552 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-10-12 00:34:59,105 - INFO - DragonTiger.py - 418 - D,43749.01,45000,0,0
+2024-10-12 00:34:59,874 - INFO - DragonTiger.py - 730 - Checking Bet history []
+2024-10-12 00:35:24,144 - INFO - DragonTiger.py - 550 - Starting value: 44199.01
+2024-10-12 00:35:24,144 - INFO - DragonTiger.py - 551 - Target amount: 45000
+2024-10-12 00:35:24,144 - INFO - DragonTiger.py - 552 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-10-12 00:35:31,762 - INFO - DragonTiger.py - 418 - D,44199.01,45000,0,0
+2024-10-12 00:35:32,044 - INFO - DragonTiger.py - 730 - Checking Bet history []
+2024-10-12 00:35:50,975 - INFO - DragonTiger.py - 432 - T,43749.01,45000,0,0
+2024-10-12 00:35:51,255 - INFO - DragonTiger.py - 730 - Checking Bet history ['I']
+2024-10-12 00:36:16,835 - INFO - DragonTiger.py - 418 - D,43299.01,45000,1,0
+2024-10-12 00:36:17,386 - INFO - DragonTiger.py - 730 - Checking Bet history ['I', 'D']
+2024-10-12 00:36:44,745 - INFO - DragonTiger.py - 432 - T,42849.01,45000,2,0
+2024-10-12 00:36:45,029 - INFO - DragonTiger.py - 730 - Checking Bet history ['I', 'D', 'T']
+2024-10-12 00:37:11,174 - INFO - DragonTiger.py - 418 - D,41949.01,45000,3,0
+2024-10-12 00:37:11,434 - INFO - DragonTiger.py - 730 - Checking Bet history ['I', 'D', 'T', 'D']
+2024-10-12 00:37:30,868 - ERROR - DragonTiger.py - 739 - An error occurred during the betting process: cannot access local variable 'sleep_test' where it is not associated with a value
+Traceback (most recent call last):
+  File "d:\Kaushal\Playground\Kaushal\Ominitrix\Omnitrix\Dragon_Tiger\DragonTiger.py", line 668, in main
+    while(sleep_test<loop_condition):
+          ^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'sleep_test' where it is not associated with a value
+2024-10-12 00:37:36,012 - INFO - DragonTiger.py - 432 - T,40599.01,45000,5,0
+2024-10-12 00:37:36,278 - INFO - DragonTiger.py - 730 - Checking Bet history ['I', 'D', 'T', 'D', 'T', 'T']
+2024-10-12 00:38:02,384 - INFO - DragonTiger.py - 432 - T,38799.01,45000,6,0
+2024-10-12 00:38:03,127 - INFO - DragonTiger.py - 730 - Checking Bet history ['I', 'D', 'T', 'D', 'T', 'T', 'I']
+2024-10-12 00:38:27,467 - INFO - DragonTiger.py - 418 - D,32949.01,45000,7,0
+2024-10-12 00:38:28,015 - INFO - DragonTiger.py - 730 - Checking Bet history ['I', 'D', 'T', 'D', 'T', 'T', 'I', 'D']
+2024-10-12 00:38:53,940 - INFO - DragonTiger.py - 418 - D,42399.01,45000,5,1
+2024-10-12 00:38:54,234 - INFO - DragonTiger.py - 730 - Checking Bet history ['D', 'T', 'D', 'T', 'T', 'I', 'D', 'D']
+2024-10-12 00:39:19,081 - INFO - DragonTiger.py - 432 - T,41499.01,45000,6,0
+2024-10-12 00:39:19,357 - INFO - DragonTiger.py - 730 - Checking Bet history ['T', 'D', 'T', 'T', 'I', 'D', 'D', 'T']
+2024-10-12 00:39:50,519 - INFO - DragonTiger.py - 432 - T,42849.01,45000,4,1
+2024-10-12 00:39:50,817 - INFO - DragonTiger.py - 730 - Checking Bet history ['D', 'T', 'T', 'I', 'D', 'D', 'T', 'T']
+2024-10-12 00:40:13,934 - INFO - DragonTiger.py - 418 - D,41949.01,45000,5,0
+2024-10-12 00:40:14,438 - INFO - DragonTiger.py - 730 - Checking Bet history ['T', 'T', 'I', 'D', 'D', 'T', 'T', 'D']
+2024-10-12 00:40:42,259 - INFO - DragonTiger.py - 432 - T,40599.01,45000,6,0
+2024-10-12 00:40:42,883 - INFO - DragonTiger.py - 730 - Checking Bet history ['T', 'I', 'D', 'D', 'T', 'T', 'D', 'T']
+2024-10-12 00:41:09,793 - INFO - DragonTiger.py - 750 - Condition not met, alarm beeped.
+2024-10-12 00:41:13,943 - INFO - DragonTiger.py - 432 - T,44199.01,45000,0,1
+2024-10-12 00:41:14,523 - INFO - DragonTiger.py - 730 - Checking Bet history ['T']

@@ -20,52 +20,40 @@ import threading
 from PIL import ImageGrab
 import pytesseract
 from PIL import Image
-import numpy as np
-from  GetBalance import get_balance
-import os
 
-# Define a global variable to store the content of the cookie
-cookie_content = None
+import requests
 
-# Function to read the cookie content from the file
-def load_cookie(file_path='DragonHeaders.txt'):
-    global cookie_content
-    if cookie_content is None:
-        with open(file_path, 'r') as file:
-            cookie_content = file.read()
-    return cookie_content
 
-def is_alternating(arr):
-    # Check if the length of the array is less than 4
-    if len(arr) < 4:
-        return False
-    
-    # Get the last 4 characters of the array
-    last_four = arr[-4:]
-    
-    # Check if the last four characters alternate
-    if (last_four[0] != last_four[1] and
-        last_four[1] != last_four[2] and
-        last_four[2] != last_four[3] and
-        last_four[0] == last_four[2] and
-        last_four[1] == last_four[3]):
-        return True
-    return False
+def get_balance():
+    # Define the URL
+    url = "https://india.1xbet.com/api/internal/user/balance"
+    # Define headers based on the curl command
+    headers = {
+        "accept": "*/*",
+        "accept-language": "en-US,en;q=0.9",
+        "cookie": "fast_coupon=true; v3fr=1; lng=en; flaglng=en; typeBetNames=full; platform_type=desktop; auid=mjmZBWcIHPJA/03yBk/FAg==; tzo=5.5; ggru=160; completed_user_settings=true; right_side=right; sh.session.id=cbeb26d2-4db9-4978-9861-af214b60e7c8; hdt=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJndWlkIjoiT2gyYmFMcXlMVkNqNVFpSnVGNUt2aFZNYnlxUkJRYmQwUHlxc2JiN0NocHRhZE9PeVMzVFJiQ3lRZnRFNGRmaXFrMndRNk0xaWVRaXVOT1k4bjJBS2pSWS8zMzhWV1M0aE9IRVhKa3RJdXM1OWJXUGsyTEtyNHJyK2JRNXBDc210aHpyMUlFUEYyNzBJY0hNKzlNT242aW03NDNZekN0VENnTXo1ZUg5UmZKODA3aUV5WFRldVJwK2U2OGpPd0YwVWhldkRmbXE5V2tqb3J0UTZQaXMwSWZjcVh3YXBpMUVERUtJYVNqSXJleU1OYWJFY3BwTzJ1OWUxZkN6NjVNNjRTSFU1KzkwNUgrNzJrZXpqOERXai9pNndkU3M5aUlZSTEzZE5QblJQNzVCREtIcmltOD0iLCJleHAiOjE3Mjg1OTkzNjQsImlhdCI6MTcyODU4NDk2NH0.e6oY9FLRgSIkpaLEqY_xigNx9gLZ379XNKMMPZZt3yb0IgQX6XXwVTWSeaic-THn5ehoCO7iqHBw9enx7BBB1Q; ua=835718469; uhash=1c3bc6e92570e21b3da6ea7c93379e5d; cur=INR; SESSION=809323076edbf475cb15820a12e46053; game_cols_count=2; pushfree_status=canceled; disallow_sport=; visit=2-6bca3b6627ec08102fe727e020dd8c74; _gid=GA1.2.1721973767.1728585021; _ga=GA1.2.1589909946.1728585021; _glhf=1728605577; _gat_gtag_UA_43962315_51=1; _ga_7V60YW2S5H=GS1.1.1728585020.1.1.1728588618.60.1.334842195; _gat_gtag_UA_131019888_1=1",
+        "priority": "u=1, i",
+        "referer": "referer: https://india.1xbet.com/en/casino/game/72348/dragon-tiger",
+        "sec-ch-ua": "\"Google Chrome\";v=\"129\", \"Not=A?Brand\";v=\"8\", \"Chromium\";v=\"129\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-origin",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36",
+        "x-requested-with": "XMLHttpRequest"
+    }
 
+    # Send the GET request with the specified headers
+    response = requests.get(url, headers=headers)
+    data = response.json()
+    print(f' print {data['balance'][0]['money']}')
+    return float(data['balance'][0]['money'])
 
 
 def set_First_target(value):
     global First_target
     First_target = value
-
-
-def set_gtarget_breaking(value):
-    global gtarget_breaking
-    gtarget_breaking=value
-
-def set_gtarget_amt(value):
-    global gtarget_amt
-    gtarget_amt=value
 
 
 set_First_target(0)
@@ -85,6 +73,7 @@ def set_last_value_at(value):
 def set_betted_on(value):
     global betted_on
     betted_on = value
+        
 
 def main():
     # ---------------------------------------------------------
@@ -146,10 +135,11 @@ def main():
     # ---------------------------------------------------------
     # ---------------------------------------------------------
     # ---------------------------------------------------------
-
-
+ 
     Bethistory=[]
-    last_value=None
+    function_one=1
+    function_change=1
+    set_last_value(None)
     loss_count=0
     win_count=0
     loop_count=0
@@ -157,8 +147,6 @@ def main():
     bet_count=0
     startingvaluefinal=0
 
-    # Define the global variable
-    
 
     def set_betted_on(value):
         global betted_on
@@ -174,76 +162,11 @@ def main():
     # for first time
     set_betted_on(None)
 
+
+
     pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-
-
-    def get_last_dragon():
-        # Load the image
-        try:
-            image_path = 'DragonRoar.png'
-            image = Image.open(image_path)
-
-            # Convert the image to a NumPy array
-            image_array = np.array(image)
-
-            # Define color thresholds for red, blue, and green
-            blue_threshold = ([0, 0, 100], [50, 50, 255])  # Approximate blue range
-            red_threshold = ([100, 0, 0], [255, 50, 50])   # Approximate red range
-            green_threshold = ([0, 100, 0], [50, 255, 50]) # Approximate green range
-
-            # Function to check if a pixel falls within the given color range
-            def is_color(pixel, color_range):
-                lower, upper = color_range
-                return all(lower[i] <= pixel[i] <= upper[i] for i in range(3))
-
-            # Extract the middle row for color detection
-            height, width, _ = image_array.shape
-            middle_row = image_array[height // 2]
-
-            # Detect the positions of circles by identifying color changes
-            circle_positions = []
-            current_color = None
-
-            for x in range(width):
-                pixel = middle_row[x, :3]  # Get RGB values of the pixel
-
-                if is_color(pixel, blue_threshold):
-                    new_color = 'T'
-                elif is_color(pixel, red_threshold):
-                    new_color = 'D'
-                elif is_color(pixel, green_threshold):
-                    new_color = 'I'
-                else:
-                    new_color = None
-
-                # If a new color is detected, it marks the start of a new circle
-                if new_color and new_color != current_color:
-                    circle_positions.append(x)
-                    current_color = new_color
-
-            # Calculate the average distance between circles to determine sample_step
-            if len(circle_positions) > 1:
-                sample_step = int(np.mean(np.diff(circle_positions)))
-            else:
-                sample_step = width // len(circle_positions)
-      
-
-            # Iterate over detected positions to extract the sequence
-            sequence = ""
-            for x in circle_positions:
-                pixel = middle_row[x, :3]  # Get RGB values of the pixel
-
-                if is_color(pixel, blue_threshold):
-                    sequence += 'T'
-                elif is_color(pixel, red_threshold):
-                    sequence += 'D'
-                elif is_color(pixel, green_threshold):
-                    sequence += 'I'
-
-            return sequence
-        except:
-            return 'D'
-
+    # Load the image
+    image_path = 'fifthtext.png'  # Replace with your image path
 
     def extract_characters_from_image(image_path):
         # Load the image
@@ -253,8 +176,7 @@ def main():
     
         # Fallback to OCR if no colors were detected
         text = pytesseract.image_to_string(img, config='--psm 6')
-        print(txt)
-        filtered_text = ''.join(c for c in text if c in 'DT')
+        filtered_text = ''.join(c for c in text if c in 'AB')
         return filtered_text[-1] if filtered_text else None
         
 
@@ -265,23 +187,16 @@ def main():
         # Fallback to OCR if no colors were detected
         text = pytesseract.image_to_string(img, config='--psm 6')
         filtered_text = ''.join(c for c in text if c in 'AB')
+        filtered_text=filtered_text[-3:]
         if filtered_text:
             return max(filtered_text, key=filtered_text.count)  # Return the character with the highest count from OCR
         else:
             return None
 
     # Define the log directory and ensure it exists
-
-
-
-    # Get the current working directory
-    current_dir = os.getcwd()
-    log_dir = os.path.join(current_dir+'\Dragon_Tiger', 'dragonglogs')
-
-    # Create the directory if it doesn't exist
+    log_dir = 'logs'
     if not os.path.exists(log_dir):
         os.makedirs(log_dir)
-
 
     # Generate a timestamp for the log filename
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
@@ -363,7 +278,7 @@ def main():
 
 
 
-    def move_cursor_in_random_circles(center_x, center_y, radius, duration=3):
+    def move_cursor_in_random_circles(center_x, center_y, radius, duration=1):
         """Move the cursor in random circles around the given center point for the specified duration with human-like imperfections.
         Returns the final x and y coordinates of the cursor."""
         
@@ -375,7 +290,7 @@ def main():
         final_y = center_y
         
         while time.time() - start_time < duration:
-            num_steps = random.randint(5, 10)  # More steps for smoother circles
+            num_steps = random.randint(3, 5)  # More steps for smoother circles
             for step in range(num_steps):
                 angle = 2 * math.pi * step / num_steps
                 
@@ -432,7 +347,6 @@ def main():
         logging.info(f"T,{startingvaluefinal},{target_amt},{loss_count},{win_count}")
         write_to_csv(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),'B', startingvaluefinal, target_amt, loss_count, win_count)
 
-
     # Extracting numbers from text
     def extract_numbers(text):
         # Define the regex pattern to match numbers and decimal points
@@ -453,30 +367,13 @@ def main():
         thread.start()
         thread.join()
 
-        target_amt=pyautogui.prompt(text="",title="Enter your target")
-        set_gtarget_amt(target_amt)
-        sleep(2)
+    #to take screen out of this ide
+    target_amt=pyautogui.prompt(text="",title="Enter your target")
+    sleep(2)
 
-        target_breaking=pyautogui.prompt(text="",title="Enter your target break")
-        set_gtarget_breaking(target_breaking)
-        sleep(1)
-    else:
-        target_amt=gtarget_amt
-        target_breaking=gtarget_breaking
+    Target_break=250
 
-    Target_break=float(target_breaking)
-
-
-
-
-    def set_last_value(value):
-        global last_value
-        last_value = value
-
-    def set_new_target_val(value):
-        global new_target
-        new_target = value
-
+    
 
     def get_text_at_position(x, y, duration=0.01):
         """
@@ -491,9 +388,12 @@ def main():
         Returns:
         str: The text copied from the specified position.
         """
-        pyautogui.click(textat_x,textat_y)
-        sleep(1)
         # Move the cursor to the specified location
+
+        pyautogui.click(x,y)
+
+        time.sleep(2)
+
         pyautogui.moveTo(x, y, duration=duration)
         
         # Double-click to select the text
@@ -512,13 +412,50 @@ def main():
         copied_text = pyperclip.paste()
         
         return copied_text
+    
+    def get_text_wupdate_position(x, y, duration=0.5):
+        """
+        Move the cursor to the given position (x, y), select the text by double-clicking, 
+        and return the copied text.
+        
+        Parameters:
+        x (int): The x-coordinate of the position.
+        y (int): The y-coordinate of the position.
+        duration (float): The duration for cursor movement (optional).
+        
+        Returns:
+        str: The text copied from the specified position.
+        """
+        # Move the cursor to the specified location
+
+        pyautogui.moveTo(x, y, duration=duration)
+        
+        # Double-click to select the text
+        pyautogui.doubleClick(x,y)
+        
+        # Give a short delay to ensure text selection and copying
+        time.sleep(1)
+        
+        # Simulate pressing the copy keyboard shortcut (Ctrl+C on Windows/Linux, Command+C on macOS)
+        pyautogui.hotkey('ctrl', 'c')  # Use 'command', 'c' on macOS
+        
+        # Give a short delay to ensure the clipboard is updated
+        time.sleep(0.5)
+        
+        # Retrieve the text from the clipboard
+        copied_text = pyperclip.paste()
+        
+        return copied_text
+
+
+
 
 
 
     def add_to_fixed_length_array(arr, new_value):
         arr.append(new_value)
         # If the length of the array exceeds the fixed length, remove the oldest element
-        if len(arr) > 8:
+        if len(arr) > 4:
             arr.pop(0)  # Remove the oldest element
         return arr
 
@@ -530,22 +467,20 @@ def main():
         # Check if all elements are equal
         return all(x == arr[0] for x in arr)
 
-
-
-    pyautogui.click(textat_x,textat_y)
-    sleep(2)
-
-    starting_value =get_balance()
-    print(starting_value)
-    txt = starting_value
-    flag=False
-    targetyes=0
-
-    try:    
+    try: 
+        # pyautogui.click(textat_x,textat_y)
+        # sleep(2)
+       
+        starting_value = get_balance()
+        txt = starting_value
+        beginning_value=txt
+        flag=False
+        targetyes=0   
         # pyautogui.click(x=607, y=640)                                                               
         startingvaluefinal=float(txt)
         Target_break_final=float(Target_break)
         set_new_target_val(startingvaluefinal+Target_break_final)
+        function_change=1
         target_amt_final=float(target_amt)
         logging.info(f"Starting value: {startingvaluefinal}")
         logging.info(f"Target amount: {target_amt}")
@@ -554,42 +489,53 @@ def main():
             while startingvaluefinal<target_amt_final:
                 if(loop_count!=0):
                     current_txt = get_balance()
-                    startingvaluefinal=current_txt
-                try:  
+                    startingvaluefinal=float(current_txt)
+                # print(f'new target {new_target}')
+                # print(f'Starting Value final {startingvaluefinal}')
+
+                if(startingvaluefinal>new_target):
+                    set_First_target(1)
+                    pyautogui.alert(f'{new_target} Mini Target Acheieved 😊 \n Please withdraw money and dont let it go! \n Disclaimer: \n Always do this on starting of 5 line. \n Please use phone to withdraw. \n  Press Ok to Play again.')
+                    inputscr=pyautogui.prompt(text="",title="Please withdraw money and dont let it go ! Type 1 to Play again")
+                    val=float(inputscr)
+                    if(val==1):
+                        main()
+                    # print(f'New Target Achieved {new_target}')
+                    set_new_target_val(startingvaluefinal+Target_break_final)
+                    #reset values
+                    Bethistory=[]
+                    function_one=1
+                    function_change=1
+                    loss_count=0
+                    win_count=0
+                    repeat_count=1
+                    loop_count=0
+                    
+                try: 
+                    #checking is connected or not
+                    # pyautogui.click(textat_x,textat_y)
                     try:
                         connection_check = pyautogui.locateOnScreen("Connnection.png", confidence=0.8)
                         # Check if the image was found and reload the page if it is
                         if connection_check is not None:
-                            # print(f'{str(connection_check)} length of this connection check: {len(str(connection_check))}')
+                            print(f'{str(connection_check)} length of this connection check: {len(str(connection_check))}')
                             pyautogui.click(1419, 263) 
                             sleep(5)
-                    except:
+
+                    except :
                         exc=''
-                    lock_check = pyautogui.locateOnScreen("Dragon_Tiger\placeyourbets.png", confidence=0.8)
-                    pyautogui.click(textat_x,textat_y)
+                        # print('Unable to locate connection')
+                    
+                    #checking place your bets lock
+                    lock_check = pyautogui.locateOnScreen("placeyourbets.png", confidence=0.8)
+                    # pyautogui.click(textat_x,textat_y)
                     sleep(1)
                     # print(lock_check)
                     strLockcheck = str(lock_check)
                     if(loop_count!=0):
 
-                        if(startingvaluefinal>new_target):
-                            # set_First_target(1)
-                            set_First_target(1)
-                            user_response=pyautogui.confirm(f' Money is A Dirty thing. \n Mini Target Acheieved 😊 \n Please withdraw money and dont let it go!\n Disclaimer: \n Always do this on starting of 5 line. \n Please use phone to withdraw. \n Press Ok to Play again.')       
-                            # Check the response and act accordingly
-                            print(f'New Target Achieved {new_target}')
-                            set_new_target_val(startingvaluefinal+Target_break_final)
-                            #reset values
-                            Bethistory=[]
-                            loss_count=0
-                            win_count=0
-                            repeat_count=1
-                            if user_response == 'OK':
-                                main()
-                            else:
-                                break
-                            # print(f'New Target Achieved {new_target}')
-                            
+                        if(startingvaluefinal>target_amt_final):
+                            break
                         if(txt<(startingvaluefinal+100)):
                             if(loss_count>=6):
                                 loss_count=1
@@ -602,23 +548,18 @@ def main():
     
                     bet_count=bet_count+1
                     current_txt = get_balance()
-                    current_value_final=current_txt
+                    current_value_final=float(current_txt)
                     if(loop_count!=0):
                         try:
-                            base_amt=450
                             if(last_value>current_value_final):
                                 # print('inside true loop')
-                                Tie_value=base_amt*repeat_count/2
-                                if((last_value-Tie_value)==current_value_final):
-                                    # its a tie
-                                    add_to_fixed_length_array(Bethistory,'I')
-                                elif(betted_on=='D'):
-                                    add_to_fixed_length_array(Bethistory,'T')
-                                elif(betted_on=='T'):
-                                    add_to_fixed_length_array(Bethistory,'D') 
-
                                 win_count=0
                                 loss_count=loss_count+1
+                                if(betted_on=='D'):
+                                    add_to_fixed_length_array(Bethistory,'T')
+                                if(betted_on=='T'):
+                                    add_to_fixed_length_array(Bethistory,'D') 
+                                
                                 if loss_count==0:
                                     repeat_count=fibo_series[loss_count]
                                 elif loss_count==1:
@@ -649,102 +590,54 @@ def main():
                                     repeat_count=loss_count*2   
                             # checks if its a tie                    
                             elif(last_value==current_value_final):
-                                # add_to_fixed_length_array(Bethistory,'I')
-                                loss_count=loss_count
+                                loss_count=loss_count+1
                                 repeat_count=repeat_count
                                 win_count=win_count
                             else:
                                 if(betted_on=='D'):
                                     add_to_fixed_length_array(Bethistory,'D')
                                 if(betted_on=='T'):
-                                    add_to_fixed_length_array(Bethistory,'T')                                                                                               
+                                    add_to_fixed_length_array(Bethistory,'T')
                                 
                                 if(loss_count-2>=0):
                                     loss_count=loss_count-2
-                                    repeat_count=fibo_series[loss_count]  
+                                    repeat_count=fibo_series[loss_count]
                                 else:
                                     loss_count=0
                                     repeat_count=fibo_series[0]
                             
                                 win_count=win_count+1
+                                betted_on=''
                         except Exception as e:
                             logging.error(f"An error occurred during the betting process: {e}", exc_info=True) 
                     try:
-                        if(is_alternating(Bethistory)):
-                            #skipping this bet
-                            next_multiple_of_5 = (bet_count + random.randint(5,6)) // 5 * 5
-                            noMultiple=next_multiple_of_5-3
-                            loop_condition=noMultiple-bet_count
-                            sleep_test=0
-                            while(sleep_test<loop_condition):
-                                try:
-                                    connection_check = pyautogui.locateOnScreen("Connnection.png", confidence=0.8)
-                                    # Check if the image was found and reload the page if it is
-                                    if connection_check is not None:
-                                        # print(f'{str(connection_check)} length of this connection check: {len(str(connection_check))}')
-                                        pyautogui.click(1419, 263) 
-                                        sleep(5)
-                                except:
-                                    exc=''
-                                    # print('Unable to locate connection')                    
-                                try:
-                                    sleepstrLockcheck = pyautogui.locateOnScreen("placeyourbets.png", confidence=0.8)                       
-                                    if(len(str(sleepstrLockcheck))==44):
-                                        sleep_test=sleep_test+1
-                                        bet_count=bet_count+1
-                                        print(f'sleep bet count {bet_count}')
-                                        sleep(15)
-                                except:
-                                    sleepstrLockcheck=''
-                            Bethistory=[]
-                            loop_count=0
+                        if loss_count>=6:
+                            pic = pyautogui.screenshot()
+                            pic.save("screenshot_"+str(loss_count)+".png")
+
+                        if(loop_count==0):
+                            betonD(repeat_count)    
+                        if(len(Bethistory)>=1):
+                            if(Bethistory[len(Bethistory)-1]=='D'):
+                                betonD(repeat_count)
+                            elif(Bethistory[len(Bethistory)-1]=='T'):
+                                betonT(repeat_count)
                         
-
-                        else:
-                            if loss_count>=6:
-                                pic = pyautogui.screenshot()
-                                pic.save("screenshot_"+str(loss_count)+".png")
-                            
-                            if(loop_count==0):
-                                pic = ImageGrab.grab(bbox=(447, 733, 703, 753))
-                                pic.save("DragonRoar.png")
-                                sleep(1)
-                                lastWinner=get_last_dragon()
-                                if(lastWinner=='D'):
-                                    betonD(repeat_count) 
-                                elif(lastWinner=='T'):
-                                    betonT(repeat_count)
-                                else:
-                                    betonD(repeat_count)
-
-                                
-                            if(len(Bethistory)>=1):
-                                if(Bethistory[len(Bethistory)-1]=='I'):
-                                    if(Bethistory[len(Bethistory)-2]=='D'):
-                                        betonD(repeat_count)
-                                    else:
-                                        betonT(repeat_count)
-
-                                if(Bethistory[len(Bethistory)-1]=='D'):
-                                    betonD(repeat_count)
-                                elif(Bethistory[len(Bethistory)-1]=='T'):
-                                    betonT(repeat_count)
-                                                
-                        last_value = get_balance()
-                        set_last_value(last_value)
+                        sleep(1)                  
+                        last_value_txt = get_balance()
+                        set_last_value(float(last_value_txt))
 
                         loop_count=loop_count+1
                         startingvaluefinal=last_value
                         
 
-                        print(f'Checking Bet history {Bethistory}')
-                        logging.info(f'Checking Bet history {Bethistory}')
+                        # print(f'Checking Bet history {Bethistory}')
+                        # logging.info(f'Checking Bet history {Bethistory}')
                         
-                        print(Bethistory)
-                        print(f'Loss_count {loss_count}')
-                        print(f'betcount  {bet_count}')
-
-                        sleep(10)
+                        print(f'Bethistory: {Bethistory}')
+                        # print(f'Loss_count {loss_count}')
+                        # print(f'betcount  {bet_count}')
+                        sleep(5)
 
                     except Exception as e:
                         logging.error(f"An error occurred during the betting process: {e}", exc_info=True)
@@ -753,8 +646,8 @@ def main():
                     strLockcheck=''
             else:
                 # bet_analyzer.analyze_and_push()
-                pyautogui.alert('Target Achieved')
-                play_alarm() 
+                # pyautogui.alert('Target Achieved')
+                # play_alarm() 
                 # close_chrome_tabs()
                 sleep(10)
                 # shutdown_system()
@@ -764,9 +657,15 @@ def main():
     except Exception as e:
         logging.error(f"An error occurred in the main function: {e}", exc_info=True)
         print(f"An error occurred: {e}. Please go to the original screen.")
-        pyautogui.alert(f"An error occurred: {e}. Please go to the original screen.")
+        # pyautogui.alert(f"An error occurred: {e}. Please go to the original screen.")
 
+
+    
 if __name__ == "__main__":
     main()
+    
+
+    
+
 
 

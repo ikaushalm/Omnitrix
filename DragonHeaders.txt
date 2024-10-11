@@ -1,0 +1,17 @@
+{
+    "accept": "*/*",
+    "accept-language": "en-US,en;q=0.9",
+    "cookie": "fast_coupon=true; v3fr=1; lng=en; flaglng=en; typeBetNames=full; coefview=0; platform_type=desktop; auid=mjmZBWcIrdWhPk3sDHYQAg==; tzo=5.5; ggru=188; _gid=GA1.2.1405754491.1728622043; completed_user_settings=true; pushfree_status=canceled; sh.session.id=90748f59-74c6-45a4-a90a-9d60a8e59c10; _grant_1728639812=_ud14op107; ua=835718469; uhash=1c3bc6e92570e21b3da6ea7c93379e5d; cur=INR; SESSION=710850c2c293b95af8b5a705349a4192; game_cols_count=2; disallow_sport=; _glhf=1728639863; visit=2-8aeec6b38beec18833c3897dcf1894df; _ga=GA1.2.513326735.1728622043; hdt=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJndWlkIjoiTExFMllKVUJEVkwrTTRzTU1NMnFhdzFxaG9ITnB5bWozRHRVV1JEUitUbVdOaWE5RkF4RW5pMFdmazhUTllNdmdqZWRPdk9NV3RkWFl6a0NyM3MrbjZxaDBxaDZiaUVXM2R6OFhienRKMDZCOGJJZ2E0eXhOZ1dlaldYUE9NTlBCMm51azhiajQrbkdyRU9VMG5RNkJSaHlIVkQxYmdvUjJncWFpN1pxRXFONzh2MWZTTTNYYU05VjI2eWFyTXQvd2tkU2gvelZQRnFMcHlFUHVRUVJFblZ4cXEwVmx1QURXU1NFU0R1cTAyaW1ZS3dPd1ZVM0FvY3NVWUxtL01Mb1Z0QmhJeWlnL1JrcGpmOC9POW5OU1FHdTZuS3hqOWsvekNIdDlBNGlLZlhLYU1OMlc4dz0iLCJleHAiOjE3Mjg2MzY0OTMsImlhdCI6MTcyODYyMjA5M30.FWnnw1Cvm9v0apkVqnmpVg5vfuJcPXPrPhVRfsc8VKc7LkT1_UHnRNUNP_DBMGoEOQbQ4G75C5dY-MSvPH_wzA; _gat_gtag_UA_43962315_51=1; _ga_7V60YW2S5H=GS1.1.1728622043.1.1.1728622207.60.1.1469443583; _gat_gtag_UA_131019888_1=1",
+    "priority": "u=1, i",
+    "referer": "referer: https://india.1xbet.com/en/casino/game/72348/dragon-tiger",
+    "sec-ch-ua": "\"Google Chrome\";v=\"129\", \"Not=A?Brand\";v=\"8\", \"Chromium\";v=\"129\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-origin",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36",
+    "x-requested-with": "XMLHttpRequest"
+}
+
+

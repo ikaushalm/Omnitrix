@@ -1,0 +1,15 @@
+2024-10-12 00:49:31,881 - INFO - DragonTiger.py - 550 - Starting value: 43899.01
+2024-10-12 00:49:31,881 - INFO - DragonTiger.py - 551 - Target amount: 46000
+2024-10-12 00:49:31,881 - INFO - DragonTiger.py - 552 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-10-12 00:49:48,447 - INFO - DragonTiger.py - 418 - D,43899.01,46000,0,0
+2024-10-12 00:49:49,705 - INFO - DragonTiger.py - 740 - Checking Bet history []
+2024-10-12 00:50:22,371 - INFO - DragonTiger.py - 432 - T,43449.01,46000,1,0
+2024-10-12 00:50:22,937 - INFO - DragonTiger.py - 740 - Checking Bet history ['T']
+2024-10-12 00:50:49,434 - INFO - DragonTiger.py - 418 - D,42999.01,46000,2,0
+2024-10-12 00:50:49,948 - INFO - DragonTiger.py - 740 - Checking Bet history ['T', 'D']
+2024-10-12 00:51:14,093 - INFO - DragonTiger.py - 418 - D,43899.01,46000,0,1
+2024-10-12 00:51:14,644 - INFO - DragonTiger.py - 740 - Checking Bet history ['T', 'D', 'D']
+2024-10-12 00:51:39,604 - INFO - DragonTiger.py - 432 - T,43449.01,46000,1,0
+2024-10-12 00:51:39,870 - INFO - DragonTiger.py - 740 - Checking Bet history ['T', 'D', 'D', 'T']
+2024-10-12 00:52:07,031 - INFO - DragonTiger.py - 418 - D,42999.01,46000,2,0
+2024-10-12 00:52:07,295 - INFO - DragonTiger.py - 740 - Checking Bet history ['T', 'D', 'D', 'T', 'D']

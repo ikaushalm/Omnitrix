@@ -1,0 +1,50 @@
+2024-10-11 16:54:54,594 - INFO - DragonTiger.py - 533 - Starting value: 45100.71
+2024-10-11 16:54:54,595 - INFO - DragonTiger.py - 534 - Target amount: 47000
+2024-10-11 16:54:54,595 - INFO - DragonTiger.py - 535 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-10-11 16:55:03,878 - INFO - DragonTiger.py - 401 - D,45100.71,47000,0,0
+2024-10-11 16:55:04,132 - INFO - DragonTiger.py - 684 - Checking Bet history []
+2024-10-11 16:55:28,489 - INFO - DragonTiger.py - 415 - T,44650.71,47000,1,0
+2024-10-11 16:55:28,749 - INFO - DragonTiger.py - 684 - Checking Bet history ['T']
+2024-10-11 16:55:52,917 - INFO - DragonTiger.py - 415 - T,44425.71,47000,2,0
+2024-10-11 16:55:53,171 - INFO - DragonTiger.py - 684 - Checking Bet history ['T', 'I']
+2024-10-11 16:56:24,961 - INFO - DragonTiger.py - 533 - Starting value: 45325.71
+2024-10-11 16:56:24,961 - INFO - DragonTiger.py - 534 - Target amount: 47000
+2024-10-11 16:56:24,961 - INFO - DragonTiger.py - 535 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-10-11 16:56:35,005 - INFO - DragonTiger.py - 401 - D,45325.71,47000,0,0
+2024-10-11 16:56:35,261 - INFO - DragonTiger.py - 684 - Checking Bet history []
+2024-10-11 16:56:51,135 - INFO - DragonTiger.py - 415 - T,45325.71,47000,0,0
+2024-10-11 16:56:51,386 - INFO - DragonTiger.py - 684 - Checking Bet history ['I']
+2024-10-11 16:57:57,850 - INFO - DragonTiger.py - 533 - Starting value: 45775.71
+2024-10-11 16:57:57,850 - INFO - DragonTiger.py - 534 - Target amount: 47000
+2024-10-11 16:57:57,850 - INFO - DragonTiger.py - 535 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-10-11 16:58:06,750 - INFO - DragonTiger.py - 401 - D,45775.71,47000,0,0
+2024-10-11 16:58:07,226 - INFO - DragonTiger.py - 684 - Checking Bet history []
+2024-10-11 16:59:26,346 - INFO - DragonTiger.py - 533 - Starting value: 46225.71
+2024-10-11 16:59:26,346 - INFO - DragonTiger.py - 534 - Target amount: 47000
+2024-10-11 16:59:26,346 - INFO - DragonTiger.py - 535 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-10-11 16:59:36,393 - INFO - DragonTiger.py - 401 - D,46225.71,47000,0,0
+2024-10-11 16:59:36,912 - INFO - DragonTiger.py - 684 - Checking Bet history []
+2024-10-11 16:59:55,038 - INFO - DragonTiger.py - 415 - T,46225.71,47000,0,0
+2024-10-11 16:59:55,576 - INFO - DragonTiger.py - 684 - Checking Bet history ['I']
+2024-10-11 17:00:21,049 - INFO - DragonTiger.py - 401 - D,45775.71,47000,1,0
+2024-10-11 17:00:21,299 - INFO - DragonTiger.py - 684 - Checking Bet history ['I', 'D']
+2024-10-11 17:00:54,403 - INFO - DragonTiger.py - 415 - T,44875.71,47000,2,0
+2024-10-11 17:00:54,656 - INFO - DragonTiger.py - 684 - Checking Bet history ['I', 'D', 'T']
+2024-10-11 17:01:59,893 - INFO - DragonTiger.py - 401 - D,43525.71,47000,3,0
+2024-10-11 17:02:00,143 - INFO - DragonTiger.py - 684 - Checking Bet history ['I', 'D', 'T', 'D']
+2024-10-11 17:02:25,450 - INFO - DragonTiger.py - 401 - D,45775.71,47000,1,1
+2024-10-11 17:02:25,944 - INFO - DragonTiger.py - 684 - Checking Bet history ['I', 'D', 'T', 'D', 'D']
+2024-10-11 17:02:53,627 - INFO - DragonTiger.py - 401 - D,45775.71,47000,1,1
+2024-10-11 17:02:53,871 - INFO - DragonTiger.py - 684 - Checking Bet history ['I', 'D', 'T', 'D', 'D', 'I']
+2024-10-11 17:03:21,087 - INFO - DragonTiger.py - 415 - T,45775.71,47000,1,1
+2024-10-11 17:03:21,336 - INFO - DragonTiger.py - 684 - Checking Bet history ['I', 'D', 'T', 'D', 'D', 'I', 'I']
+2024-10-11 17:03:46,730 - INFO - DragonTiger.py - 401 - D,45325.71,47000,2,0
+2024-10-11 17:03:47,263 - INFO - DragonTiger.py - 684 - Checking Bet history ['I', 'D', 'T', 'D', 'D', 'I', 'I', 'D']
+2024-10-11 17:04:13,592 - INFO - DragonTiger.py - 415 - T,44425.71,47000,3,0
+2024-10-11 17:04:13,855 - INFO - DragonTiger.py - 684 - Checking Bet history ['D', 'T', 'D', 'D', 'I', 'I', 'D', 'T']
+2024-10-11 17:04:40,966 - INFO - DragonTiger.py - 415 - T,45775.71,47000,1,1
+2024-10-11 17:04:41,229 - INFO - DragonTiger.py - 684 - Checking Bet history ['T', 'D', 'D', 'I', 'I', 'D', 'T', 'T']
+2024-10-11 17:05:04,496 - INFO - DragonTiger.py - 401 - D,45325.71,47000,2,0
+2024-10-11 17:05:04,765 - INFO - DragonTiger.py - 684 - Checking Bet history ['D', 'D', 'I', 'I', 'D', 'T', 'T', 'D']
+2024-10-11 17:05:32,154 - INFO - DragonTiger.py - 401 - D,46225.71,47000,0,1
+2024-10-11 17:05:32,891 - INFO - DragonTiger.py - 684 - Checking Bet history ['D', 'I', 'I', 'D', 'T', 'T', 'D', 'D']

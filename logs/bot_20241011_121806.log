@@ -1,0 +1,120 @@
+2024-10-11 12:18:21,489 - INFO - DragonTiger.py - 520 - Starting value: 42343.71
+2024-10-11 12:18:21,489 - INFO - DragonTiger.py - 521 - Target amount: 45000
+2024-10-11 12:18:21,489 - INFO - DragonTiger.py - 522 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-10-11 12:18:29,797 - INFO - DragonTiger.py - 388 - D,42343.71,45000,0,0
+2024-10-11 12:18:30,180 - INFO - DragonTiger.py - 671 - Checking Bet history []
+2024-10-11 12:18:46,243 - INFO - DragonTiger.py - 402 - T,42343.71,45000,0,0
+2024-10-11 12:18:46,484 - INFO - DragonTiger.py - 671 - Checking Bet history ['I']
+2024-10-11 12:19:10,170 - INFO - DragonTiger.py - 388 - D,41893.71,45000,1,0
+2024-10-11 12:19:10,453 - INFO - DragonTiger.py - 671 - Checking Bet history ['I', 'D']
+2024-10-11 12:19:40,195 - INFO - DragonTiger.py - 388 - D,42343.71,45000,0,1
+2024-10-11 12:19:40,703 - INFO - DragonTiger.py - 671 - Checking Bet history ['I', 'D', 'D']
+2024-10-11 12:20:55,013 - INFO - DragonTiger.py - 520 - Starting value: 42293.71
+2024-10-11 12:20:55,013 - INFO - DragonTiger.py - 521 - Target amount: 45000
+2024-10-11 12:20:55,013 - INFO - DragonTiger.py - 522 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-10-11 12:21:01,091 - INFO - DragonTiger.py - 388 - D,42293.71,45000,0,0
+2024-10-11 12:21:01,335 - INFO - DragonTiger.py - 671 - Checking Bet history []
+2024-10-11 12:21:23,453 - INFO - DragonTiger.py - 402 - T,41843.71,45000,0,0
+2024-10-11 12:21:23,973 - INFO - DragonTiger.py - 671 - Checking Bet history ['I']
+2024-10-11 12:22:33,002 - INFO - DragonTiger.py - 402 - T,42293.71,45000,0,1
+2024-10-11 12:22:33,252 - INFO - DragonTiger.py - 671 - Checking Bet history ['I', 'T']
+2024-10-11 12:22:59,811 - INFO - DragonTiger.py - 388 - D,41843.71,45000,1,0
+2024-10-11 12:23:00,335 - INFO - DragonTiger.py - 671 - Checking Bet history ['I', 'T', 'D']
+2024-10-11 12:23:26,072 - INFO - DragonTiger.py - 388 - D,41843.71,45000,1,0
+2024-10-11 12:23:26,587 - INFO - DragonTiger.py - 671 - Checking Bet history ['I', 'T', 'D', 'I']
+2024-10-11 12:23:48,167 - INFO - DragonTiger.py - 388 - D,42293.71,45000,0,1
+2024-10-11 12:23:48,476 - INFO - DragonTiger.py - 671 - Checking Bet history ['I', 'T', 'D', 'I', 'D']
+2024-10-11 12:24:13,426 - INFO - DragonTiger.py - 402 - T,41843.71,45000,1,0
+2024-10-11 12:24:14,233 - INFO - DragonTiger.py - 671 - Checking Bet history ['I', 'T', 'D', 'I', 'D', 'T']
+2024-10-11 12:24:40,002 - INFO - DragonTiger.py - 388 - D,41393.71,45000,2,0
+2024-10-11 12:24:40,243 - INFO - DragonTiger.py - 671 - Checking Bet history ['I', 'T', 'D', 'I', 'D', 'T', 'D']
+2024-10-11 12:25:05,833 - INFO - DragonTiger.py - 402 - T,40493.71,45000,3,0
+2024-10-11 12:25:06,355 - INFO - DragonTiger.py - 671 - Checking Bet history ['I', 'T', 'D', 'I', 'D', 'T', 'D', 'T']
+2024-10-11 12:25:32,023 - INFO - DragonTiger.py - 402 - T,41843.71,45000,1,1
+2024-10-11 12:25:32,545 - INFO - DragonTiger.py - 671 - Checking Bet history ['T', 'D', 'I', 'D', 'T', 'D', 'T', 'T']
+2024-10-11 12:25:59,317 - INFO - DragonTiger.py - 402 - T,42293.71,45000,0,2
+2024-10-11 12:25:59,565 - INFO - DragonTiger.py - 671 - Checking Bet history ['D', 'I', 'D', 'T', 'D', 'T', 'T', 'T']
+2024-10-11 12:27:05,479 - INFO - DragonTiger.py - 520 - Starting value: 42243.71
+2024-10-11 12:27:05,479 - INFO - DragonTiger.py - 521 - Target amount: 45000
+2024-10-11 12:27:05,479 - INFO - DragonTiger.py - 522 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-10-11 12:27:12,505 - ERROR - DragonTiger.py - 680 - An error occurred during the betting process: integer division or modulo by zero
+Traceback (most recent call last):
+  File "d:\Kaushal\Playground\Kaushal\Ominitrix\Omnitrix\Dragon_Tiger\DragonTiger.py", line 642, in main
+    lastWinner=get_last_dragon()
+               ^^^^^^^^^^^^^^^^^
+  File "d:\Kaushal\Playground\Kaushal\Ominitrix\Omnitrix\Dragon_Tiger\DragonTiger.py", line 209, in get_last_dragon
+    sample_step = width // len(circle_positions)
+                  ~~~~~~^^~~~~~~~~~~~~~~~~~~~~~~
+ZeroDivisionError: integer division or modulo by zero
+2024-10-11 12:27:15,083 - ERROR - DragonTiger.py - 680 - An error occurred during the betting process: integer division or modulo by zero
+Traceback (most recent call last):
+  File "d:\Kaushal\Playground\Kaushal\Ominitrix\Omnitrix\Dragon_Tiger\DragonTiger.py", line 642, in main
+    lastWinner=get_last_dragon()
+               ^^^^^^^^^^^^^^^^^
+  File "d:\Kaushal\Playground\Kaushal\Ominitrix\Omnitrix\Dragon_Tiger\DragonTiger.py", line 209, in get_last_dragon
+    sample_step = width // len(circle_positions)
+                  ~~~~~~^^~~~~~~~~~~~~~~~~~~~~~~
+ZeroDivisionError: integer division or modulo by zero
+2024-10-11 12:27:17,600 - ERROR - DragonTiger.py - 680 - An error occurred during the betting process: integer division or modulo by zero
+Traceback (most recent call last):
+  File "d:\Kaushal\Playground\Kaushal\Ominitrix\Omnitrix\Dragon_Tiger\DragonTiger.py", line 642, in main
+    lastWinner=get_last_dragon()
+               ^^^^^^^^^^^^^^^^^
+  File "d:\Kaushal\Playground\Kaushal\Ominitrix\Omnitrix\Dragon_Tiger\DragonTiger.py", line 209, in get_last_dragon
+    sample_step = width // len(circle_positions)
+                  ~~~~~~^^~~~~~~~~~~~~~~~~~~~~~~
+ZeroDivisionError: integer division or modulo by zero
+2024-10-11 12:27:20,363 - ERROR - DragonTiger.py - 680 - An error occurred during the betting process: integer division or modulo by zero
+Traceback (most recent call last):
+  File "d:\Kaushal\Playground\Kaushal\Ominitrix\Omnitrix\Dragon_Tiger\DragonTiger.py", line 642, in main
+    lastWinner=get_last_dragon()
+               ^^^^^^^^^^^^^^^^^
+  File "d:\Kaushal\Playground\Kaushal\Ominitrix\Omnitrix\Dragon_Tiger\DragonTiger.py", line 209, in get_last_dragon
+    sample_step = width // len(circle_positions)
+                  ~~~~~~^^~~~~~~~~~~~~~~~~~~~~~~
+ZeroDivisionError: integer division or modulo by zero
+2024-10-11 12:27:23,133 - ERROR - DragonTiger.py - 680 - An error occurred during the betting process: integer division or modulo by zero
+Traceback (most recent call last):
+  File "d:\Kaushal\Playground\Kaushal\Ominitrix\Omnitrix\Dragon_Tiger\DragonTiger.py", line 642, in main
+    lastWinner=get_last_dragon()
+               ^^^^^^^^^^^^^^^^^
+  File "d:\Kaushal\Playground\Kaushal\Ominitrix\Omnitrix\Dragon_Tiger\DragonTiger.py", line 209, in get_last_dragon
+    sample_step = width // len(circle_positions)
+                  ~~~~~~^^~~~~~~~~~~~~~~~~~~~~~~
+ZeroDivisionError: integer division or modulo by zero
+2024-10-11 12:27:39,493 - ERROR - DragonTiger.py - 680 - An error occurred during the betting process: integer division or modulo by zero
+Traceback (most recent call last):
+  File "d:\Kaushal\Playground\Kaushal\Ominitrix\Omnitrix\Dragon_Tiger\DragonTiger.py", line 642, in main
+    lastWinner=get_last_dragon()
+               ^^^^^^^^^^^^^^^^^
+  File "d:\Kaushal\Playground\Kaushal\Ominitrix\Omnitrix\Dragon_Tiger\DragonTiger.py", line 209, in get_last_dragon
+    sample_step = width // len(circle_positions)
+                  ~~~~~~^^~~~~~~~~~~~~~~~~~~~~~~
+ZeroDivisionError: integer division or modulo by zero
+2024-10-11 12:27:42,259 - ERROR - DragonTiger.py - 680 - An error occurred during the betting process: integer division or modulo by zero
+Traceback (most recent call last):
+  File "d:\Kaushal\Playground\Kaushal\Ominitrix\Omnitrix\Dragon_Tiger\DragonTiger.py", line 642, in main
+    lastWinner=get_last_dragon()
+               ^^^^^^^^^^^^^^^^^
+  File "d:\Kaushal\Playground\Kaushal\Ominitrix\Omnitrix\Dragon_Tiger\DragonTiger.py", line 209, in get_last_dragon
+    sample_step = width // len(circle_positions)
+                  ~~~~~~^^~~~~~~~~~~~~~~~~~~~~~~
+ZeroDivisionError: integer division or modulo by zero
+2024-10-11 12:27:44,765 - ERROR - DragonTiger.py - 680 - An error occurred during the betting process: integer division or modulo by zero
+Traceback (most recent call last):
+  File "d:\Kaushal\Playground\Kaushal\Ominitrix\Omnitrix\Dragon_Tiger\DragonTiger.py", line 642, in main
+    lastWinner=get_last_dragon()
+               ^^^^^^^^^^^^^^^^^
+  File "d:\Kaushal\Playground\Kaushal\Ominitrix\Omnitrix\Dragon_Tiger\DragonTiger.py", line 209, in get_last_dragon
+    sample_step = width // len(circle_positions)
+                  ~~~~~~^^~~~~~~~~~~~~~~~~~~~~~~
+ZeroDivisionError: integer division or modulo by zero
+2024-10-11 12:27:52,744 - ERROR - DragonTiger.py - 680 - An error occurred during the betting process: integer division or modulo by zero
+Traceback (most recent call last):
+  File "d:\Kaushal\Playground\Kaushal\Ominitrix\Omnitrix\Dragon_Tiger\DragonTiger.py", line 642, in main
+    lastWinner=get_last_dragon()
+               ^^^^^^^^^^^^^^^^^
+  File "d:\Kaushal\Playground\Kaushal\Ominitrix\Omnitrix\Dragon_Tiger\DragonTiger.py", line 209, in get_last_dragon
+    sample_step = width // len(circle_positions)
+                  ~~~~~~^^~~~~~~~~~~~~~~~~~~~~~~
+ZeroDivisionError: integer division or modulo by zero

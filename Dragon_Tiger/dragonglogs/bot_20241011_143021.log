@@ -1,0 +1,5 @@
+2024-10-11 14:30:41,456 - INFO - DragonTiger.py - 533 - Starting value: 44523.71
+2024-10-11 14:30:41,456 - INFO - DragonTiger.py - 534 - Target amount: 48000
+2024-10-11 14:30:41,456 - INFO - DragonTiger.py - 535 - Betted On,CurrentValue,TargetAmt,Losscount,Wincount
+2024-10-11 14:30:59,349 - INFO - DragonTiger.py - 401 - D,44523.71,48000,0,0
+2024-10-11 14:30:59,896 - INFO - DragonTiger.py - 684 - Checking Bet history []
