@@ -50,6 +50,8 @@ def is_alternating(arr):
         last_four[0] == last_four[2] and
         last_four[1] == last_four[3]):
         return True
+    elif(last_four[-1]=='I'):
+        return True
     return False
 
 
@@ -242,7 +244,7 @@ def main():
 
             return sequence
         except:
-            return 'D'
+            return 'T'
 
 
     def extract_characters_from_image(image_path):
@@ -605,7 +607,7 @@ def main():
                     current_value_final=current_txt
                     if(loop_count!=0):
                         try:
-                            base_amt=450
+                            base_amt=9
                             if(last_value>current_value_final):
                                 # print('inside true loop')
                                 Tie_value=base_amt*repeat_count/2
@@ -672,9 +674,10 @@ def main():
                     try:
                         if(is_alternating(Bethistory)):
                             #skipping this bet
-                            next_multiple_of_5 = (bet_count + random.randint(5,6)) // 5 * 5
-                            noMultiple=next_multiple_of_5-3
-                            loop_condition=noMultiple-bet_count
+                            # next_multiple_of_5 = (bet_count + random.randint(5,6)) // 5 * 5
+                            # noMultiple=next_multiple_of_5-3
+                            # loop_condition=noMultiple-bet_count
+                            loop_condition=random.randint(5,6)
                             sleep_test=0
                             while(sleep_test<loop_condition):
                                 try:
@@ -698,6 +701,10 @@ def main():
                                     sleepstrLockcheck=''
                             Bethistory=[]
                             loop_count=0
+                            #reset values
+                            Bethistory=[]
+                            win_count=0
+                            repeat_count=fibo_series[loss_count]
                         
 
                         else:
@@ -729,12 +736,15 @@ def main():
                                     betonD(repeat_count)
                                 elif(Bethistory[len(Bethistory)-1]=='T'):
                                     betonT(repeat_count)
+
+                            loop_count=loop_count+1
+                        
                                                 
                         last_value = get_balance()
+                        startingvaluefinal=last_value
                         set_last_value(last_value)
 
-                        loop_count=loop_count+1
-                        startingvaluefinal=last_value
+
                         
 
                         print(f'Checking Bet history {Bethistory}')
