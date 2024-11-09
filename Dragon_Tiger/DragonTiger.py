@@ -343,22 +343,22 @@ def main():
     def open_incognito_website(url):
         # Determine the platform and path to Chrome executable
         if platform.system() == "Windows":
-            chrome_path = "C:/Program Files/Google/Chrome/Application/chrome.exe"
+            brave_path = "C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe"
         elif platform.system() == "Darwin":  # macOS
-            chrome_path = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+            brave_path = "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser"
         elif platform.system() == "Linux":
-            chrome_path = "/usr/bin/google-chrome"
+            brave_path = "/usr/bin/brave"
         else:
             raise OSError("Unsupported operating system")
 
         # Prepare the command for launching Chrome in incognito mode
-        command = [chrome_path, '--incognito', url]
+        command = [brave_path, '--incognito', url]
 
         # Launch Chrome in incognito mode with the specified URL
         try:
             subprocess.run(command, check=True)
         except FileNotFoundError:
-            print(f"Error: Chrome executable not found at {chrome_path}")
+            print(f"Error: Chrome executable not found at {brave_path}")
         except subprocess.CalledProcessError as e:
             print(f"Error running command: {e}")
 
@@ -412,27 +412,30 @@ def main():
 
     def betonD(no_click):
         # pyautogui.click(x=600,y= 600,clicks=no_click)
-        final_x, final_y =move_cursor_in_random_circles(A_x, A_y, moving_r)  # Move cursor in random circles around the betting point
+        # final_x, final_y =move_cursor_in_random_circles(A_x, A_y, moving_r)  # Move cursor in random circles around the betting point
         # sleep(1)  # Short delay to mimic human behavior
-        pyautogui.click(x=final_x, y=final_y,clicks=no_click)
+        pyautogui.click(x=A_x, y=A_y,clicks=no_click*2)
         set_betted_on('D')
         # logging.info("Betting on A --Current value:{starting_value_final} Target Value:{target_amt}  Loss Count: {loss_count} Win Count:{win_count} Repeat_count:{repeat_count}")
         logging.info(f"D,{startingvaluefinal},{target_amt},{loss_count},{win_count}")
         write_to_csv(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),'A', startingvaluefinal, target_amt, loss_count, win_count)
+        sleep(3)
 
 
 
     def betonT(no_click):
         # pyautogui.click(x=740,y= 600,clicks=no_click)
         """Perform betting action on B."""
-        final_x, final_y =move_cursor_in_random_circles(B_x,B_y,moving_r)  # Move cursor in random circles around the betting point
+        # final_x, final_y =move_cursor_in_random_circles(B_x,B_y,moving_r)  # Move cursor in random circles around the betting point
         # sleep(1)  # Short delay to mimic human behavior
-        pyautogui.click(x=final_x,y=final_y,clicks=no_click)
+        pyautogui.click(x=B_x,y=B_y,clicks=no_click*2)
 
         set_betted_on('T')
         # logging.info("Betting on B --Loss Count: {loss_count} Win Count:{win_count} Repeat_count:{repeat_count}")
         logging.info(f"T,{startingvaluefinal},{target_amt},{loss_count},{win_count}")
         write_to_csv(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),'B', startingvaluefinal, target_amt, loss_count, win_count)
+        sleep(3)
+
 
 
     # Extracting numbers from text
@@ -493,7 +496,7 @@ def main():
         Returns:
         str: The text copied from the specified position.
         """
-        pyautogui.click(textat_x,textat_y)
+        
         sleep(1)
         # Move the cursor to the specified location
         pyautogui.moveTo(x, y, duration=duration)
@@ -534,7 +537,7 @@ def main():
 
 
 
-    pyautogui.click(textat_x,textat_y)
+    # 
     sleep(2)
 
     starting_value =get_balance()
@@ -568,7 +571,7 @@ def main():
                     except:
                         exc=''
                     lock_check = pyautogui.locateOnScreen("Dragon_Tiger\placeyourbets.png", confidence=0.8)
-                    pyautogui.click(textat_x,textat_y)
+                    
                     sleep(1)
                     # print(lock_check)
                     strLockcheck = str(lock_check)
@@ -603,6 +606,7 @@ def main():
                 if(len(strLockcheck)==44) :
     
                     bet_count=bet_count+1
+                    sleep(2)
                     current_txt = get_balance()
                     current_value_final=current_txt
                     if(loop_count!=0):
@@ -610,7 +614,7 @@ def main():
                             base_amt=9
                             if(last_value>current_value_final):
                                 # print('inside true loop')
-                                Tie_value=base_amt*repeat_count/2
+                                Tie_value=(base_amt*(repeat_count*2))/2
                                 if((last_value-Tie_value)==current_value_final):
                                     # its a tie
                                     add_to_fixed_length_array(Bethistory,'I')
@@ -722,7 +726,11 @@ def main():
                                 elif(lastWinner=='T'):
                                     betonT(repeat_count)
                                 else:
-                                    betonD(repeat_count)
+                                    even_number= random.randint(1, 10) 
+                                    if(even_number%2==0):
+                                        betonD(repeat_count)
+                                    else:
+                                        betonT(repeat_count)
 
                                 
                             if(len(Bethistory)>=1):
@@ -763,11 +771,11 @@ def main():
                     strLockcheck=''
             else:
                 # bet_analyzer.analyze_and_push()
-                pyautogui.alert('Target Achieved')
+                shutdown_system()
+                # pyautogui.alert('Target Achieved')
                 play_alarm() 
                 # close_chrome_tabs()
                 sleep(10)
-                # shutdown_system()
                 logging.info("Condition not met, alarm beeped.")
                 break
                 # sleep(10)  # Wait before rechecking
