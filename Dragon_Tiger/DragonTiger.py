@@ -1,3 +1,4 @@
+import asyncio
 import base64
 import math
 import random
@@ -36,21 +37,21 @@ def load_cookie(file_path='DragonHeaders.txt'):
     return cookie_content
 
 def is_alternating(arr):
+    # Get the last 4 characters of the array
+    last_four = arr[-4:]
+    if(len(arr)>=1):
+        if(last_four[-1]=='I'):
+            return True
     # Check if the length of the array is less than 4
     if len(arr) < 4:
         return False
-    
-    # Get the last 4 characters of the array
-    last_four = arr[-4:]
-    
+
     # Check if the last four characters alternate
     if (last_four[0] != last_four[1] and
         last_four[1] != last_four[2] and
         last_four[2] != last_four[3] and
         last_four[0] == last_four[2] and
         last_four[1] == last_four[3]):
-        return True
-    elif(last_four[-1]=='I'):
         return True
     return False
 
@@ -88,7 +89,7 @@ def set_betted_on(value):
     global betted_on
     betted_on = value
 
-def main():
+async def main():
     # ---------------------------------------------------------
     # ---------------------------------------------------------
     # ---------------------------------------------------------
@@ -158,6 +159,9 @@ def main():
     repeat_count=1
     bet_count=0
     startingvaluefinal=0
+
+    log_wincount=0
+    log_losscount=0
 
     # Define the global variable
     
@@ -244,37 +248,18 @@ def main():
 
             return sequence
         except:
-            return 'T'
+            return 'I'
 
 
-    def extract_characters_from_image(image_path):
-        # Load the image
-        img = Image.open(image_path)
+    def get_random_even_or_odd():
+        # Randomly decide if we want even or odd
+        is_even = random.choice([True, False])  # True for even, False for odd
 
-        # Convert image to RGB and extract pixels
-    
-        # Fallback to OCR if no colors were detected
-        text = pytesseract.image_to_string(img, config='--psm 6')
-        print(txt)
-        filtered_text = ''.join(c for c in text if c in 'DT')
-        return filtered_text[-1] if filtered_text else None
-        
-
-
-    def extract_maxcount_from_image(image_path):
-        # Load the image
-        img = Image.open(image_path)
-        # Fallback to OCR if no colors were detected
-        text = pytesseract.image_to_string(img, config='--psm 6')
-        filtered_text = ''.join(c for c in text if c in 'AB')
-        if filtered_text:
-            return max(filtered_text, key=filtered_text.count)  # Return the character with the highest count from OCR
+        # Generate even or odd number based on the decision
+        if is_even:
+            return random.choice([x for x in range(0, 1000, 2)])  # Even numbers from 0 to 999
         else:
-            return None
-
-    # Define the log directory and ensure it exists
-
-
+            return random.choice([x for x in range(1, 1000, 2)]) 
 
     # Get the current working directory
     current_dir = os.getcwd()
@@ -417,8 +402,8 @@ def main():
         pyautogui.click(x=A_x, y=A_y,clicks=no_click*2)
         set_betted_on('D')
         # logging.info("Betting on A --Current value:{starting_value_final} Target Value:{target_amt}  Loss Count: {loss_count} Win Count:{win_count} Repeat_count:{repeat_count}")
-        logging.info(f"D,{startingvaluefinal},{target_amt},{loss_count},{win_count}")
-        write_to_csv(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),'A', startingvaluefinal, target_amt, loss_count, win_count)
+        logging.info(f"D,{startingvaluefinal},{target_amt},{loss_count},{win_count},{log_wincount},{log_wincount}")
+        write_to_csv(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),'A', startingvaluefinal, target_amt, loss_count, win_count,log_wincount,log_losscount)
         sleep(3)
 
 
@@ -432,8 +417,8 @@ def main():
 
         set_betted_on('T')
         # logging.info("Betting on B --Loss Count: {loss_count} Win Count:{win_count} Repeat_count:{repeat_count}")
-        logging.info(f"T,{startingvaluefinal},{target_amt},{loss_count},{win_count}")
-        write_to_csv(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),'B', startingvaluefinal, target_amt, loss_count, win_count)
+        logging.info(f"D,{startingvaluefinal},{target_amt},{loss_count},{win_count},{log_wincount},{log_wincount}")
+        write_to_csv(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),'A', startingvaluefinal, target_amt, loss_count, win_count,log_wincount,log_losscount)
         sleep(3)
 
 
@@ -540,7 +525,7 @@ def main():
     # 
     sleep(2)
 
-    starting_value =get_balance()
+    starting_value = await get_balance()
     print(starting_value)
     txt = starting_value
     flag=False
@@ -558,7 +543,7 @@ def main():
         while True:             
             while startingvaluefinal<target_amt_final:
                 if(loop_count!=0):
-                    current_txt = get_balance()
+                    current_txt = await get_balance()
                     startingvaluefinal=current_txt
                 try:  
                     try:
@@ -598,6 +583,7 @@ def main():
                         if(txt<(startingvaluefinal+100)):
                             if(loss_count>=6):
                                 loss_count=1
+                                txt=startingvaluefinal+100
 
                     # print(len(strLockcheck))                   
                 except:
@@ -607,7 +593,7 @@ def main():
     
                     bet_count=bet_count+1
                     sleep(2)
-                    current_txt = get_balance()
+                    current_txt =await get_balance()
                     current_value_final=current_txt
                     if(loop_count!=0):
                         try:
@@ -625,6 +611,7 @@ def main():
 
                                 win_count=0
                                 loss_count=loss_count+1
+                                log_losscount=log_losscount+1
                                 if loss_count==0:
                                     repeat_count=fibo_series[loss_count]
                                 elif loss_count==1:
@@ -673,6 +660,8 @@ def main():
                                     repeat_count=fibo_series[0]
                             
                                 win_count=win_count+1
+                                log_wincount=log_wincount+1
+
                         except Exception as e:
                             logging.error(f"An error occurred during the betting process: {e}", exc_info=True) 
                     try:
@@ -717,38 +706,41 @@ def main():
                                 pic.save("screenshot_"+str(loss_count)+".png")
                             
                             if(loop_count==0):
-                                pic = ImageGrab.grab(bbox=(447, 733, 703, 753))
-                                pic.save("DragonRoar.png")
-                                sleep(1)
-                                lastWinner=get_last_dragon()
-                                if(lastWinner=='D'):
-                                    betonD(repeat_count) 
-                                elif(lastWinner=='T'):
-                                    betonT(repeat_count)
+                                randomNumber=get_random_even_or_odd()
+                                if(randomNumber%2==0):
+                                    betonD(repeat_count)
                                 else:
-                                    even_number= random.randint(1, 10) 
-                                    if(even_number%2==0):
-                                        betonD(repeat_count)
-                                    else:
-                                        betonT(repeat_count)
+                                    betonT(repeat_count)
 
                                 
                             if(len(Bethistory)>=1):
                                 if(Bethistory[len(Bethistory)-1]=='I'):
-                                    if(Bethistory[len(Bethistory)-2]=='D'):
+                                    if(randomNumber%2==0):
                                         betonD(repeat_count)
                                     else:
                                         betonT(repeat_count)
+                                    # if(Bethistory[len(Bethistory)-2]=='D'):
+                                    #     betonT(repeat_count)
+                                    # else:
+                                    #     betonD(repeat_count)
 
                                 if(Bethistory[len(Bethistory)-1]=='D'):
+                                    # if(Bethistory[len(Bethistory)-2]==Bethistory[len(Bethistory)-3]=='T'):
+                                    #     betonT(repeat_count)
+                                    # else:
                                     betonD(repeat_count)
+
                                 elif(Bethistory[len(Bethistory)-1]=='T'):
+                                    # if(Bethistory[len(Bethistory)-2]==Bethistory[len(Bethistory)-3]=='D'):
+                                    #     betonD(repeat_count)
+                                    # else:
                                     betonT(repeat_count)
+
 
                             loop_count=loop_count+1
                         
                                                 
-                        last_value = get_balance()
+                        last_value =await  get_balance()
                         startingvaluefinal=last_value
                         set_last_value(last_value)
 
@@ -773,7 +765,7 @@ def main():
                 # bet_analyzer.analyze_and_push()
                 shutdown_system()
                 # pyautogui.alert('Target Achieved')
-                play_alarm() 
+                # play_alarm() 
                 # close_chrome_tabs()
                 sleep(10)
                 logging.info("Condition not met, alarm beeped.")
@@ -785,6 +777,6 @@ def main():
         pyautogui.alert(f"An error occurred: {e}. Please go to the original screen.")
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
 
 
