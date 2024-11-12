@@ -664,7 +664,7 @@ async def main():
                             # next_multiple_of_5 = (bet_count + random.randint(5,6)) // 5 * 5
                             # noMultiple=next_multiple_of_5-3
                             # loop_condition=noMultiple-bet_count
-                            loop_condition=random.randint(5,6)
+                            loop_condition=random.randint(4,7)
                             sleep_test=0
                             while(sleep_test<loop_condition):
                                 try:
