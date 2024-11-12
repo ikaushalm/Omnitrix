@@ -160,9 +160,6 @@ async def main():
     bet_count=0
     startingvaluefinal=0
 
-    log_wincount=0
-    log_losscount=0
-
     # Define the global variable
     
 
@@ -402,8 +399,8 @@ async def main():
         pyautogui.click(x=A_x, y=A_y,clicks=no_click*2)
         set_betted_on('D')
         # logging.info("Betting on A --Current value:{starting_value_final} Target Value:{target_amt}  Loss Count: {loss_count} Win Count:{win_count} Repeat_count:{repeat_count}")
-        logging.info(f"D,{startingvaluefinal},{target_amt},{loss_count},{win_count},{log_wincount},{log_wincount}")
-        write_to_csv(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),'A', startingvaluefinal, target_amt, loss_count, win_count,log_wincount,log_losscount)
+        logging.info(f"D,{startingvaluefinal},{target_amt},{loss_count},{win_count}")
+        write_to_csv(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),'A', startingvaluefinal, target_amt, loss_count, win_count)
         sleep(3)
 
 
@@ -417,8 +414,8 @@ async def main():
 
         set_betted_on('T')
         # logging.info("Betting on B --Loss Count: {loss_count} Win Count:{win_count} Repeat_count:{repeat_count}")
-        logging.info(f"D,{startingvaluefinal},{target_amt},{loss_count},{win_count},{log_wincount},{log_wincount}")
-        write_to_csv(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),'A', startingvaluefinal, target_amt, loss_count, win_count,log_wincount,log_losscount)
+        logging.info(f"T,{startingvaluefinal},{target_amt},{loss_count},{win_count}")
+        write_to_csv(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),'B', startingvaluefinal, target_amt, loss_count, win_count)
         sleep(3)
 
 
@@ -611,7 +608,6 @@ async def main():
 
                                 win_count=0
                                 loss_count=loss_count+1
-                                log_losscount=log_losscount+1
                                 if loss_count==0:
                                     repeat_count=fibo_series[loss_count]
                                 elif loss_count==1:
@@ -660,8 +656,6 @@ async def main():
                                     repeat_count=fibo_series[0]
                             
                                 win_count=win_count+1
-                                log_wincount=log_wincount+1
-
                         except Exception as e:
                             logging.error(f"An error occurred during the betting process: {e}", exc_info=True) 
                     try:
